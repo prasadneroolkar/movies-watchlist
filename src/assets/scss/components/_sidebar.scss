@@ -1,0 +1,19 @@
+article.sidebar {
+  width: 320px;
+  padding: 20px 40px;
+  background-color: $bg-black;
+
+  h1 {
+    font-size: 40px;
+    line-height: 44px;
+    font-family: $secondary-family;
+    font-weight: 800;
+    text-transform: capitalize;
+  }
+}
+
+.right_common {
+  width: 100%;
+  background-color: #191919;
+  padding: 50px 60px 20px;
+}
