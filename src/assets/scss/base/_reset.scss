@@ -12,6 +12,17 @@ input[type="text"] {
 
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0
+}
+
+a {
+  color: $text-color;
+  text-decoration: none;
+}
+
 section.main {
   min-height: 100vh;
   // padding: 50px 60px 20px;
