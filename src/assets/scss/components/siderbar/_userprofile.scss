@@ -1,0 +1,14 @@
+.profile_status {
+  position: absolute;
+  bottom: 0;
+  border-radius: 6px;
+  border: 1px solid #ffffff;
+  padding: 6px 10px;
+  margin-bottom: 20px;
+  min-width: 241px;
+
+  p {
+    font-size: 16px;
+    line-height: 19px
+  }
+}

@@ -11,7 +11,7 @@ const Siderbar = () => {
         <h1>watchlist</h1>
         <Searchbar />
         <Menu />
-        <Button />
+        <Button btnName="create watchlist" />
         <hr />
         <Watchlist />
         <Userprof />
