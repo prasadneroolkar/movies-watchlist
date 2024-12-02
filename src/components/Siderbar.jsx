@@ -4,6 +4,8 @@ import Menu from "../components/Menu";
 import Button from "../components/Button";
 import Watchlist from "../components/Watchlist";
 import Userprof from "../components/Userprof";
+import AddSharpIcon from "@mui/icons-material/AddSharp";
+
 const Siderbar = () => {
   return (
     <>
@@ -11,7 +13,13 @@ const Siderbar = () => {
         <h1>watchlist</h1>
         <Searchbar />
         <Menu />
-        <Button btnName="create watchlist" />
+        <Button
+          btnName={
+            <>
+              <AddSharpIcon sx={{ fontSize: 16 }} /> create watchlist
+            </>
+          }
+        />
         <hr />
         <Watchlist />
         <Userprof />
