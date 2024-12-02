@@ -42,11 +42,14 @@ const Login = () => {
               >
                 <div className="form-group d-flex justify-content-start align-items-center">
                   <EmailIcon sx={{ fontSize: 22 }} />
-                  <FormInput placeholder="Enter your email" />
+                  <FormInput type="email" placeholder="Enter your email" />
                 </div>
                 <div className="form-group d-flex justify-content-start align-items-center">
                   <LockIcon sx={{ fontSize: 22 }} />
-                  <FormInput placeholder="Enter your password" />
+                  <FormInput
+                    placeholder="Enter your password"
+                    type="password"
+                  />
                 </div>
 
                 {/* <input
