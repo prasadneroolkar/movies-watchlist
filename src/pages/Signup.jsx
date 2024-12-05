@@ -6,11 +6,14 @@ import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
+import ImageUpload from "../components/Form/ImageUpload";
 
 const Signup = () => {
   return (
     <section className="login_section vh-100">
       <FormLayout formname="Sign up">
+        <ImageUpload />
+
         <div className="form-group d-flex justify-content-start align-items-center">
           <PersonIcon sx={{ fontSize: 22 }} />
           <FormInput placeholder="Enter your name" />
