@@ -10,25 +10,27 @@ import ImageUpload from "../components/Form/ImageUpload";
 
 const Signup = () => {
   const [username, setName] = useState("");
+  const [Details, setDetails] = useState([]);
   const [email, setEmail] = useState();
-  const userDetail = [
-    {
-      uname: username,
-    },
-  ];
+
+  // const userDetail = [
+  //   {
+  //     uname: username,
+  //   },
+  // ];
 
   const inputChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setName(e.target.value);
   };
 
-  const addUser = (username) => {
-    console.log(...userDetail, username);
+  const addUser = () => {
+    setName("");
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addUser(userDetail.uname);
+    addUser();
   };
 
   return (
