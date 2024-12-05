@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FormInput from "../components/Form/FormInput";
 import FormLayout from "../components/Form/FormLayout";
 import PersonIcon from "@mui/icons-material/Person";
@@ -9,14 +9,39 @@ import { Link } from "react-router-dom";
 import ImageUpload from "../components/Form/ImageUpload";
 
 const Signup = () => {
+  const [username, setName] = useState("");
+  const [email, setEmail] = useState();
+  const userDetail = [
+    {
+      uname: username,
+    },
+  ];
+
+  const inputChange = (e) => {
+    console.log(e.target.value);
+    setName(e.target.value);
+  };
+
+  const addUser = (username) => {
+    console.log(...userDetail, username);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    addUser(userDetail.uname);
+  };
+
   return (
     <section className="login_section vh-100">
-      <FormLayout formname="Sign up">
+      <FormLayout formname="Sign up" onAction={onSubmit}>
         <ImageUpload />
-
         <div className="form-group d-flex justify-content-start align-items-center">
           <PersonIcon sx={{ fontSize: 22 }} />
-          <FormInput placeholder="Enter your name" />
+          <FormInput
+            placeholder="Enter your name"
+            onChange={inputChange}
+            value={username}
+          />
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <EmailIcon sx={{ fontSize: 22 }} />
@@ -33,7 +58,7 @@ const Signup = () => {
 
           <FormInput type="password" placeholder="Confirm password" />
         </div>
-        <Button btnName="Create Profile" />
+        <Button btnName="Create Profile" type="submit" />
         <p className=" mt-3 d-flex flex-column justify-content-center align-items-center">
           Already have an account?{" "}
           <Link to="" className="text-decoration-underline">

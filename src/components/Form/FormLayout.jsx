@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormLayout = ({ children, formname }) => {
+const FormLayout = ({ children, formname, onAction }) => {
   return (
     <div className="container ">
       <div className="row  d-flex justify-content-center align-items-center">
@@ -9,6 +9,7 @@ const FormLayout = ({ children, formname }) => {
             <h1 className="text-center">{formname}</h1>
             <form
               action=""
+              onSubmit={onAction}
               className="d-flex justify-content-start flex-column"
             >
               {children}

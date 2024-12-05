@@ -1,12 +1,13 @@
 import React from "react";
 
-const FormInput = ({ placeholder, type = "text" }) => {
+const FormInput = ({ placeholder, type = "text", onChange, value }) => {
   return (
     <>
       <input
         type={type}
         placeholder={placeholder}
-        // onChange={(e) => setEmail(e.target.value)}
+        value={value}
+        onChange={onChange}
       />
     </>
   );
