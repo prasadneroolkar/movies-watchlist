@@ -1,6 +1,12 @@
 import React from "react";
 
-const FormInput = ({ placeholder, type = "text", onChange, value }) => {
+const FormInput = ({
+  placeholder,
+  type = "text",
+  onChange,
+  value,
+  InputRef,
+}) => {
   return (
     <>
       <input
@@ -8,6 +14,7 @@ const FormInput = ({ placeholder, type = "text", onChange, value }) => {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        ref={InputRef}
       />
     </>
   );
