@@ -2,14 +2,7 @@ import React from "react";
 import Siderbar from "../components/Siderbar";
 
 const Home = () => {
-  return (
-    <>
-      <section className="main d-flex">
-        <Siderbar />
-        <div className="right_common">comman</div>
-      </section>
-    </>
-  );
+  return <>home</>;
 };
 
 export default Home;
