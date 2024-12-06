@@ -3,12 +3,18 @@ import React, { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [currentUser, setcurrentUser] = useState(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (storedUser) setcurrentUser(storedUser);
+    console.log(storedUser);
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ currentUser }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import FormInput from "../components/Form/FormInput";
 import FormLayout from "../components/Form/FormLayout";
 import PersonIcon from "@mui/icons-material/Person";
@@ -7,30 +7,39 @@ import EmailIcon from "@mui/icons-material/Email";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import ImageUpload from "../components/Form/ImageUpload";
+import { AuthContext } from "../context/AuthContext";
 
 const Signup = () => {
+  const { currentUser } = useContext(AuthContext);
   const [username, setName] = useState("");
   const [Details, setDetails] = useState([]);
   const [email, setEmail] = useState();
-
-  // const userDetail = [
-  //   {
-  //     uname: username,
-  //   },
-  // ];
+  const [password, setPassword] = useState("");
+  const [confirm, setCnfPass] = useState("");
 
   const inputChange = (e) => {
-    // console.log(e.target.value);
     setName(e.target.value);
   };
 
-  const addUser = () => {
-    setName("");
+  const addUser = (username, email, password) => {
+    const users = JSON.parse(localStorage.getItem("userDetails")) || [];
+    console.log(users);
+    if (users.find((user) => user.email === email)) {
+      alert("user already existing");
+      return;
+    }
+
+    const newUser = { username, email, password };
+    users.push(newUser);
+    localStorage.setItem("userDetails", JSON.stringify(users));
+    console.log(newUser);
+    setDetails(newUser);
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addUser();
+    addUser(username, email, password);
   };
 
   return (
