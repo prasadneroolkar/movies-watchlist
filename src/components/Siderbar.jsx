@@ -7,6 +7,7 @@ import Userprof from "../components/Userprof";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 import { AuthContext } from "../context/AuthContext";
 import Logout from "./Form/Logout";
+import { Link } from "react-router-dom";
 
 const Siderbar = () => {
   const { currentUser } = useContext(AuthContext);
@@ -25,7 +26,9 @@ const Siderbar = () => {
         />
         <hr />
         <Watchlist />
-        <p className="mt-4">{currentUser ? <Logout /> : "Sign IN"}</p>
+        <p className="mt-4">
+          {currentUser ? <Logout /> : <Link to="/login">Sign in</Link>}
+        </p>
 
         <Userprof />
       </aside>

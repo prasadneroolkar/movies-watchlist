@@ -6,12 +6,11 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const logout = () => {
-    const User = JSON.parse(localStorage.getItem("currentUser"));
-    if (User) {
-      localStorage.removeItem(User);
-      navigate("/login");
-    } else {
-      return;
+    if (localStorage.getItem("currentUser")) {
+      setTimeout(() => {
+        localStorage.removeItem("currentUser");
+        navigate("/login");
+      }, 2000);
     }
   };
 

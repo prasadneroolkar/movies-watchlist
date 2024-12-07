@@ -8,10 +8,11 @@ import Button from "../components/Button";
 import { Link } from "react-router-dom";
 import ImageUpload from "../components/Form/ImageUpload";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { signUp } = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -23,6 +24,14 @@ const Signup = () => {
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value;
     const confirm = cnfpassRef.current.value;
+
+    if (username == "" || email == "" || password == "" || confirm == "") {
+      alert("Enter details for signing up");
+      if (password != confirm) {
+        alert("password doesnt match");
+        return;
+      }
+    }
     if (password != confirm) {
       alert("password doesnt match");
       return;
@@ -33,6 +42,7 @@ const Signup = () => {
     emailRef.current.value = "";
     passwordRef.current.value = "";
     cnfpassRef.current.value = "";
+    navigate("/");
   };
 
   return (
@@ -73,7 +83,7 @@ const Signup = () => {
         <Button btnName="Create Profile" type="submit" />
         <p className=" mt-3 d-flex flex-column justify-content-center align-items-center">
           Already have an account?{" "}
-          <Link to="" className="text-decoration-underline">
+          <Link to="/login" className="text-decoration-underline">
             Log in here.
           </Link>
         </p>
