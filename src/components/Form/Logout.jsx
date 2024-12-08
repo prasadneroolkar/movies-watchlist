@@ -1,18 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Logout = () => {
-  const navigate = useNavigate();
-
-  const logout = () => {
-    if (localStorage.getItem("currentUser")) {
-      setTimeout(() => {
-        localStorage.removeItem("currentUser");
-        navigate("/login");
-      }, 2000);
-    }
-  };
+  const { logout } = useContext(AuthContext);
 
   return (
     <>

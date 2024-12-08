@@ -6,30 +6,12 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import FormInput from "../components/Form/FormInput";
 import FormLayout from "../components/Form/FormLayout";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  // const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const emailRef = useRef();
   const passRef = useRef();
-
-  const login = (email, password) => {
-    const user = JSON.parse(localStorage.getItem("userDetails"));
-    console.log(user);
-    try {
-      if (
-        user.find((user) => user.email === email && user.password === password)
-      ) {
-        alert("matched");
-        localStorage.setItem("currentUser", JSON.stringify(user));
-        navigate("/");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const onsubmit = () => {
     event.preventDefault();
