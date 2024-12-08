@@ -51,16 +51,13 @@ const Signup = () => {
         <ImageUpload />
         <div className="form-group d-flex justify-content-start align-items-center">
           <PersonIcon sx={{ fontSize: 22 }} />
-          <FormInput placeholder="Enter your name" InputRef={usernameRef} />
+
+          <FormInput InputRef={usernameRef} placeholder="Name" />
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <EmailIcon sx={{ fontSize: 22 }} />
 
-          <FormInput
-            type="email"
-            placeholder="Enter your email"
-            InputRef={emailRef}
-          />
+          <FormInput type="email" placeholder="Email" InputRef={emailRef} />
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <LockIcon sx={{ fontSize: 22 }} />
@@ -84,7 +81,7 @@ const Signup = () => {
         <p className=" mt-3 d-flex flex-column justify-content-center align-items-center">
           Already have an account?{" "}
           <Link to="/login" className="text-decoration-underline">
-            Log in here.
+            Sign in here.
           </Link>
         </p>
       </FormLayout>

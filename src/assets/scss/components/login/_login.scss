@@ -26,16 +26,58 @@
     margin: 0 auto;
 
     .form-group {
-      border: 1px solid #ffffff;
+      border: 1px solid;
+      border-color: rgba(128, 128, 128, 0.7);
       border-radius: 6px;
-      padding: 7px 12px;
+      padding: 0px 12px;
       margin-bottom: 18px;
       background: rgba(22, 22, 22, 0.7);
 
-      input {
-        padding-left: 10px;
+      &:focus-within {
+        border-color: #fff;
       }
 
+      .label_input {
+        width: 100%;
+        position: relative;
+        z-index: 0;
+
+        label {
+          position: absolute;
+          z-index: 1;
+          top: 16px;
+          padding-left: 10px;
+          text-overflow: ellipsis;
+          transition-property: top, font-size, line-height;
+          transition-duration: 250ms;
+          pointer-events: none;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.68, 0.06);
+
+
+
+        }
+
+
+
+        input {
+          padding: 24px 10px 8px;
+          width: 100%;
+          min-height: 16px;
+          min-width: 16px;
+
+          // padding-left: 10px;
+          // &:focus {
+          //   border-color: #fff;
+          // }
+        }
+      }
+
+      :focus-within label {
+        top: 8px;
+        font-size: 12px;
+
+        /* Optional: Change label color on focus */
+      }
     }
   }
 

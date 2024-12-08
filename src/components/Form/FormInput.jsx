@@ -9,13 +9,16 @@ const FormInput = ({
 }) => {
   return (
     <>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        ref={InputRef}
-      />
+      <div className="label_input">
+        <label htmlFor="">{placeholder}</label>
+        <input
+          type={type}
+          // placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          ref={InputRef}
+        />
+      </div>
     </>
   );
 };

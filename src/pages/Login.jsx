@@ -25,25 +25,21 @@ const Login = () => {
 
   return (
     <section className="login_section vh-100">
-      <FormLayout formname="log in" onAction={onsubmit}>
+      <FormLayout formname="Sign in" onAction={onsubmit}>
         <div className="form-group d-flex justify-content-start align-items-center">
           <EmailIcon sx={{ fontSize: 22 }} />
-          <FormInput
-            type="email"
-            placeholder="Enter your email"
-            InputRef={emailRef}
-          />
+          <FormInput type="email" placeholder="Email" InputRef={emailRef} />
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <LockIcon sx={{ fontSize: 22 }} />
           <FormInput
-            placeholder="Enter your password"
+            placeholder="Password"
             type="password"
             InputRef={passRef}
           />
         </div>
 
-        <Button btnName="Log in" type="submit" />
+        <Button btnName="Sign in" type="submit" />
         <p className="text-center mt-4">
           <Link to="">Forgot your password?</Link>
         </p>
