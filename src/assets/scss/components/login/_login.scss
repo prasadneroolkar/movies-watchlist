@@ -72,7 +72,8 @@
         }
       }
 
-      :focus-within label {
+      :focus-within label,
+      input:not(:placeholder-shown)+label {
         top: 8px;
         font-size: 12px;
 

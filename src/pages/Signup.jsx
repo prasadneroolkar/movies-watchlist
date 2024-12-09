@@ -12,11 +12,39 @@ import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { signUp } = useContext(AuthContext);
+  const [error, setError] = useState({});
   const navigate = useNavigate();
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const cnfpassRef = useRef();
+
+  const validateForm = (username, email, password, confpass) => {
+    const errordata = {};
+
+    if (!username) {
+      errordata.username = "Title is required";
+    }
+
+    if (!email) {
+      errordata.email = "email is required";
+    }
+
+    if (!password) {
+      errordata.password = "password is required";
+    }
+
+    if (!confpass) {
+      errordata.confpass = "password is required";
+    } else {
+      if (password !== confpass) {
+        errordata.confpass = " password is donot match";
+      }
+    }
+
+    setError(errordata);
+    return errordata;
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -25,24 +53,17 @@ const Signup = () => {
     const password = passwordRef.current.value;
     const confirm = cnfpassRef.current.value;
 
-    if (username == "" || email == "" || password == "" || confirm == "") {
-      alert("Enter details for signing up");
-      if (password != confirm) {
-        alert("password doesnt match");
-        return;
-      }
-    }
-    if (password != confirm) {
-      alert("password doesnt match");
-      return;
-    }
+    const validateRes = validateForm(username, email, password, confirm);
+    console.log(Object.keys(validateRes).length);
+    if (Object.keys(validateRes).length === 0) {
+      signUp(username, email, password);
 
-    signUp(username, email, password);
-    usernameRef.current.value = "";
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
-    cnfpassRef.current.value = "";
-    navigate("/");
+      usernameRef.current.value = "";
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+      cnfpassRef.current.value = "";
+      navigate("/");
+    }
   };
 
   return (
@@ -51,13 +72,14 @@ const Signup = () => {
         <ImageUpload />
         <div className="form-group d-flex justify-content-start align-items-center">
           <PersonIcon sx={{ fontSize: 22 }} />
-
           <FormInput InputRef={usernameRef} placeholder="Name" />
+          <span>{error.username}</span>
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <EmailIcon sx={{ fontSize: 22 }} />
 
           <FormInput type="email" placeholder="Email" InputRef={emailRef} />
+          <span>{error.email}</span>
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <LockIcon sx={{ fontSize: 22 }} />
@@ -67,6 +89,7 @@ const Signup = () => {
             placeholder="Password"
             InputRef={passwordRef}
           />
+          <span>{error.password}</span>
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <LockIcon sx={{ fontSize: 22 }} />
@@ -76,6 +99,7 @@ const Signup = () => {
             placeholder="Confirm password"
             InputRef={cnfpassRef}
           />
+          <span>{error.confpass}</span>
         </div>
         <Button btnName="Create Profile" type="submit" />
         <p className=" mt-3 d-flex flex-column justify-content-center align-items-center">

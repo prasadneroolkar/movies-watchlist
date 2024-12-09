@@ -21,7 +21,8 @@ const Siderbar = () => {
         <Button
           btnName={
             <>
-              <AddSharpIcon sx={{ fontSize: 16 }} /> create watchlist
+              <AddSharpIcon sx={{ fontSize: 16 }} />{" "}
+              <Link to="/signup">create watchlist</Link>
             </>
           }
         />

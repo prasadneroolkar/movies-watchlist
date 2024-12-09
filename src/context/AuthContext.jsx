@@ -10,11 +10,11 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("currentUser")) || null;
     if (storedUser) setcurrentUser(storedUser);
-    console.log(storedUser);
+    // console.log(storedUser);
   }, []);
 
   const signUp = (username, email, password) => {
-    const users = JSON.parse(localStorage.getItem("userDetails")) || null;
+    const users = JSON.parse(localStorage.getItem("userDetails")) || [];
     console.log(users);
     if (users.find((user) => user.email === email)) {
       alert("user already existing");
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
     const newUser = { username, email, password };
     users.push(newUser);
     localStorage.setItem("userDetails", JSON.stringify(users));
-    console.log(newUser);
+    // console.log(newUser);
     setcurrentUser(newUser);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
   };
@@ -47,7 +47,6 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("currentUser");
     setcurrentUser(null);
-    navigate("/");
   };
 
   return (
