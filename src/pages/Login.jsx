@@ -6,9 +6,11 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import FormInput from "../components/Form/FormInput";
 import FormLayout from "../components/Form/FormLayout";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const emailRef = useRef();
   const passRef = useRef();
@@ -21,6 +23,7 @@ const Login = () => {
       alert("enter login details");
     }
     login(email, password);
+    navigate("/");
   };
 
   return (

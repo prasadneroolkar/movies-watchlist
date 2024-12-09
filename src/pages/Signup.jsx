@@ -11,39 +11,18 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const { signUp } = useContext(AuthContext);
-  const [error, setError] = useState({});
+  const { signUp, validateForm, error, setError } = useContext(AuthContext);
   const navigate = useNavigate();
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const cnfpassRef = useRef();
 
-  const validateForm = (username, email, password, confpass) => {
-    const errordata = {};
-
-    if (!username) {
-      errordata.username = "Title is required";
-    }
-
-    if (!email) {
-      errordata.email = "email is required";
-    }
-
-    if (!password) {
-      errordata.password = "password is required";
-    }
-
-    if (!confpass) {
-      errordata.confpass = "password is required";
-    } else {
-      if (password !== confpass) {
-        errordata.confpass = " password is donot match";
-      }
-    }
-
-    setError(errordata);
-    return errordata;
+  const handleInputChange = (field) => {
+    setError((prevError) => ({
+      ...prevError,
+      [field]: "", // Clear the error message for the specific field
+    }));
   };
 
   const onSubmit = (e) => {
@@ -56,8 +35,12 @@ const Signup = () => {
     const validateRes = validateForm(username, email, password, confirm);
     console.log(Object.keys(validateRes).length);
     if (Object.keys(validateRes).length === 0) {
-      signUp(username, email, password);
-
+      const signupRes = signUp(username, email, password);
+      console.log(signupRes);
+      if (signupRes === false) {
+        alert("Signup failed, please try again.");
+        return;
+      }
       usernameRef.current.value = "";
       emailRef.current.value = "";
       passwordRef.current.value = "";
@@ -72,7 +55,12 @@ const Signup = () => {
         <ImageUpload />
         <div className="form-group d-flex justify-content-start align-items-center">
           <PersonIcon sx={{ fontSize: 22 }} />
-          <FormInput InputRef={usernameRef} placeholder="Name" />
+          <FormInput
+            InputRef={usernameRef}
+            placeholder="Name"
+            onChange={() => handleInputChange("username")}
+          />
+
           <span>{error.username}</span>
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
