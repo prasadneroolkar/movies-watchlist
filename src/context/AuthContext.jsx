@@ -40,6 +40,8 @@ const AuthProvider = ({ children }) => {
       // alert("matched");
       localStorage.setItem("currentUser", JSON.stringify(matchedUser));
       setcurrentUser(matchedUser);
+    } else {
+      alert("Incorrect login password");
     }
   };
 
@@ -48,26 +50,24 @@ const AuthProvider = ({ children }) => {
     setcurrentUser(null);
   };
 
-  const validateForm = (username, email, password, confpass) => {
+  const validateForm = (fields) => {
     const errordata = {};
-
-    if (!username) {
+    if (fields.username !== undefined && !fields.username.trim()) {
       errordata.username = "Please enter name";
     }
 
-    if (!email) {
+    if (fields.email !== undefined && !fields.email.trim()) {
       errordata.email = "Please enter valid email";
     }
 
-    if (!password) {
+    if (fields.password !== undefined && !fields.password.trim()) {
       errordata.password = "Please enter password";
     }
-
-    if (!confpass) {
-      errordata.confpass = "Please enter password";
-    } else {
-      if (password !== confpass) {
-        errordata.confpass = " Password is donot match";
+    if (fields.confpass !== undefined) {
+      if (!fields.confpass.trim()) {
+        errordata.confpass = "Please confirm your password";
+      } else if (fields.password && fields.password !== fields.confpass) {
+        errordata.confpass = "Passwords do not match";
       }
     }
 

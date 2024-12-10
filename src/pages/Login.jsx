@@ -9,7 +9,7 @@ import FormLayout from "../components/Form/FormLayout";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { login, validateForm, error } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const emailRef = useRef();
@@ -19,11 +19,15 @@ const Login = () => {
     event.preventDefault();
     const email = emailRef.current.value.trim();
     const password = passRef.current.value.trim();
-    if (email == "" || password == "") {
-      alert("enter login details");
+    const validateres = validateForm({ email, password });
+    console.log(validateres);
+    console.log(Object.keys(validateres).length);
+    if (Object.keys(validateres).length === 0) {
+      login(email, password);
+      navigate("/");
     }
-    login(email, password);
-    navigate("/");
+
+    // login(email, password);
   };
 
   return (
@@ -32,6 +36,7 @@ const Login = () => {
         <div className="form-group d-flex justify-content-start align-items-center">
           <EmailIcon sx={{ fontSize: 22 }} />
           <FormInput type="email" placeholder="Email" InputRef={emailRef} />
+          <span>{error.email}</span>
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <LockIcon sx={{ fontSize: 22 }} />
@@ -40,6 +45,7 @@ const Login = () => {
             type="password"
             InputRef={passRef}
           />
+          <span>{error.password}</span>
         </div>
 
         <Button btnName="Sign in" type="submit" />

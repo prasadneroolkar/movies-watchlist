@@ -21,7 +21,7 @@ const Signup = () => {
   const handleInputChange = (field) => {
     setError((prevError) => ({
       ...prevError,
-      [field]: "", // Clear the error message for the specific field
+      [field]: "",
     }));
   };
 
@@ -32,7 +32,7 @@ const Signup = () => {
     const password = passwordRef.current.value;
     const confirm = cnfpassRef.current.value;
 
-    const validateRes = validateForm(username, email, password, confirm);
+    const validateRes = validateForm({ username, email, password, confirm });
     console.log(Object.keys(validateRes).length);
     if (Object.keys(validateRes).length === 0) {
       const signupRes = signUp(username, email, password);
@@ -66,7 +66,12 @@ const Signup = () => {
         <div className="form-group d-flex justify-content-start align-items-center">
           <EmailIcon sx={{ fontSize: 22 }} />
 
-          <FormInput type="email" placeholder="Email" InputRef={emailRef} />
+          <FormInput
+            type="email"
+            placeholder="Email"
+            InputRef={emailRef}
+            onChange={() => handleInputChange("email")}
+          />
           <span>{error.email}</span>
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
@@ -76,6 +81,7 @@ const Signup = () => {
             type="password"
             placeholder="Password"
             InputRef={passwordRef}
+            onChange={() => handleInputChange("password")}
           />
           <span>{error.password}</span>
         </div>
@@ -86,6 +92,7 @@ const Signup = () => {
             type="password"
             placeholder="Confirm password"
             InputRef={cnfpassRef}
+            onChange={() => handleInputChange("confpass")}
           />
           <span>{error.confpass}</span>
         </div>
