@@ -11,19 +11,13 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const { signUp, validateForm, error, setError } = useContext(AuthContext);
+  const { signUp, validateForm, error, setError, handleErrormsg } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const cnfpassRef = useRef();
-
-  const handleInputChange = (field) => {
-    setError((prevError) => ({
-      ...prevError,
-      [field]: "",
-    }));
-  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -58,7 +52,7 @@ const Signup = () => {
           <FormInput
             InputRef={usernameRef}
             placeholder="Name"
-            onChange={() => handleInputChange("username")}
+            onChange={() => handleErrormsg("username")}
           />
 
           <span>{error.username}</span>
@@ -70,7 +64,7 @@ const Signup = () => {
             type="email"
             placeholder="Email"
             InputRef={emailRef}
-            onChange={() => handleInputChange("email")}
+            onChange={() => handleErrormsg("email")}
           />
           <span>{error.email}</span>
         </div>
@@ -81,7 +75,7 @@ const Signup = () => {
             type="password"
             placeholder="Password"
             InputRef={passwordRef}
-            onChange={() => handleInputChange("password")}
+            onChange={() => handleErrormsg("password")}
           />
           <span>{error.password}</span>
         </div>
@@ -92,7 +86,7 @@ const Signup = () => {
             type="password"
             placeholder="Confirm password"
             InputRef={cnfpassRef}
-            onChange={() => handleInputChange("confpass")}
+            onChange={() => handleErrormsg("confpass")}
           />
           <span>{error.confpass}</span>
         </div>

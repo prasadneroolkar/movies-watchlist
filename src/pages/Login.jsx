@@ -9,11 +9,16 @@ import FormLayout from "../components/Form/FormLayout";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { login, validateForm, error } = useContext(AuthContext);
+  const { login, validateForm, error, handleErrormsg } =
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   const emailRef = useRef();
   const passRef = useRef();
+
+  // const onHandlechange = (field) => {
+  //   return handleErrormsg(field);
+  // };
 
   const onsubmit = () => {
     event.preventDefault();
@@ -23,8 +28,12 @@ const Login = () => {
     console.log(validateres);
     console.log(Object.keys(validateres).length);
     if (Object.keys(validateres).length === 0) {
-      login(email, password);
-      navigate("/");
+      const loggedIn = login(email, password);
+      if (loggedIn === false) {
+        return;
+      } else {
+        navigate("/");
+      }
     }
 
     // login(email, password);
@@ -35,7 +44,12 @@ const Login = () => {
       <FormLayout formname="Sign in" onAction={onsubmit}>
         <div className="form-group d-flex justify-content-start align-items-center">
           <EmailIcon sx={{ fontSize: 22 }} />
-          <FormInput type="email" placeholder="Email" InputRef={emailRef} />
+          <FormInput
+            type="email"
+            placeholder="Email"
+            InputRef={emailRef}
+            onChange={() => handleErrormsg("email")}
+          />
           <span>{error.email}</span>
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
@@ -44,6 +58,7 @@ const Login = () => {
             placeholder="Password"
             type="password"
             InputRef={passRef}
+            onChange={() => handleErrormsg("password")}
           />
           <span>{error.password}</span>
         </div>

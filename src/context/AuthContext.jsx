@@ -41,8 +41,10 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("currentUser", JSON.stringify(matchedUser));
       setcurrentUser(matchedUser);
     } else {
-      alert("Incorrect login password");
+      alert("Incorrect email and login password");
+      return false;
     }
+    return true;
   };
 
   const logout = () => {
@@ -75,6 +77,14 @@ const AuthProvider = ({ children }) => {
     return errordata;
   };
 
+  const handleErrormsg = (field) => {
+    setError((prevError) => ({
+      ...prevError,
+      [field]: "",
+    }));
+    // console.log(field);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -85,6 +95,7 @@ const AuthProvider = ({ children }) => {
         validateForm,
         error,
         setError,
+        handleErrormsg,
       }}
     >
       {children}
