@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import ImageUpload from "../components/Form/ImageUpload";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Signup = () => {
   const { signUp, validateForm, error, setError, handleErrormsg } =
@@ -19,12 +21,15 @@ const Signup = () => {
   const passwordRef = useRef();
   const cnfpassRef = useRef();
 
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [isConfpassVisible, setConfpassVisible] = useState(false);
+
   const onSubmit = (e) => {
     e.preventDefault();
     const username = usernameRef.current.value.trim();
     const email = emailRef.current.value.trim();
-    const password = passwordRef.current.value;
-    const confirm = cnfpassRef.current.value;
+    const password = passwordRef.current.value.trim();
+    const confirm = cnfpassRef.current.value.trim();
 
     const validateRes = validateForm({ username, email, password, confirm });
     console.log(Object.keys(validateRes).length);
@@ -72,22 +77,28 @@ const Signup = () => {
           <LockIcon sx={{ fontSize: 22 }} />
 
           <FormInput
-            type="password"
+            type={isPasswordVisible ? "text" : "password"}
             placeholder="Password"
             InputRef={passwordRef}
             onChange={() => handleErrormsg("password")}
           />
+          <p onClick={() => setPasswordVisible(!isPasswordVisible)}>
+            {isPasswordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          </p>
           <span>{error.password}</span>
         </div>
         <div className="form-group d-flex justify-content-start align-items-center">
           <LockIcon sx={{ fontSize: 22 }} />
 
           <FormInput
-            type="password"
+            type={isConfpassVisible ? "text" : "password"}
             placeholder="Confirm password"
             InputRef={cnfpassRef}
             onChange={() => handleErrormsg("confpass")}
           />
+          <p onClick={() => setConfpassVisible(!isConfpassVisible)}>
+            {isConfpassVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          </p>
           <span>{error.confpass}</span>
         </div>
         <Button btnName="Create Profile" type="submit" />

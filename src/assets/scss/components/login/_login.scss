@@ -66,20 +66,22 @@
           min-height: 16px;
           min-width: 16px;
 
-          // padding-left: 10px;
-          // &:focus {
-          //   border-color: #fff;
-          // }
+
+
+
+          &::placeholder {
+            color: transparent; // Hide placeholder text
+          }
+
+          &:focus+label,
+          &:not(:placeholder-shown)+label {
+            top: 8px;
+            font-size: 12px;
+            // color: #333;
+          }
         }
       }
 
-      :focus-within label,
-      input:not(:placeholder-shown)+label {
-        top: 8px;
-        font-size: 12px;
-
-        /* Optional: Change label color on focus */
-      }
 
       span {
 

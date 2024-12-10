@@ -7,18 +7,21 @@ import LockIcon from "@mui/icons-material/Lock";
 import FormInput from "../components/Form/FormInput";
 import FormLayout from "../components/Form/FormLayout";
 import { useNavigate } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const Login = () => {
   const { login, validateForm, error, handleErrormsg } =
     useContext(AuthContext);
   const navigate = useNavigate();
+  const [isVisible, setVisible] = useState(false);
 
   const emailRef = useRef();
   const passRef = useRef();
 
-  // const onHandlechange = (field) => {
-  //   return handleErrormsg(field);
-  // };
+  const handleVisibility = () => {
+    setVisible(!isVisible);
+  };
 
   const onsubmit = () => {
     event.preventDefault();
@@ -46,7 +49,7 @@ const Login = () => {
           <EmailIcon sx={{ fontSize: 22 }} />
           <FormInput
             type="email"
-            placeholder="Email"
+            Labelname="Email"
             InputRef={emailRef}
             onChange={() => handleErrormsg("email")}
           />
@@ -55,11 +58,14 @@ const Login = () => {
         <div className="form-group d-flex justify-content-start align-items-center">
           <LockIcon sx={{ fontSize: 22 }} />
           <FormInput
-            placeholder="Password"
-            type="password"
+            Labelname="Password"
+            type={isVisible ? "text" : "password"}
             InputRef={passRef}
             onChange={() => handleErrormsg("password")}
           />
+          <p onClick={handleVisibility}>
+            {isVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          </p>
           <span>{error.password}</span>
         </div>
 

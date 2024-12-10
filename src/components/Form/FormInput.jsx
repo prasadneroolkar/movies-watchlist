@@ -1,19 +1,13 @@
 import React from "react";
 
-const FormInput = ({
-  placeholder,
-  type = "text",
-  onChange,
-  value,
-  InputRef,
-}) => {
+const FormInput = ({ Labelname, type = "text", onChange, value, InputRef }) => {
   return (
     <>
       <div className="label_input">
-        <label htmlFor="">{placeholder}</label>
+        <label htmlFor="">{Labelname}</label>
         <input
           type={type}
-          // placeholder={placeholder}
+          placeholder=""
           value={value}
           onChange={onChange}
           ref={InputRef}
