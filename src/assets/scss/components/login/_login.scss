@@ -47,6 +47,7 @@
           position: absolute;
           z-index: 1;
           top: 16px;
+          left: 0;
           padding-left: 10px;
           text-overflow: ellipsis;
           transition-property: top, font-size, line-height;
@@ -65,20 +66,17 @@
           width: 100%;
           min-height: 16px;
           min-width: 16px;
+        }
 
+        input::placeholder {
+          color: transparent; // Hide placeholder text
+        }
 
-
-
-          &::placeholder {
-            color: transparent; // Hide placeholder text
-          }
-
-          &:focus+label,
-          &:not(:placeholder-shown)+label {
-            top: 8px;
-            font-size: 12px;
-            // color: #333;
-          }
+        input:focus+label,
+        input:not(:placeholder-shown)+label {
+          top: 8px;
+          font-size: 12px;
+          // color: #333;
         }
       }
 

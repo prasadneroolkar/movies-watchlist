@@ -56,7 +56,7 @@ const Signup = () => {
           <PersonIcon sx={{ fontSize: 22 }} />
           <FormInput
             InputRef={usernameRef}
-            placeholder="Name"
+            Labelname="Name"
             onChange={() => handleErrormsg("username")}
           />
 
@@ -67,7 +67,7 @@ const Signup = () => {
 
           <FormInput
             type="email"
-            placeholder="Email"
+            Labelname="Email"
             InputRef={emailRef}
             onChange={() => handleErrormsg("email")}
           />
@@ -78,7 +78,7 @@ const Signup = () => {
 
           <FormInput
             type={isPasswordVisible ? "text" : "password"}
-            placeholder="Password"
+            Labelname="Password"
             InputRef={passwordRef}
             onChange={() => handleErrormsg("password")}
           />
@@ -92,7 +92,7 @@ const Signup = () => {
 
           <FormInput
             type={isConfpassVisible ? "text" : "password"}
-            placeholder="Confirm password"
+            Labelname="Confirm password"
             InputRef={cnfpassRef}
             onChange={() => handleErrormsg("confpass")}
           />
