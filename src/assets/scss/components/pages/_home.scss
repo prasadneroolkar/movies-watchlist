@@ -1,0 +1,22 @@
+section.home-message {
+  border-radius: 8px;
+  border: 1px solid $ruby-red;
+  padding: 20px 20px 30px;
+  background-color: #2c2c2c;
+
+  h1 {
+    color: $text-color;
+    margin-bottom: 35px;
+
+    span {
+      color: $primary-color
+    }
+  }
+
+  p {
+
+    font-weight: normal;
+    padding-bottom: 10px;
+  }
+
+}

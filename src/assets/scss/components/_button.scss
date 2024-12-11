@@ -8,4 +8,11 @@ button.btn_create {
   padding: 11px 0px;
   font-weight: 700;
   min-width: 241px;
+  font-size: 16px;
+  line-height: 19px;
+
+  a {
+    color: $magic-black;
+
+  }
 }
