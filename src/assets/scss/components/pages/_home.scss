@@ -20,3 +20,27 @@ section.home-message {
   }
 
 }
+
+section.search_box_2 {
+  display: flex;
+  margin-top: 40px;
+  margin-bottom: 35PX;
+
+  .search_box {
+    width: 100%;
+    justify-content: start !important;
+
+    input {
+      width: 100%;
+    }
+  }
+}
+
+section.movies_section {
+  h2 {
+    font-size: 32px;
+    line-height: 38px;
+    color: $text-color;
+    margin-bottom: 35px;
+  }
+}

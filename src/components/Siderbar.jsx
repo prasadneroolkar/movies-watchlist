@@ -16,7 +16,7 @@ const Siderbar = () => {
     <>
       <aside className="sidebar">
         <h1>watchlist</h1>
-        <Searchbar />
+        <Searchbar placeholder="Search" />
         <Menu />
         <Button
           btnName={
