@@ -11,9 +11,11 @@ export const api = async () => {
       },
     });
     const res = await response;
-    console.log("Full Response:", res);
+    console.log("Full Response:", res.data.Search);
+    return res.data.Search;
   } catch (error) {
     console.log("api errors:", error.message);
+    return [];
   }
 };
 // api();

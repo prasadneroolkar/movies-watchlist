@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 
 const Siderbar = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
   return (
     <>
       <aside className="sidebar">

@@ -8,13 +8,11 @@ import { api } from "../services/api";
 const Home = () => {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
-    const fetchMovies = async () => {
-      const movieData = await api();
-      setMovies(movieData);
-      console.log(movieData); // Set movies or empty array if no data
+    const fetchApi = async () => {
+      const fetchMovies = await api();
+      setMovies(fetchMovies);
     };
-
-    fetchMovies();
+    // fetchApi();
   }, []);
   return (
     <>
@@ -37,18 +35,17 @@ const Home = () => {
       </section>
       <section className="movies_section">
         <h2>Popular movies right now</h2>
-        <div>
-          {movies.map((movie) => (
-            <div className="card" key={movie.id}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                className="card-img-top"
-                alt={movie.title}
-              />
-              <h5 className="card-title">{movie.title}</h5>
-            </div>
-          ))}
+
+        {/* {movies.length === 0 ? (
+          <p>No movies found.</p>
+        ) : (
+          movies.map((movie) => ( */}
+        <div className="card">
+          <img src="" className="card-img-top" alt="Movie poster" />
+          <h5 className="card-title">Title</h5>
         </div>
+        {/* ))
+        )} */}
       </section>
     </>
   );
