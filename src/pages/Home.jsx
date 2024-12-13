@@ -12,7 +12,7 @@ const Home = () => {
       const fetchMovies = await api();
       setMovies(fetchMovies);
     };
-    // fetchApi();
+    fetchApi();
   }, []);
   return (
     <>
@@ -35,17 +35,29 @@ const Home = () => {
       </section>
       <section className="movies_section">
         <h2>Popular movies right now</h2>
+        <div className="d-flex column-gap-2">
+          {movies.length === 0 ? (
+            <p>No movies found.</p>
+          ) : (
+            movies.map((movie) => (
+              <div className="mov_card" key={movie.imdbID}>
+                <span>
+                  <img src="/images/ribbon2.png" alt="ribbon" />
+                </span>
+                <img
+                  src={movie.Poster}
+                  className="card-img-top"
+                  alt={movie.Tite}
+                />
 
-        {/* {movies.length === 0 ? (
-          <p>No movies found.</p>
-        ) : (
-          movies.map((movie) => ( */}
-        <div className="card">
-          <img src="" className="card-img-top" alt="Movie poster" />
-          <h5 className="card-title">Title</h5>
+                <h5 className="card-title">
+                  {movie.Title}
+                  <span>({movie.Year})</span>
+                </h5>
+              </div>
+            ))
+          )}
         </div>
-        {/* ))
-        )} */}
       </section>
     </>
   );
