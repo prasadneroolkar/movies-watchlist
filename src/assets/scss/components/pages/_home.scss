@@ -45,6 +45,7 @@ section.movies_section {
   }
 
   .mov_card {
+    overflow: hidden;
     position: relative;
     min-width: 150px;
     min-height: 320px;

@@ -14,6 +14,7 @@ const Home = () => {
     };
     fetchApi();
   }, []);
+
   return (
     <>
       <section className="home-message">

@@ -8,6 +8,7 @@ export const api = async () => {
       params: {
         apikey: apiKey,
         s: "top",
+        plot: "full",
       },
     });
     const res = await response;
