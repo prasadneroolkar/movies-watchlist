@@ -18,7 +18,7 @@ const Slider = () => {
     fetchApi();
   }, []);
 
-  // console.log("movies array", movies);
+  console.log("movies array", movies);
   // const newMovies = movies.slice(prev, next);
   // console.log(newMovies);
 
@@ -54,7 +54,7 @@ const Slider = () => {
         <button className="carousel-btn prev" onClick={onPrev}>
           &#8249;
         </button>
-        <div className="d-flex card-main">
+        <div className="card-main">
           {movies.length === 0 ? (
             <p>No movies found.</p>
           ) : (

@@ -37,7 +37,6 @@ section.search_box_2 {
 }
 
 section.movies_section {
-  overflow-x: hidden;
 
   h2 {
     font-size: 32px;
@@ -50,10 +49,11 @@ section.movies_section {
     position: relative;
     column-gap: 60px;
     overflow: hidden;
+    display: flex;
     // scroll-snap-type: x proximity;
 
     .mov_card {
-      flex: 0 0 calc(100% / 6 - 10px);
+      // flex: 0 0 calc(100% / 6 - 10px);
       position: relative;
       min-width: 150px;
       min-height: 320px;
