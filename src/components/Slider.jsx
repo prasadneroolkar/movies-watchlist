@@ -6,8 +6,8 @@ import { api } from "../services/api";
 const Slider = () => {
   const { boxRef } = useOutletContext();
   const [movies, setMovies] = useState([]);
-  // const [prev, setPrev] = useState(0);
-  // const [next, setNext] = useState(5);
+  const [prev, setPrev] = useState(0);
+  const [next, setNext] = useState(5);
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -19,33 +19,25 @@ const Slider = () => {
   }, []);
 
   console.log("movies array", movies);
-  // const newMovies = movies.slice(prev, next);
+  const newMovies = movies.slice(prev, next);
   // console.log(newMovies);
 
   const onPrev = () => {
     console.log("prev buttn");
-    if (boxRef.current) {
-      const width = boxRef.current.clientWidth;
-      boxRef.current.scrollLeft -= width;
-      console.log("Scrolled left by:", width);
+
+    if (prev !== 0 || prev < -1) {
+      setPrev((prev) => prev - 5);
+      setNext((next) => next - 5);
     }
-    // if (prev !== 0 || prev < -1) {
-    //   setPrev((prev) => prev - 5);
-    //   setNext((next) => next - 5);
-    // }
   };
 
   const onNext = () => {
     console.log("next buttn");
-    if (boxRef.current) {
-      const width = boxRef.current.clientWidth;
-      boxRef.current.scrollLeft += width;
-      console.log("Scrolled right by:", width);
+
+    if (next < movies.length) {
+      setNext((next) => next + 5);
+      setPrev((prev) => prev + 5);
     }
-    // if (next < movies.length) {
-    //   setNext((next) => next + 5);
-    //   setPrev((prev) => prev + 5);
-    // }
   };
   return (
     <>
@@ -58,7 +50,7 @@ const Slider = () => {
           {movies.length === 0 ? (
             <p>No movies found.</p>
           ) : (
-            movies.map((movie) => (
+            newMovies.map((movie) => (
               <div className="mov_card" key={movie.imdbID}>
                 <span>
                   <img src="/images/ribbon2.png" alt="ribbon" />
