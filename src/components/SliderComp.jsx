@@ -3,11 +3,12 @@ import { useOutletContext } from "react-router-dom";
 import Slider from "react-slick";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-
 import { api } from "../services/api";
+import SliderArrow from "./Slider/SliderArrow";
 
 const SliderComp = () => {
   const [movies, setMovies] = useState([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
   // const [prev, setPrev] = useState(0);
   // const [next, setNext] = useState(5);
 
@@ -27,15 +28,17 @@ const SliderComp = () => {
     // centerPadding: "60px",
     // centerMode: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 5.5,
     slidesToScroll: 5,
-    nextArrow: <KeyboardArrowRightIcon />,
-    prevArrow: <KeyboardArrowLeftIcon />,
+    nextArrow: <SliderArrow arrowBtn={<KeyboardArrowRightIcon />} />,
+
+    prevArrow: <SliderArrow arrowBtn={<KeyboardArrowLeftIcon />} />,
+    // afterChange: (index) => setCurrentSlide(index), // Track current slide index
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 3.5,
           slidesToScroll: 3,
           infinite: true,
           dots: true,
@@ -44,7 +47,7 @@ const SliderComp = () => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 2.5,
           slidesToScroll: 2,
           initialSlide: 2,
         },
@@ -52,12 +55,16 @@ const SliderComp = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1.1,
           slidesToScroll: 1,
         },
       },
     ],
   };
+  // const isLastSlide =
+  //   currentSlide >= movies.length - Math.ceil(settings.slidesToShow);
+
+  // console.log("last slide", isLastSlide);
 
   // const newMovies = movies.slice(prev, next);
   // console.log(newMovies);
@@ -83,7 +90,7 @@ const SliderComp = () => {
     <>
       <section className="movies_section">
         <h2>Popular movies right now</h2>
-
+        <h2>Current Slide: {currentSlide}</h2> {/* Display it here */}
         <div className="slider-container card-main">
           {movies.length === 0 ? (
             <p>No movies found.</p>

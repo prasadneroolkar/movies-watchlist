@@ -35,5 +35,49 @@ section.main {
 .slick-track {
   display: flex;
   justify-content: start;
-  column-gap: 60px;
+  column-gap: 30px;
+}
+
+.slick-list {
+  margin: 0 -10px;
+}
+
+.slick-slide {
+  padding: 0 10px;
+  /* Adds spacing between slides */
+}
+
+.slick-slider {
+  position: relative;
+}
+
+button.slick-arrow {
+  height: 500px;
+  position: absolute;
+  transform: translate(0, -50%);
+  top: 50%;
+  z-index: 1;
+  background-color: rgba(0, 5, 13, .5);
+  filter: grayscale(.1);
+  border: none;
+  outline: none;
+  transition: color .3s ease-in-out;
+
+  svg {
+    color: white;
+
+    &:hover {
+      transform: scale(2);
+    }
+  }
+
+  &.slick-next {
+    right: 0
+  }
+
+  &.slick-disabled {
+    display: none;
+  }
+
+
 }
