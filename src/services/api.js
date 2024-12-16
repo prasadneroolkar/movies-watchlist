@@ -7,7 +7,7 @@ export const api = async () => {
     const response = axios.get(url, {
       params: {
         apikey: apiKey,
-        s: "last",
+        s: "top",
         plot: "full",
       },
     });

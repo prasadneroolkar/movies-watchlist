@@ -52,7 +52,8 @@ section.main {
 }
 
 button.slick-arrow {
-  height: 500px;
+  height: 100%;
+  width: calc(100% - 1000px);
   position: absolute;
   transform: translate(0, -50%);
   top: 50%;
@@ -66,8 +67,11 @@ button.slick-arrow {
   svg {
     color: white;
 
+    height: 100%;
+    width: 100%;
+
     &:hover {
-      transform: scale(2);
+      transform: scale(1.2);
     }
   }
 

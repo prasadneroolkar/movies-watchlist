@@ -30,9 +30,13 @@ const SliderComp = () => {
     speed: 500,
     slidesToShow: 5.5,
     slidesToScroll: 5,
-    nextArrow: <SliderArrow arrowBtn={<KeyboardArrowRightIcon />} />,
+    nextArrow: (
+      <SliderArrow arrowBtn={<KeyboardArrowRightIcon fontSize="small" />} />
+    ),
 
-    prevArrow: <SliderArrow arrowBtn={<KeyboardArrowLeftIcon />} />,
+    prevArrow: (
+      <SliderArrow arrowBtn={<KeyboardArrowLeftIcon fontSize="small" />} />
+    ),
     // afterChange: (index) => setCurrentSlide(index), // Track current slide index
     responsive: [
       {
@@ -90,7 +94,7 @@ const SliderComp = () => {
     <>
       <section className="movies_section">
         <h2>Popular movies right now</h2>
-        <h2>Current Slide: {currentSlide}</h2> {/* Display it here */}
+
         <div className="slider-container card-main">
           {movies.length === 0 ? (
             <p>No movies found.</p>
