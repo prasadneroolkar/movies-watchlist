@@ -3,7 +3,7 @@ import ribbon from "/images/ribbon.png";
 import tick from "/images/tick.png";
 import Searchbar from "../components/Searchbar";
 import Button from "../components/Button";
-import Slider from "../components/Slider";
+import SliderComp from "../components/SliderComp";
 
 const Home = () => {
   return (
@@ -25,7 +25,7 @@ const Home = () => {
         <Searchbar placeholder="Search for movies by title" />
         <Button btnName="search"></Button>
       </section>
-      <Slider />
+      <SliderComp />
     </>
   );
 };

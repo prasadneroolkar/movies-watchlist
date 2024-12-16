@@ -31,3 +31,9 @@ section.main {
   min-height: 100vh;
   // padding: 50px 60px 20px;
 }
+
+.slick-track {
+  display: flex;
+  justify-content: start;
+  column-gap: 60px;
+}
