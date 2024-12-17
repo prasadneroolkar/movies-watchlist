@@ -9,25 +9,22 @@ import MoviesSkimmer from "./MoviesSkimmer";
 
 const SliderComp = () => {
   const [movies, setMovies] = useState([]);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  // const [prev, setPrev] = useState(0);
-  // const [next, setNext] = useState(5);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchApi = async () => {
       console.log("useeffect called");
+      setLoading(true);
       const fetchMovies = await api();
       setMovies(fetchMovies);
+      setLoading(false);
     };
     fetchApi();
   }, []);
   let settings = {
-    // className: "center",
     dots: false,
     infinite: false,
     lazyLoad: true,
-    // centerPadding: "60px",
-    // centerMode: true,
+
     speed: 500,
     slidesToShow: 5.5,
     slidesToScroll: 5,
@@ -38,7 +35,7 @@ const SliderComp = () => {
     prevArrow: (
       <SliderArrow arrowBtn={<KeyboardArrowLeftIcon fontSize="small" />} />
     ),
-    // afterChange: (index) => setCurrentSlide(index), // Track current slide index
+
     responsive: [
       {
         breakpoint: 1024,
@@ -66,66 +63,38 @@ const SliderComp = () => {
       },
     ],
   };
-  // const isLastSlide =
-  //   currentSlide >= movies.length - Math.ceil(settings.slidesToShow);
 
-  // console.log("last slide", isLastSlide);
-
-  // const newMovies = movies.slice(prev, next);
-  // console.log(newMovies);
-
-  // const onPrev = () => {
-  //   console.log("prev buttn");
-
-  //   if (prev !== 0 || prev < -1) {
-  //     setPrev((prev) => prev - 5);
-  //     setNext((next) => next - 5);
-  //   }
-  // };
-
-  // const onNext = () => {
-  //   console.log("next buttn");
-
-  //   if (next < movies.length) {
-  //     setNext((next) => next + 5);
-  //     setPrev((prev) => prev + 5);
-  //   }
-  // };
   return (
     <>
       <section className="movies_section">
         <h2>Popular movies right now</h2>
 
         <div className="slider-container card-main">
-          {/* {movies.length === 0 ? (
+          {loading ? (
+            <MoviesSkimmer />
+          ) : movies.length === 0 ? (
             <p>No movies found.</p>
-          ) : ( */}
-          <Slider {...settings}>
-            {movies.map((movie) => (
-              <div className="mov_card" key={movie.imdbID}>
-                {movie ? (
-                  <>
-                    <span>
-                      <img src="/images/ribbon2.png" alt="ribbon" />
-                    </span>
-                    <img
-                      src={movie.Poster}
-                      className="card-img-top"
-                      alt={movie.Tite}
-                    />
-                  </>
-                ) : (
-                  <MoviesSkimmer />
-                )}
+          ) : (
+            <Slider {...settings}>
+              {movies.map((movie) => (
+                <div className="mov_card" key={movie.imdbID}>
+                  <span>
+                    <img src="/images/ribbon2.png" alt="ribbon" />
+                  </span>
+                  <img
+                    src={movie.Poster}
+                    className="card-img-top"
+                    alt={movie.Title}
+                  />
 
-                <h5 className="card-title">
-                  {movie.Title}
-                  <span>({movie.Year})</span>
-                </h5>
-              </div>
-            ))}
-          </Slider>
-          {/* )} */}
+                  <h5 className="card-title">
+                    {movie.Title}
+                    <span>({movie.Year})</span>
+                  </h5>
+                </div>
+              ))}
+            </Slider>
+          )}
         </div>
       </section>
     </>
