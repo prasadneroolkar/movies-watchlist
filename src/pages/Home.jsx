@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, lazy, Suspense } from "react";
 import ribbon from "/images/ribbon.png";
 import tick from "/images/tick.png";
 import Searchbar from "../components/Searchbar";
 import Button from "../components/Button";
-import SliderComp from "../components/SliderComp";
+
+const SliderComp = lazy(() => import("../components/SliderComp"));
 
 const Home = () => {
   return (
@@ -25,7 +26,9 @@ const Home = () => {
         <Searchbar placeholder="Search for movies by title" />
         <Button btnName="search"></Button>
       </section>
-      <SliderComp />
+      <Suspense fallback={""}>
+        <SliderComp />
+      </Suspense>
     </>
   );
 };

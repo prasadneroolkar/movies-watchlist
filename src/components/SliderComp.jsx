@@ -5,6 +5,7 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { api } from "../services/api";
 import SliderArrow from "./Slider/SliderArrow";
+import MoviesSkimmer from "./MoviesSkimmer";
 
 const SliderComp = () => {
   const [movies, setMovies] = useState([]);
@@ -96,29 +97,35 @@ const SliderComp = () => {
         <h2>Popular movies right now</h2>
 
         <div className="slider-container card-main">
-          {movies.length === 0 ? (
+          {/* {movies.length === 0 ? (
             <p>No movies found.</p>
-          ) : (
-            <Slider {...settings}>
-              {movies.map((movie) => (
-                <div className="mov_card" key={movie.imdbID}>
-                  <span>
-                    <img src="/images/ribbon2.png" alt="ribbon" />
-                  </span>
-                  <img
-                    src={movie.Poster}
-                    className="card-img-top"
-                    alt={movie.Tite}
-                  />
+          ) : ( */}
+          <Slider {...settings}>
+            {movies.map((movie) => (
+              <div className="mov_card" key={movie.imdbID}>
+                {movie ? (
+                  <>
+                    <span>
+                      <img src="/images/ribbon2.png" alt="ribbon" />
+                    </span>
+                    <img
+                      src={movie.Poster}
+                      className="card-img-top"
+                      alt={movie.Tite}
+                    />
+                  </>
+                ) : (
+                  <MoviesSkimmer />
+                )}
 
-                  <h5 className="card-title">
-                    {movie.Title}
-                    <span>({movie.Year})</span>
-                  </h5>
-                </div>
-              ))}
-            </Slider>
-          )}
+                <h5 className="card-title">
+                  {movie.Title}
+                  <span>({movie.Year})</span>
+                </h5>
+              </div>
+            ))}
+          </Slider>
+          {/* )} */}
         </div>
       </section>
     </>
