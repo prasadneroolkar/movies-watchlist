@@ -3,7 +3,6 @@ import Skeleton from "@mui/material/Skeleton";
 
 const MoviesSkimmer = () => {
   const SkimArray = Array.from({ length: 5 });
-  console.log(SkimArray);
 
   return (
     <div className="skimmer_cls">
