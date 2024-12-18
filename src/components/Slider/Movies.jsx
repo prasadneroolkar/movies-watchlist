@@ -5,7 +5,6 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { api } from "../../services/api";
 import SliderArrow from "./SliderArrow";
-import MoviesSkimmer from "../MoviesSkimmer";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
