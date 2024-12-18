@@ -5,16 +5,25 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { api } from "../../services/api";
 import SliderArrow from "./SliderArrow";
+import MoviesSkimmer from "../MoviesSkimmer";
 
 const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); // To track errors (e.g., too many results)
   useEffect(() => {
     const fetchApi = async (query) => {
-      console.log("useeffect called");
       setLoading(true);
+      setError(null); // Reset error state before fetching
+
       const fetchMovies = await api(query);
-      setMovies(fetchMovies);
+      if (!fetchMovies) {
+        setError(
+          "No movies found or too many results. Try refining your search."
+        );
+      } else {
+        setMovies(fetchMovies);
+      }
       setLoading(false);
     };
     fetchApi(movSrch);
@@ -68,7 +77,11 @@ const Movies = ({ movSrch }) => {
 
   return (
     <div className="slider-container card-main">
-      {movies.length === 0 ? (
+      {loading ? (
+        <MoviesSkimmer />
+      ) : error ? (
+        <p>{error}</p>
+      ) : movies.length === 0 ? (
         <p>No movies found.</p>
       ) : (
         <Slider {...settings}>

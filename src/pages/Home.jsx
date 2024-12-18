@@ -9,7 +9,14 @@ const Home = () => {
   const [srchMov, setSrchmov] = useState("");
 
   const handleSearch = (e) => {
-    setSrchmov(e.target.value.trim());
+    if (e.target.value.trim() === "") {
+      setSrchmov("top");
+    }
+  };
+  const handleKeypress = (e) => {
+    if (e.key === "Enter") {
+      setSrchmov(e.target.value.trim());
+    }
   };
   return (
     <>
@@ -30,6 +37,7 @@ const Home = () => {
         <Searchbar
           placeholder="Search for movies by title"
           onChange={handleSearch}
+          onKeyDown={handleKeypress}
         />
         <Button btnName="search"></Button>
       </section>
