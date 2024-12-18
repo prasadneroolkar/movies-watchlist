@@ -4,6 +4,7 @@ import tick from "/images/tick.png";
 import Searchbar from "../components/Searchbar";
 import Button from "../components/Button";
 import SliderComp from "../components/SliderComp";
+import { api } from "../services/api";
 
 const Home = () => {
   const [srchMov, setSrchmov] = useState("");
@@ -17,6 +18,9 @@ const Home = () => {
     if (e.key === "Enter") {
       setSrchmov(e.target.value.trim());
     }
+  };
+  const onhandleClick = (e) => {
+    console.log("clicked");
   };
   return (
     <>
@@ -39,7 +43,7 @@ const Home = () => {
           onChange={handleSearch}
           onKeyDown={handleKeypress}
         />
-        <Button btnName="search"></Button>
+        <Button btnName="search" onClick={onhandleClick}></Button>
       </section>
 
       <SliderComp search={srchMov} />

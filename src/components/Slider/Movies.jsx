@@ -29,8 +29,6 @@ const Movies = ({ movSrch }) => {
     fetchApi(movSrch);
   }, [movSrch]);
 
-  console.log(movSrch);
-
   let settings = {
     dots: false,
     infinite: false,

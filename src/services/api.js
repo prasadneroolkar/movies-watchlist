@@ -9,7 +9,6 @@ export const api = async (searchQry) => {
     );
     console.log("response", response);
     const res = await response;
-    console.log("response", res);
     console.log("Full Response:", res.data.Search);
     return res.data.Search;
   } catch (error) {
