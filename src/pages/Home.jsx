@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ribbon from "/images/ribbon.png";
 import tick from "/images/tick.png";
 import Searchbar from "../components/Searchbar";
@@ -6,6 +6,11 @@ import Button from "../components/Button";
 import SliderComp from "../components/SliderComp";
 
 const Home = () => {
+  const [srchMov, setSrchmov] = useState("");
+
+  const handleSearch = (e) => {
+    setSrchmov(e.target.value.trim());
+  };
   return (
     <>
       <section className="home-message">
@@ -22,10 +27,14 @@ const Home = () => {
         </p>
       </section>
       <section className="search_box_2">
-        <Searchbar placeholder="Search for movies by title" />
+        <Searchbar
+          placeholder="Search for movies by title"
+          onChange={handleSearch}
+        />
         <Button btnName="search"></Button>
       </section>
-      <SliderComp />
+
+      <SliderComp search={srchMov} />
     </>
   );
 };

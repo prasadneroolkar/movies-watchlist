@@ -3,7 +3,7 @@ import MoviesSkimmer from "./MoviesSkimmer";
 
 const Movies = lazy(() => import("./Slider/Movies"));
 
-const SliderComp = () => {
+const SliderComp = ({ search }) => {
   return (
     <>
       <section className="movies_section">
@@ -15,7 +15,7 @@ const SliderComp = () => {
             </div>
           }
         >
-          <Movies />
+          <Movies movSrch={search} />
         </Suspense>
       </section>
     </>

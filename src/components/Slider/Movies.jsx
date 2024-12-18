@@ -6,20 +6,21 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { api } from "../../services/api";
 import SliderArrow from "./SliderArrow";
 
-const Movies = () => {
+const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const fetchApi = async () => {
+    const fetchApi = async (query) => {
       console.log("useeffect called");
       setLoading(true);
-      const fetchMovies = await api();
+      const fetchMovies = await api(query);
       setMovies(fetchMovies);
       setLoading(false);
     };
-    fetchApi();
-  }, []);
-  console.log("movies", movies);
+    fetchApi(movSrch);
+  }, [movSrch]);
+
+  console.log(movSrch);
 
   let settings = {
     dots: false,
