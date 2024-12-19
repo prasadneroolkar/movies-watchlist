@@ -8,19 +8,23 @@ import { api } from "../services/api";
 
 const Home = () => {
   const [srchMov, setSrchmov] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  console.log(srchMov);
 
   const handleSearch = (e) => {
     if (e.target.value.trim() === "") {
       setSrchmov("top");
     }
+    setInputValue(e.target.value.trim());
   };
   const handleKeypress = (e) => {
     if (e.key === "Enter") {
       setSrchmov(e.target.value.trim());
     }
   };
-  const onhandleClick = (e) => {
-    console.log("clicked");
+  const onhandleClick = () => {
+    setSrchmov(inputValue.trim());
+    console.log(inputValue);
   };
   return (
     <>
@@ -39,6 +43,7 @@ const Home = () => {
       </section>
       <section className="search_box_2">
         <Searchbar
+          value={inputValue}
           placeholder="Search for movies by title"
           onChange={handleSearch}
           onKeyDown={handleKeypress}
