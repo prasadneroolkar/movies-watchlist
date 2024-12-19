@@ -12,18 +12,18 @@ const Home = () => {
   console.log(srchMov);
 
   const handleSearch = (e) => {
-    if (e.target.value.trim() === "") {
+    if (e.target.value === "") {
       setSrchmov("top");
     }
-    setInputValue(e.target.value.trim());
+    setInputValue(e.target.value);
   };
   const handleKeypress = (e) => {
     if (e.key === "Enter") {
-      setSrchmov(e.target.value.trim());
+      setSrchmov(e.target.value);
     }
   };
   const onhandleClick = () => {
-    setSrchmov(inputValue.trim());
+    setSrchmov(inputValue);
     console.log(inputValue);
   };
   return (
