@@ -1,0 +1,35 @@
+.simpleForm {
+
+  form {
+    .fields {
+      color: $text-color;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+
+      label {
+        font-size: 18px;
+        line-height: 22px;
+        margin-bottom: 5px;
+      }
+
+      input {
+        min-height: 45px;
+      }
+
+      textarea {
+        min-height: 126px;
+
+      }
+
+      input,
+      textarea {
+        border: 1px solid #ffffff;
+        border-radius: 6px;
+        background-color: transparent;
+        color: $text-color;
+
+      }
+    }
+  }
+}
