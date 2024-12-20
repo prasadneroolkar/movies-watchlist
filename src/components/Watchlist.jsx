@@ -8,7 +8,7 @@ const Watchlist = () => {
       <p>My lists</p>
       <ul>
         <li>
-          <Link>
+          <Link to="watchlist" target="_blank">
             <img src={mwatchlist} alt="" />
             Movies by Tom Cruise
           </Link>
