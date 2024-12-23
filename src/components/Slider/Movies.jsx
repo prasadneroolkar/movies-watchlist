@@ -6,6 +6,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { api } from "../../services/api";
 import SliderArrow from "./SliderArrow";
 import MoviesSkimmer from "../MoviesSkimmer";
+import Addlist from "../../assets/scss/components/modal/Addlist";
 
 const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
@@ -85,9 +86,11 @@ const Movies = ({ movSrch }) => {
         <Slider {...settings}>
           {movies.map((movie) => (
             <div className="mov_card" key={movie.imdbID}>
-              <span>
-                <img src="/images/ribbon2.png" alt="ribbon" />
-              </span>
+              <Addlist>
+                <span>
+                  <img src="/images/ribbon2.png" alt="ribbon" />
+                </span>
+              </Addlist>
               <img
                 src={movie.Poster}
                 className="card-img-top"
