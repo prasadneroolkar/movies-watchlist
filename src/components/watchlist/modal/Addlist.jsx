@@ -1,14 +1,16 @@
 import { useState } from "react";
 
-const Addlist = ({ children }) => {
-  const [menuVisible, setMenuvisible] = useState(false);
-  const [menuPosition, setMenuposition] = useState({ x: 0, y: 0 });
-
+const Addlist = ({
+  children,
+  menuPosition,
+  menuVisible,
+  onClickOutside,
+  onToggleMenu,
+}) => {
   const handleContext = (e) => {
-    e.preventDefault();
-    setMenuposition({ x: e.pageX, y: e.pageY });
-    setMenuvisible(true);
-    console.log("clicked");
+    // e.preventDefault();
+    e.stopPropagation();
+    onToggleMenu(e.pageX, e.pageY);
   };
 
   // const handleClick = () => {

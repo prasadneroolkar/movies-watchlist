@@ -12,6 +12,10 @@ const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); // To track errors (e.g., too many results)
+  const [menuVisible, setMenuvisible] = useState(false);
+  const [menuPosition, setMenuposition] = useState({ x: 0, y: 0 });
+  const [activeCard, setActiveCard] = useState(null);
+
   useEffect(() => {
     const fetchApi = async (query) => {
       setLoading(true);
@@ -74,8 +78,26 @@ const Movies = ({ movSrch }) => {
     ],
   };
 
+  const handleClose = () => {
+    setMenuvisible(false);
+    setActiveCard(null);
+  };
+
+  const handleToggleMenu = (id, x, y) => {
+    if (activeCard === id) {
+      console.log(activeCard, id);
+      setMenuvisible(false);
+      setActiveCard(null);
+    } else {
+      setMenuposition({ x, y });
+      setMenuvisible(true);
+      setActiveCard(id);
+      console.log("after", activeCard, id);
+    }
+  };
+
   return (
-    <div className="slider-container card-main">
+    <div className="slider-container card-main" onClick={handleClose}>
       {loading ? (
         <MoviesSkimmer />
       ) : error ? (
@@ -87,7 +109,12 @@ const Movies = ({ movSrch }) => {
           <Slider {...settings}>
             {movies.map((movie) => (
               <div className="mov_card" key={movie.imdbID}>
-                <Addlist>
+                <Addlist
+                  menuPosition={menuPosition}
+                  menuVisible={menuVisible && activeCard === movie.imdbID}
+                  onClickOutside={handleClose}
+                  onToggleMenu={(x, y) => handleToggleMenu(movie.imdbID, x, y)}
+                >
                   <span>
                     <img src="/images/ribbon2.png" alt="ribbon" />
                   </span>
