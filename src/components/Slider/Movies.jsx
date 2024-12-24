@@ -112,7 +112,6 @@ const Movies = ({ movSrch }) => {
                 <Addlist
                   menuPosition={menuPosition}
                   menuVisible={menuVisible && activeCard === movie.imdbID}
-                  onClickOutside={handleClose}
                   onToggleMenu={(x, y) => handleToggleMenu(movie.imdbID, x, y)}
                 >
                   <span>
