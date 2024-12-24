@@ -29,3 +29,35 @@
     }
   }
 }
+
+.contextClass {
+  position: relative;
+
+  ul {
+    position: absolute;
+    // top: menuPosition.y,
+    // left: menuPosition.x,
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    list-style: none;
+    background-color: #161616;
+    max-height: calc(100vh - 24px);
+    max-width: 350px;
+    min-width: 160px;
+    overflow-y: auto;
+
+    li {
+      color: $text-color;
+      padding: 5px 10px;
+      cursor: pointer;
+
+      // border-bottom: 1px solid;
+      &:first-child {
+        border-bottom: 1px solid;
+      }
+
+    }
+
+
+  }
+}

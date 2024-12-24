@@ -6,7 +6,7 @@ import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { api } from "../../services/api";
 import SliderArrow from "./SliderArrow";
 import MoviesSkimmer from "../MoviesSkimmer";
-import Addlist from "../../assets/scss/components/modal/Addlist";
+import Addlist from "../watchlist/modal/Addlist";
 
 const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
@@ -83,27 +83,30 @@ const Movies = ({ movSrch }) => {
       ) : movies.length === 0 ? (
         <p>No movies found.</p>
       ) : (
-        <Slider {...settings}>
-          {movies.map((movie) => (
-            <div className="mov_card" key={movie.imdbID}>
-              <Addlist>
-                <span>
-                  <img src="/images/ribbon2.png" alt="ribbon" />
-                </span>
-              </Addlist>
-              <img
-                src={movie.Poster}
-                className="card-img-top"
-                alt={movie.Title}
-              />
+        <>
+          <Slider {...settings}>
+            {movies.map((movie) => (
+              <div className="mov_card" key={movie.imdbID}>
+                <Addlist>
+                  <span>
+                    <img src="/images/ribbon2.png" alt="ribbon" />
+                  </span>
+                </Addlist>
 
-              <h5 className="card-title">
-                {movie.Title}
-                <span>({movie.Year})</span>
-              </h5>
-            </div>
-          ))}
-        </Slider>
+                <img
+                  src={movie.Poster}
+                  className="card-img-top"
+                  alt={movie.Title}
+                />
+
+                <h5 className="card-title">
+                  {movie.Title}
+                  <span>({movie.Year})</span>
+                </h5>
+              </div>
+            ))}
+          </Slider>
+        </>
       )}
     </div>
   );
