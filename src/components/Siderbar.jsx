@@ -17,17 +17,21 @@ const Siderbar = () => {
         <h1>watchlist</h1>
         <Searchbar placeholder="Search" />
         <Menu />
+
         <Button
           btnName={
             <>
-              <AddSharpIcon sx={{ fontSize: 16 }} />{" "}
-              <Link to="/createwatchlist" target="_blank">
+              <AddSharpIcon sx={{ fontSize: 16 }} />
+              <Link
+                to={!currentUser ? "/login" : "/createwatchlist"}
+                target="_blank"
+              >
                 create watchlist
               </Link>
             </>
           }
         />
-        <hr />
+
         <Watchlist />
         <p className="mt-4">
           {currentUser ? <Logout /> : <Link to="/login">Sign in</Link>}

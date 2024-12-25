@@ -38,16 +38,16 @@ const Addlist = ({ children, menuPosition, menuVisible, onToggleMenu }) => {
             </li>
             <li>
               <Link>my playlist</Link>
-            </li>{" "}
+            </li>
             <li>
               <Link>my playlist</Link>
-            </li>{" "}
+            </li>
             <li>
               <Link>my playlist</Link>
-            </li>{" "}
+            </li>
             <li>
               <Link>my playlist</Link>
-            </li>{" "}
+            </li>
             <li>
               <Link>my playlist</Link>
             </li>
