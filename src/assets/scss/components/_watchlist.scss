@@ -38,7 +38,6 @@
     // top: menuPosition.y,
     // left: menuPosition.x,
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
     list-style: none;
     background-color: #161616;
     max-height: calc(100vh - 24px);
@@ -47,9 +46,12 @@
     overflow-y: auto;
 
     li {
+      text-transform: capitalize;
       color: $text-color;
-      padding: 5px 10px;
+      display: flex;
       cursor: pointer;
+      gap: 5px;
+      padding: 12px;
 
       // border-bottom: 1px solid;
       &:first-child {

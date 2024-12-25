@@ -1,34 +1,56 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import AddSharpIcon from "@mui/icons-material/AddSharp";
 
-const Addlist = ({
-  children,
-  menuPosition,
-  menuVisible,
-  onClickOutside,
-  onToggleMenu,
-}) => {
+const Addlist = ({ children, menuPosition, menuVisible, onToggleMenu }) => {
+  const menuRef = useRef(null);
   const handleContext = (e) => {
-    // e.preventDefault();
     e.stopPropagation();
     onToggleMenu(e.pageX, e.pageY);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        onToggleMenu(null, null, null);
+      }
+    };
 
-  // const handleClick = () => {
-  //   setMenuvisible(false);
-  // };
+    if (menuVisible) {
+      document.addEventListener("click", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [menuVisible, onToggleMenu]);
 
   return (
     <>
-      <div
-        className="contextClass"
-        // onContextMenu={handleContext}
-        onClick={handleContext}
-      >
+      <div className="contextClass" onClick={handleContext}>
         {children}
         {menuVisible && (
-          <ul>
-            <li>new playlist</li>
-            <li>my playlist</li>
+          <ul ref={menuRef}>
+            <li>
+              <AddSharpIcon />
+              new playlist
+            </li>
+            <li>
+              <Link>my playlist</Link>
+            </li>
+            <li>
+              <Link>my playlist</Link>
+            </li>{" "}
+            <li>
+              <Link>my playlist</Link>
+            </li>{" "}
+            <li>
+              <Link>my playlist</Link>
+            </li>{" "}
+            <li>
+              <Link>my playlist</Link>
+            </li>{" "}
+            <li>
+              <Link>my playlist</Link>
+            </li>
           </ul>
         )}
       </div>
