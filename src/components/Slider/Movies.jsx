@@ -85,14 +85,12 @@ const Movies = ({ movSrch }) => {
 
   const handleToggleMenu = (id, x, y) => {
     if (activeCard === id) {
-      console.log(activeCard, id);
       setMenuvisible(false);
       setActiveCard(null);
     } else {
       setMenuposition({ x, y });
       setMenuvisible(true);
       setActiveCard(id);
-      console.log("after", activeCard, id);
     }
   };
 

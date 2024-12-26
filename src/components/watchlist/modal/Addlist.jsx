@@ -1,8 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 
 const Addlist = ({ children, menuPosition, menuVisible, onToggleMenu }) => {
+  const { currentUser } = useContext(AuthContext);
+
   const menuRef = useRef(null);
   const handleContext = (e) => {
     e.stopPropagation();
@@ -29,28 +33,22 @@ const Addlist = ({ children, menuPosition, menuVisible, onToggleMenu }) => {
         {children}
         {menuVisible && (
           <ul ref={menuRef}>
-            <li>
-              <AddSharpIcon />
-              new playlist
+            <li style={!currentUser ? { paddingBottom: "10px" } : {}}>
+              <Link to={!currentUser ? "/login" : "/createwatchlist"}>
+                <AddSharpIcon />
+                new playlist
+              </Link>
             </li>
-            <li>
-              <Link>my playlist</Link>
-            </li>
-            <li>
-              <Link>my playlist</Link>
-            </li>
-            <li>
-              <Link>my playlist</Link>
-            </li>
-            <li>
-              <Link>my playlist</Link>
-            </li>
-            <li>
-              <Link>my playlist</Link>
-            </li>
-            <li>
-              <Link>my playlist</Link>
-            </li>
+
+            {currentUser && (
+              <li>
+                <ul>
+                  <li>
+                    <Link>my playlist</Link>
+                  </li>
+                </ul>
+              </li>
+            )}
           </ul>
         )}
       </div>
