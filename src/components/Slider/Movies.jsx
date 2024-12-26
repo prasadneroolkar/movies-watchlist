@@ -8,6 +8,7 @@ import SliderArrow from "./SliderArrow";
 import MoviesSkimmer from "../MoviesSkimmer";
 import Addlist from "../watchlist/modal/Addlist";
 import { apiMdb } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
@@ -16,8 +17,8 @@ const Movies = ({ movSrch }) => {
   const [menuVisible, setMenuvisible] = useState(false);
   const [menuPosition, setMenuposition] = useState({ x: 0, y: 0 });
   const [activeCard, setActiveCard] = useState(null);
-
   const [movDetail, setMovdetail] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchApi = async (query) => {
@@ -41,6 +42,7 @@ const Movies = ({ movSrch }) => {
   const fetchDetails = (mId) => {
     const ImdbRes = apiMdb(mId);
     setMovdetail(ImdbRes);
+    navigate("/details", { state: { movDetail: ImdbRes } });
   };
 
   let settings = {

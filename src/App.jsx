@@ -9,6 +9,8 @@ const Login = lazy(() => import("./pages/Login"));
 const Home = lazy(() => import("./pages/Home"));
 const CreateWatchlist = lazy(() => import("./pages/CreateWatchlist"));
 const WatchlistPage = lazy(() => import("./pages/WatchlistPage"));
+const MovieDetails = lazy(() => import("./pages/MovieDetails"));
+
 function App() {
   return (
     <>
@@ -17,6 +19,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/createwatchlist" element={<CreateWatchlist />} />
           <Route path="/watchlist" element={<WatchlistPage />} />
+          <Route path="/details" element={<MovieDetails />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
