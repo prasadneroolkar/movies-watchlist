@@ -7,6 +7,7 @@ import { api } from "../../services/api";
 import SliderArrow from "./SliderArrow";
 import MoviesSkimmer from "../MoviesSkimmer";
 import Addlist from "../watchlist/modal/Addlist";
+import { apiMdb } from "../../services/api";
 
 const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
@@ -15,6 +16,8 @@ const Movies = ({ movSrch }) => {
   const [menuVisible, setMenuvisible] = useState(false);
   const [menuPosition, setMenuposition] = useState({ x: 0, y: 0 });
   const [activeCard, setActiveCard] = useState(null);
+
+  const [movDetail, setMovdetail] = useState([]);
 
   useEffect(() => {
     const fetchApi = async (query) => {
@@ -32,7 +35,13 @@ const Movies = ({ movSrch }) => {
       setLoading(false);
     };
     fetchApi(movSrch);
+    // fetchImdb()
   }, [movSrch]);
+
+  const fetchDetails = (mId) => {
+    const ImdbRes = apiMdb(mId);
+    setMovdetail(ImdbRes);
+  };
 
   let settings = {
     dots: false,
@@ -106,7 +115,11 @@ const Movies = ({ movSrch }) => {
         <>
           <Slider {...settings}>
             {movies.map((movie) => (
-              <div className="mov_card" key={movie.imdbID}>
+              <div
+                className="mov_card"
+                key={movie.imdbID}
+                onClick={() => fetchDetails(movie.imdbID)}
+              >
                 <Addlist
                   menuPosition={menuPosition}
                   menuVisible={menuVisible && activeCard === movie.imdbID}
