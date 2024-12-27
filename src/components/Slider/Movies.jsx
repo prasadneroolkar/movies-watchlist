@@ -39,10 +39,14 @@ const Movies = ({ movSrch }) => {
     // fetchImdb()
   }, [movSrch]);
 
-  const fetchDetails = (mId) => {
-    const ImdbRes = apiMdb(mId);
-    setMovdetail(ImdbRes);
-    navigate("/details", { state: { movDetail: ImdbRes } });
+  const fetchDetails = async (mId) => {
+    try {
+      const ImdbRes = await apiMdb(mId);
+      setMovdetail(ImdbRes);
+      navigate("/details", { state: { movDetail: ImdbRes } });
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   let settings = {

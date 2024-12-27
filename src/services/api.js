@@ -22,8 +22,10 @@ export const apiMdb = async (imdb) => {
     const fetch = axios.get(`${url}?apikey=${apiKey}&i=${imdb}&plot=full`);
     const response = await fetch;
     console.log("imdbi =", response.data);
+    return response.data;
   } catch (error) {
     console.error("imdb error", error.message);
+    return [];
   }
 };
 
