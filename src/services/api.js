@@ -4,13 +4,21 @@ const apiKey = "8db4a6db";
 
 export const api = async (searchQry) => {
   try {
-    const response = axios.get(
+    const response = await axios.get(
       `${url}?apikey=${apiKey}&s=${searchQry || "top"}`
     );
     // console.log("response", response);
-    const res = await response;
-    // console.log("Full Response:", res.data.Search);
-    return res.data.Search;
+    const res = response.data.Search;
+    // console.log("Full Response:", res);
+
+    const detailedMovies = await Promise.all(
+      res.map(async (movie) => {
+        const details = await apiMdb(movie.imdbID);
+        return { ...movie, ...details }; // Ensure proper merging
+      })
+    );
+    // console.log("Full merging:", detailedMovies.imdbID);
+    return detailedMovies;
   } catch (error) {
     console.log("api errors:", error.message);
     return [];
@@ -21,7 +29,7 @@ export const apiMdb = async (imdb) => {
   try {
     const fetch = axios.get(`${url}?apikey=${apiKey}&i=${imdb}&plot=full`);
     const response = await fetch;
-    console.log("imdbi =", response.data);
+    // console.log("imdbi =", response.data);
     return response.data;
   } catch (error) {
     console.error("imdb error", error.message);
@@ -29,4 +37,11 @@ export const apiMdb = async (imdb) => {
   }
 };
 
+// api().then((movies) => {
+//   console.log("Movies with Details:", movies);
+// });
 // apiMdb();
+// api(async (imdbID) => {
+//   const movieDetails = await apiMdb(imdbID);
+//   console.log("Movie Details for imdbID", imdbID, ":", movieDetails);
+// });

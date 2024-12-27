@@ -3,15 +3,11 @@ import { useLocation } from "react-router-dom";
 
 const MovieDetails = () => {
   const location = useLocation();
-  const { movDetail } = location.state || {};
+  const { movDetail } = location.state;
 
   return (
     <div>
-      {movDetail ? (
-        <p>{JSON.stringify(movDetail)}</p>
-      ) : (
-        <p>No movie details available</p>
-      )}
+      {movDetail ? <p>{movDetail.Title}</p> : <p>No movie details available</p>}
     </div>
   );
 };

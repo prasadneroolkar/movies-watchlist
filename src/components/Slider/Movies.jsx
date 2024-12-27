@@ -9,6 +9,8 @@ import MoviesSkimmer from "../MoviesSkimmer";
 import Addlist from "../watchlist/modal/Addlist";
 import { apiMdb } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import better from "../../../public/images/better.png";
+import good from "../../../public/images/good.png";
 
 const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
@@ -108,7 +110,7 @@ const Movies = ({ movSrch }) => {
       setActiveCard(id);
     }
   };
-
+  console.log(movies);
   return (
     <div className="slider-container card-main" onClick={handleClose}>
       {loading ? (
@@ -145,6 +147,24 @@ const Movies = ({ movSrch }) => {
                 <h5 className="card-title">
                   {movie.Title}
                   <span>({movie.Year})</span>
+
+                  {movie.Ratings.map((val, ind) => {
+                    if (val.Source === "Metacritic") {
+                      return (
+                        <p key={ind}>
+                          <img
+                            src={
+                              parseInt(val.Value.slice(0, 2)) > 50
+                                ? better
+                                : good
+                            }
+                            alt=""
+                          />
+                          {parseInt(val.Value.slice(0, 2))}/100
+                        </p>
+                      );
+                    }
+                  })}
                 </h5>
               </div>
             ))}
