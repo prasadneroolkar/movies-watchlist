@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Slider from "react-slick";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -43,6 +43,7 @@ const Movies = ({ movSrch }) => {
   }, [movSrch]);
 
   const fetchDetails = async (mId) => {
+    console.log("fetchDetails recreated");
     try {
       const ImdbRes = await apiMdb(mId);
       setMovdetail(ImdbRes);
@@ -101,17 +102,20 @@ const Movies = ({ movSrch }) => {
     setActiveCard(null);
   };
 
-  const handleToggleMenu = (id, x, y) => {
-    if (activeCard === id) {
-      setMenuvisible(false);
-      setActiveCard(null);
-    } else {
-      setMenuposition({ x, y });
-      setMenuvisible(true);
-      setActiveCard(id);
-    }
-  };
-  console.log(movies);
+  const handleToggleMenu = useCallback(
+    (id, x, y) => {
+      if (activeCard === id) {
+        setMenuvisible(false);
+        setActiveCard(null);
+      } else {
+        setMenuposition({ x, y });
+        setMenuvisible(true);
+        setActiveCard(id);
+      }
+    },
+    [activeCard]
+  );
+  console.log("Movies component rendered");
   return (
     <div className="slider-container card-main" onClick={handleClose}>
       {loading ? (
