@@ -9,9 +9,9 @@ import MoviesSkimmer from "../MoviesSkimmer";
 import Addlist from "../watchlist/modal/Addlist";
 import { apiMdb } from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import better from "../../../public/images/better.png";
-import good from "../../../public/images/good.png";
-import awful from "../../../public/images/awful.png";
+import better from "/images/better.png";
+import good from "/images/good.png";
+import awful from "/images/awful.png";
 
 const Movies = ({ movSrch }) => {
   const [movies, setMovies] = useState([]);
@@ -42,16 +42,19 @@ const Movies = ({ movSrch }) => {
     // fetchImdb()
   }, [movSrch]);
 
-  const fetchDetails = async (mId) => {
-    console.log("fetchDetails recreated");
-    try {
-      const ImdbRes = await apiMdb(mId);
-      setMovdetail(ImdbRes);
-      navigate("/details", { state: { movDetail: ImdbRes } });
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
+  const fetchDetails = useCallback(
+    async (mId) => {
+      console.log("fetchDetails recreated");
+      try {
+        const ImdbRes = await apiMdb(mId);
+        setMovdetail(ImdbRes);
+        navigate("/details", { state: { movDetail: ImdbRes } });
+      } catch (error) {
+        console.error(error.message);
+      }
+    },
+    [navigate]
+  );
 
   let settings = {
     dots: false,
