@@ -172,3 +172,34 @@
     }
   }
 }
+
+.watchlist_page {
+  .editbtn {
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 50px;
+
+    h2 {
+      font-size: 38px;
+      line-height: 46px;
+      color: $text-color;
+      font-weight: bold;
+    }
+  }
+
+  .description {
+    margin-top: 26px;
+
+    h3 {
+      font-size: 20px;
+      line-height: 24px;
+      color: $text-color;
+    }
+
+    p {
+      font-weight: 300;
+    }
+  }
+}
