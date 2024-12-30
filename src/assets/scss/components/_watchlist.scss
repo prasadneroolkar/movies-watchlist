@@ -203,3 +203,42 @@
     }
   }
 }
+
+.editpage_title {
+  margin-bottom: 50px;
+
+  a {
+    color: $primary-color;
+    text-decoration: underline;
+  }
+}
+
+section.editmovie_list {
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    margin-bottom: 40px;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid $text-color;
+      padding: 17px 17px 17px 0px;
+      column-gap: 10px;
+      border-radius: 4px;
+
+
+      .remove_btn {
+        background-color: unset;
+        border: 1px solid $primary-color;
+        border-radius: 4px;
+        color: $text-color;
+        min-width: unset;
+        padding: 11px 10px;
+      }
+    }
+  }
+}
