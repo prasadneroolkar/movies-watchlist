@@ -27,7 +27,12 @@ const Editwatchlist = () => {
         className="editmovie_list
       "
       >
-        <p className="mb-1">Movies</p>
+        <p
+          className="mb-1"
+          style={{ fontSize: "18px", lineHeight: "22px", fontWeight: "bold" }}
+        >
+          Movies
+        </p>
         <ul>
           <li>
             movie name <Button className="remove_btn" btnName="remove" />
