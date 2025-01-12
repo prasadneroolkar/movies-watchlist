@@ -1,11 +1,11 @@
 import React from "react";
 
-const InputFields = () => {
+const InputFields = ({ onChange, value }) => {
   return (
     <>
       <div className="fields">
         <label htmlFor="">Name</label>
-        <input type="text" />
+        <input type="text" onChange={onChange} value={value} />
         <p>required</p>
       </div>
     </>
