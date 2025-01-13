@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const intialState = [];
+const initialState = [];
 
 const watchlistSlice = createSlice({
   name: "watchlist",

@@ -36,12 +36,3 @@ export const apiMdb = async (imdb) => {
     return [];
   }
 };
-
-// api().then((movies) => {
-//   console.log("Movies with Details:", movies);
-// });
-// apiMdb();
-// api(async (imdbID) => {
-//   const movieDetails = await apiMdb(imdbID);
-//   console.log("Movie Details for imdbID", imdbID, ":", movieDetails);
-// });

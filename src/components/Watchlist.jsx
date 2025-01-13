@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import mwatchlist from "/images/mwatchlist.png";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { useSelector } from "react-redux";
 
 const Watchlist = () => {
   const { currentUser } = useContext(AuthContext);
+  const watchlistName = useSelector((state) => state.watchlist);
+  console.log(watchlistName?.name);
   return (
     currentUser && (
       <>
@@ -16,7 +19,7 @@ const Watchlist = () => {
             <li>
               <Link to="watchlist" target="_blank">
                 <img src={mwatchlist} alt="" />
-                Movies by Tom Cruise
+                {watchlistName?.name}
               </Link>
             </li>
           </ul>

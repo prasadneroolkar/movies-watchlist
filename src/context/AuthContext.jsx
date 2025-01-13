@@ -82,7 +82,6 @@ const AuthProvider = ({ children }) => {
       ...prevError,
       [field]: "",
     }));
-    // console.log(field);
   };
 
   return (

@@ -4,13 +4,19 @@ import WatchlistForm from "../components/watchlist/WatchlistForm";
 import InputField from "../components/watchlist/InputField";
 import Textarea from "../components/watchlist/Textarea";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createWatchlist } from "../components/store/watchlistSlice";
 
 const CreateWatchlist = () => {
+  const dispatch = useDispatch();
   const [watchlistName, setWatchlistName] = useState("");
   const [description, setDescription] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
+    dispatch(createWatchlist({ name: watchlistName, description }));
+    setWatchlistName("");
+    setDescription("");
   };
   return (
     <>
