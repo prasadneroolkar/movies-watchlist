@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
@@ -8,8 +8,13 @@ import { AuthContext } from "../../../context/AuthContext";
 const Addlist = React.memo(
   ({ children, menuPosition, menuVisible, onToggleMenu, movieDetails }) => {
     console.log("ChildComponent re-rendered");
-    const { currentUser } = useContext(AuthContext);
 
+    const { currentUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+    console.log(movieDetails);
+    const addtoList = () => {
+      navigate("/createwatchlist", { state: { movieDetails } });
+    };
     const menuRef = useRef(null);
     const handleContext = (e) => {
       e.stopPropagation();
@@ -36,7 +41,10 @@ const Addlist = React.memo(
         {menuVisible && (
           <ul ref={menuRef}>
             <li style={!currentUser ? { paddingBottom: "10px" } : {}}>
-              <Link to={!currentUser ? "/login" : "/createwatchlist"}>
+              <Link
+                onClick={addtoList}
+                to={!currentUser ? "/login" : "/createwatchlist"}
+              >
                 <AddSharpIcon />
                 new playlist
               </Link>

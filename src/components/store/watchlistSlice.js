@@ -11,11 +11,19 @@ const watchlistSlice = createSlice({
         id: Date.now(),
         name: action.payload.name,
         description: action.payload.description,
-        movies: [],
+      });
+    },
+
+    addMovieToWatchlist(state, action) {
+      state.push({
+        id: Date.now(),
+        name: action.payload.name,
+        description: action.payload.description,
+        movi: [],
       });
     },
   },
 });
 
-export const { createWatchlist } = watchlistSlice.actions;
+export const { createWatchlist, addMovieToWatchlist } = watchlistSlice.actions;
 export default watchlistSlice.reducer;

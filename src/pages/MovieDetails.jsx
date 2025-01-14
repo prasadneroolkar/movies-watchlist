@@ -5,6 +5,7 @@ import Button from "../components/Button";
 const MovieDetails = () => {
   const location = useLocation();
   const { movDetail } = location.state;
+  console.log(movDetail);
 
   return (
     <>
