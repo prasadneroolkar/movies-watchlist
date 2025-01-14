@@ -7,7 +7,12 @@ const watchlistSlice = createSlice({
   initialState,
   reducers: {
     createWatchlist(state, action) {
-      state.push(action.payload);
+      state.push({
+        id: Date.now(),
+        name: action.payload.name,
+        description: action.payload.description,
+        movies: [],
+      });
     },
   },
 });

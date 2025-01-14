@@ -140,6 +140,7 @@ const Movies = ({ movSrch }) => {
                   menuPosition={menuPosition}
                   menuVisible={menuVisible && activeCard === movie.imdbID}
                   onToggleMenu={(x, y) => handleToggleMenu(movie.imdbID, x, y)}
+                  movieDetails={movDetail}
                 >
                   <span>
                     <img src="/images/ribbon2.png" alt="ribbon" />

@@ -15,6 +15,7 @@ const CreateWatchlist = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     dispatch(createWatchlist({ name: watchlistName, description }));
+
     setWatchlistName("");
     setDescription("");
   };

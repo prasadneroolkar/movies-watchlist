@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from "react";
+import React from "react";
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-import React from "react";
 
 const Addlist = React.memo(
-  ({ children, menuPosition, menuVisible, onToggleMenu }) => {
+  ({ children, menuPosition, menuVisible, onToggleMenu, movieDetails }) => {
     console.log("ChildComponent re-rendered");
     const { currentUser } = useContext(AuthContext);
 
@@ -31,31 +31,29 @@ const Addlist = React.memo(
     }, [menuVisible, onToggleMenu]);
 
     return (
-      <>
-        <div className="contextClass" onClick={handleContext}>
-          {children}
-          {menuVisible && (
-            <ul ref={menuRef}>
-              <li style={!currentUser ? { paddingBottom: "10px" } : {}}>
-                <Link to={!currentUser ? "/login" : "/createwatchlist"}>
-                  <AddSharpIcon />
-                  new playlist
-                </Link>
-              </li>
+      <div className="contextClass" onClick={handleContext}>
+        {children}
+        {menuVisible && (
+          <ul ref={menuRef}>
+            <li style={!currentUser ? { paddingBottom: "10px" } : {}}>
+              <Link to={!currentUser ? "/login" : "/createwatchlist"}>
+                <AddSharpIcon />
+                new playlist
+              </Link>
+            </li>
 
-              {currentUser && (
-                <li>
-                  <ul>
-                    <li>
-                      <Link>my playlist</Link>
-                    </li>
-                  </ul>
-                </li>
-              )}
-            </ul>
-          )}
-        </div>
-      </>
+            {currentUser && (
+              <li>
+                <ul>
+                  <li>
+                    <Link>my playlist</Link>
+                  </li>
+                </ul>
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
     );
   }
 );

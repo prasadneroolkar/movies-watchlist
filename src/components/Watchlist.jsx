@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 const Watchlist = () => {
   const { currentUser } = useContext(AuthContext);
   const watchlistName = useSelector((state) => state.watchlist);
-  console.log(watchlistName?.name);
   return (
     currentUser && (
       <>
@@ -16,12 +15,20 @@ const Watchlist = () => {
         <div className="watchlist">
           <p>My lists</p>
           <ul>
-            <li>
-              <Link to="watchlist" target="_blank">
-                <img src={mwatchlist} alt="" />
-                {watchlistName?.name}
-              </Link>
-            </li>
+            {watchlistName?.length ? (
+              watchlistName.map((val) => {
+                return (
+                  <li key={val.id}>
+                    <Link to="watchlist" target="_blank">
+                      <img src={mwatchlist} alt="movie.logo" />
+                      {val.name}
+                    </Link>
+                  </li>
+                );
+              })
+            ) : (
+              <li>No watchlists available.</li>
+            )}
           </ul>
         </div>
       </>
