@@ -14,14 +14,24 @@ import { useLocation } from "react-router-dom";
 const CreateWatchlist = () => {
   const location = useLocation();
   const movies = location.state?.movieDetails;
+  console.log(movies);
 
   const dispatch = useDispatch();
   const [watchlistName, setWatchlistName] = useState("");
   const [description, setDescription] = useState("");
-  console.log(movies);
+
+  const validateForm = (data) => {
+    const errorData = {};
+    if (data.watchlistName !== undefined && !data.watchlistName.trim()) {
+      errorData.watchlistName = "Please enter name";
+    }
+    return errorData;
+  };
 
   const onSubmit = (event) => {
     event.preventDefault();
+    let formValidate = validateForm(watchlistName);
+    console.log(formValidate);
     if (movies) {
       dispatch(
         addMovieToWatchlist({ name: watchlistName, description, movies })

@@ -13,7 +13,11 @@ const Addlist = React.memo(
     const navigate = useNavigate();
     console.log(movieDetails);
     const addtoList = () => {
-      navigate("/createwatchlist", { state: { movieDetails } });
+      if (!currentUser) {
+        navigate("/login");
+      } else {
+        navigate("/createwatchlist", { state: { movieDetails } });
+      }
     };
     const menuRef = useRef(null);
     const handleContext = (e) => {
@@ -40,11 +44,11 @@ const Addlist = React.memo(
         {children}
         {menuVisible && (
           <ul ref={menuRef}>
-            <li style={!currentUser ? { paddingBottom: "10px" } : {}}>
-              <Link
-                onClick={addtoList}
-                to={!currentUser ? "/login" : "/createwatchlist"}
-              >
+            <li
+              style={!currentUser ? { paddingBottom: "10px" } : {}}
+              onClick={addtoList}
+            >
+              <Link>
                 <AddSharpIcon />
                 new playlist
               </Link>

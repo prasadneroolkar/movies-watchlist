@@ -19,7 +19,7 @@ const watchlistSlice = createSlice({
         id: Date.now(),
         name: action.payload.name,
         description: action.payload.description,
-        movi: [],
+        movi: action.payload.movies || [],
       });
     },
   },
