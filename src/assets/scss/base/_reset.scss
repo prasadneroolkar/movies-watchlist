@@ -94,3 +94,15 @@ button.slick-arrow {
 .mb-50 {
   margin-bottom: 50px;
 }
+
+.fields {
+  position: relative;
+
+  input {}
+
+  .errorMsg {
+    position: absolute;
+    bottom: -24px;
+    color: $ruby-red;
+  }
+}

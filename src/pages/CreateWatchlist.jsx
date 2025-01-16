@@ -14,34 +14,49 @@ import { useLocation } from "react-router-dom";
 const CreateWatchlist = () => {
   const location = useLocation();
   const movies = location.state?.movieDetails;
-  console.log(movies);
 
   const dispatch = useDispatch();
   const [watchlistName, setWatchlistName] = useState("");
   const [description, setDescription] = useState("");
+  const [error, setError] = useState({});
 
   const validateForm = (data) => {
     const errorData = {};
     if (data.watchlistName !== undefined && !data.watchlistName.trim()) {
-      errorData.watchlistName = "Please enter name";
+      errorData.watchlistName = "Please enter watchlist name";
     }
+    setError(errorData);
     return errorData;
+  };
+
+  const onhandleName = (e) => {
+    setWatchlistName(e.target.value);
+    handleErr("watchlistName");
+  };
+
+  const handleErr = (field) => {
+    setError((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-    let formValidate = validateForm(watchlistName);
-    console.log(formValidate);
-    if (movies) {
-      dispatch(
-        addMovieToWatchlist({ name: watchlistName, description, movies })
-      );
-    } else {
-      dispatch(createWatchlist({ name: watchlistName, description }));
-    }
+    let formValidate = validateForm({ watchlistName });
+    const val = Object.keys(formValidate).length;
+    if (val === 0) {
+      if (movies) {
+        dispatch(
+          addMovieToWatchlist({ name: watchlistName, description, movies })
+        );
+      } else {
+        dispatch(createWatchlist({ name: watchlistName, description }));
+      }
 
-    setWatchlistName("");
-    setDescription("");
+      setWatchlistName("");
+      setDescription("");
+    }
   };
   return (
     <>
@@ -51,7 +66,8 @@ const CreateWatchlist = () => {
       <WatchlistForm onSubmit={onSubmit}>
         <InputField
           value={watchlistName}
-          onChange={(e) => setWatchlistName(e.target.value)}
+          onChange={onhandleName}
+          errorMsg={error.watchlistName && error.watchlistName}
         />
         <Textarea
           value={description}
