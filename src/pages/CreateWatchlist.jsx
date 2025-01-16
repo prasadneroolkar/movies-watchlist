@@ -3,22 +3,23 @@ import PageTitle from "../components/watchlist/PageTitle";
 import WatchlistForm from "../components/watchlist/WatchlistForm";
 import InputField from "../components/watchlist/InputField";
 import Textarea from "../components/watchlist/Textarea";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   createWatchlist,
   addMovieToWatchlist,
 } from "../components/store/watchlistSlice";
 import { useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const CreateWatchlist = () => {
+  const { handleErrormsg, error, setError } = useContext(AuthContext);
   const location = useLocation();
   const movies = location.state?.movieDetails;
 
   const dispatch = useDispatch();
   const [watchlistName, setWatchlistName] = useState("");
   const [description, setDescription] = useState("");
-  const [error, setError] = useState({});
 
   const validateForm = (data) => {
     const errorData = {};
@@ -31,14 +32,7 @@ const CreateWatchlist = () => {
 
   const onhandleName = (e) => {
     setWatchlistName(e.target.value);
-    handleErr("watchlistName");
-  };
-
-  const handleErr = (field) => {
-    setError((prev) => ({
-      ...prev,
-      [field]: "",
-    }));
+    handleErrormsg("watchlistName");
   };
 
   const onSubmit = (event) => {
