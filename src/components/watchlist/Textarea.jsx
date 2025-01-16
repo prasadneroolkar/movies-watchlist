@@ -4,7 +4,9 @@ const Textarea = ({ onChange, value }) => {
   return (
     <>
       <div className="fields">
-        <label htmlFor="">Description</label>
+        <label htmlFor="">
+          Description <span>(optional)</span>
+        </label>
         <textarea name="" id="" onChange={onChange} value={value} />
       </div>
     </>

@@ -98,6 +98,14 @@ button.slick-arrow {
 .fields {
   position: relative;
 
+  label {
+    span {
+      display: inline-block;
+      margin-left: 5px;
+      color: $bg-color;
+    }
+  }
+
   input {}
 
   .errorMsg {
