@@ -1,11 +1,11 @@
 import React from "react";
 
-const InputFields = ({ onChange, value, errorMsg }) => {
+const InputFields = ({ onChange, value, errorMsg, name }) => {
   return (
     <>
       <div className="fields">
         <label htmlFor="">Name</label>
-        <input type="text" onChange={onChange} value={value} />
+        <input type="text" name={name} onChange={onChange} value={value} />
         <p className="errorMsg">{errorMsg}</p>
       </div>
     </>

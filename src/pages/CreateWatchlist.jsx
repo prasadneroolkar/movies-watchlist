@@ -18,40 +18,63 @@ const CreateWatchlist = () => {
   const movies = location.state?.movieDetails;
 
   const dispatch = useDispatch();
-  const [watchlistName, setWatchlistName] = useState("");
-  const [description, setDescription] = useState("");
+  // const [watchlistName, setWatchlistName] = useState("");
+  // const [description, setDescription] = useState("");
+  const [watchlistData, setwatchlistData] = useState({
+    watchlistName: "",
+    description: "",
+  });
 
   const validateForm = (data) => {
     const errorData = {};
-    if (data.watchlistName !== undefined && !data.watchlistName.trim()) {
-      errorData.watchlistName = "Please enter watchlist name";
+    if (data !== undefined && !data.trim()) {
+      errorData.data = "Please enter watchlist name";
     }
     setError(errorData);
     return errorData;
   };
 
-  const onhandleName = (e) => {
-    setWatchlistName(e.target.value);
+  const onhandleinput = (e) => {
+    setwatchlistData({
+      ...watchlistData,
+      [e.target.name]: e.target.value,
+    });
+    // console.log(watchlistData);
     handleErrormsg("watchlistName");
   };
+  const users = JSON.parse(localStorage.getItem("currentUser")) || [];
+  // console.log(users.email);
 
   const onSubmit = (event) => {
     event.preventDefault();
-    let formValidate = validateForm({ watchlistName });
+    const { watchlistName } = watchlistData;
+
+    let formValidate = validateForm(watchlistName);
+    console.log(formValidate);
     const val = Object.keys(formValidate).length;
+    console.log(val);
     if (val === 0) {
       if (movies) {
         dispatch(
-          addMovieToWatchlist({ name: watchlistName, description, movies })
+          addMovieToWatchlist({
+            name: watchlistData.watchlistName,
+            description: watchlistData.description,
+            movies,
+          })
         );
       } else {
-        dispatch(createWatchlist({ name: watchlistName, description }));
+        dispatch(
+          createWatchlist({
+            name: watchlistData.watchlistName,
+            description: watchlistData.description,
+            // user,
+          })
+        );
       }
-
-      setWatchlistName("");
-      setDescription("");
     }
+    setwatchlistData({ ...watchlistData, [event.target.name]: "" });
   };
+
   return (
     <>
       {movies && <pre>{JSON.stringify(movies, null, 2)}</pre>}
@@ -59,13 +82,15 @@ const CreateWatchlist = () => {
 
       <WatchlistForm onSubmit={onSubmit}>
         <InputField
-          value={watchlistName}
-          onChange={onhandleName}
-          errorMsg={error.watchlistName && error.watchlistName}
+          name="watchlistName"
+          // value={watchlistName}
+          onChange={onhandleinput}
+          errorMsg={error.data && error.data}
         />
         <Textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          name="description"
+          // value={description}
+          onChange={onhandleinput}
         />
         <Button btnName="Create watchlist" type="submit" />
       </WatchlistForm>

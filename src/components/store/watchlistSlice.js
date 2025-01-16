@@ -11,6 +11,7 @@ const watchlistSlice = createSlice({
         id: Date.now(),
         name: action.payload.name,
         description: action.payload.description,
+        // user: action.payload.userEmail,
       });
     },
 
