@@ -35,10 +35,15 @@ const CreateWatchlist = () => {
   };
 
   const onhandleinput = (e) => {
-    setwatchlistData({
-      ...watchlistData,
+    // setwatchlistData({
+    //   ...watchlistData,
+    //   [e.target.name]: e.target.value,
+    // });
+
+    setwatchlistData((prevData) => ({
+      ...prevData,
       [e.target.name]: e.target.value,
-    });
+    }));
     // console.log(watchlistData);
     handleErrormsg("watchlistName");
   };
@@ -72,7 +77,11 @@ const CreateWatchlist = () => {
         );
       }
     }
-    setwatchlistData({ ...watchlistData, [event.target.name]: "" });
+
+    setwatchlistData({
+      watchlistName: "",
+      description: "",
+    });
   };
 
   return (
@@ -83,13 +92,13 @@ const CreateWatchlist = () => {
       <WatchlistForm onSubmit={onSubmit}>
         <InputField
           name="watchlistName"
-          // value={watchlistName}
+          value={watchlistData.watchlistName}
           onChange={onhandleinput}
           errorMsg={error.data && error.data}
         />
         <Textarea
           name="description"
-          // value={description}
+          value={watchlistData.description}
           onChange={onhandleinput}
         />
         <Button btnName="Create watchlist" type="submit" />
