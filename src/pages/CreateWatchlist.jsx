@@ -86,7 +86,7 @@ const CreateWatchlist = () => {
 
   return (
     <>
-      {movies && <pre>{JSON.stringify(movies, null, 2)}</pre>}
+      {/* {movies && <pre>{JSON.stringify(movies, null, 2)}</pre>} */}
       <PageTitle className="create_watchlist" Title="Create a new Watchlist" />
 
       <WatchlistForm onSubmit={onSubmit}>
