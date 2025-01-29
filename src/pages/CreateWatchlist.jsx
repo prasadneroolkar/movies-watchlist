@@ -3,7 +3,7 @@ import PageTitle from "../components/watchlist/PageTitle";
 import WatchlistForm from "../components/watchlist/WatchlistForm";
 import InputField from "../components/watchlist/InputField";
 import Textarea from "../components/watchlist/Textarea";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   createWatchlist,
@@ -18,12 +18,27 @@ const CreateWatchlist = () => {
   const movies = location.state?.movieDetails;
 
   const dispatch = useDispatch();
-  // const [watchlistName, setWatchlistName] = useState("");
-  // const [description, setDescription] = useState("");
+  const [usrEmail, setUseremail] = useState({});
+
   const [watchlistData, setwatchlistData] = useState({
     watchlistName: "",
     description: "",
   });
+
+  useEffect(() => {
+    const users = JSON.parse(localStorage.getItem("currentUser")) || [];
+    setUseremail(users.email);
+  }, []);
+
+  console.log(usrEmail);
+
+  useEffect(() => {
+    setwatchlistData((prevData) => ({
+      ...prevData,
+      user: usrEmail,
+    }));
+  }, [usrEmail]);
+  console.log(watchlistData.user);
 
   const validateForm = (data) => {
     const errorData = {};
@@ -35,20 +50,12 @@ const CreateWatchlist = () => {
   };
 
   const onhandleinput = (e) => {
-    // setwatchlistData({
-    //   ...watchlistData,
-    //   [e.target.name]: e.target.value,
-    // });
-
     setwatchlistData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-    // console.log(watchlistData);
     handleErrormsg("watchlistName");
   };
-  const users = JSON.parse(localStorage.getItem("currentUser")) || [];
-  // console.log(users.email);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -72,7 +79,7 @@ const CreateWatchlist = () => {
           createWatchlist({
             name: watchlistData.watchlistName,
             description: watchlistData.description,
-            // user,
+            user: watchlistData.user,
           })
         );
       }
@@ -81,6 +88,7 @@ const CreateWatchlist = () => {
     setwatchlistData({
       watchlistName: "",
       description: "",
+      user: usrEmail,
     });
   };
 
