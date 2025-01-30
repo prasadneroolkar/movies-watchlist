@@ -18,27 +18,13 @@ const CreateWatchlist = () => {
   const movies = location.state?.movieDetails;
 
   const dispatch = useDispatch();
-  const [usrEmail, setUseremail] = useState({});
+  const users = JSON.parse(localStorage.getItem("currentUser")) || [];
 
   const [watchlistData, setwatchlistData] = useState({
     watchlistName: "",
     description: "",
+    user: users.email,
   });
-
-  useEffect(() => {
-    const users = JSON.parse(localStorage.getItem("currentUser")) || [];
-    setUseremail(users.email);
-  }, []);
-
-  console.log(usrEmail);
-
-  useEffect(() => {
-    setwatchlistData((prevData) => ({
-      ...prevData,
-      user: usrEmail,
-    }));
-  }, [usrEmail]);
-  console.log(watchlistData.user);
 
   const validateForm = (data) => {
     const errorData = {};
@@ -62,9 +48,7 @@ const CreateWatchlist = () => {
     const { watchlistName } = watchlistData;
 
     let formValidate = validateForm(watchlistName);
-    console.log(formValidate);
     const val = Object.keys(formValidate).length;
-    console.log(val);
     if (val === 0) {
       if (movies) {
         dispatch(
@@ -82,13 +66,29 @@ const CreateWatchlist = () => {
             user: watchlistData.user,
           })
         );
+        console.log("watchlist added", watchlistData);
+
+        const existingWatchlist =
+          JSON.parse(localStorage.getItem("watchlists")) || [];
+        console.log("existingdata", existingWatchlist);
+
+        const updatedWatchlist = [
+          ...existingWatchlist,
+          {
+            name: watchlistData.watchlistName,
+            description: watchlistData.description,
+            user: watchlistData.user,
+          },
+        ];
+        localStorage.setItem("watchlists", JSON.stringify(updatedWatchlist));
+        console.log("Watchlist added:", updatedWatchlist);
       }
     }
 
     setwatchlistData({
       watchlistName: "",
       description: "",
-      user: usrEmail,
+      user: users.email,
     });
   };
 
