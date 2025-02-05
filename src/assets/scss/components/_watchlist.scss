@@ -61,17 +61,15 @@
 
       ul {
         width: 100%;
-        // max-height: unset;
-        // max-width: unset;
-        // min-width: unset;
-        // overflow-y: unset;
+
 
         li {
-          padding: 12px;
+          padding: 5px 12px 5px;
+          border-top: 1px solid;
 
-          &:first-child {
-            border-top: 1px solid;
-          }
+          // &:first-child {
+          //   border-top: 1px solid;
+          // }
 
           // &:not(first-child) {
           //   border-bottom: 1px solid;

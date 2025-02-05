@@ -4,11 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import { useSelector } from "react-redux";
 
 const Addlist = React.memo(
   ({ children, menuPosition, menuVisible, onToggleMenu, movieDetails }) => {
-    console.log("ChildComponent re-rendered");
+    // console.log("ChildComponent re-rendered");
 
+    const displayList = useSelector((state) => state.watchlist);
+    console.log("displaylist", displayList);
     const { currentUser } = useContext(AuthContext);
     const navigate = useNavigate();
     console.log(movieDetails);
@@ -53,16 +56,17 @@ const Addlist = React.memo(
                 new playlist
               </Link>
             </li>
-
-            {currentUser && (
-              <li>
-                <ul>
-                  <li>
-                    <Link>my playlist</Link>
-                  </li>
-                </ul>
-              </li>
-            )}
+            <li>
+              <ul>
+                {currentUser &&
+                  displayList?.length > 0 &&
+                  displayList.map((list, index) => (
+                    <li key={index}>
+                      <Link>{list.name}</Link>
+                    </li>
+                  ))}
+              </ul>
+            </li>
           </ul>
         )}
       </div>
