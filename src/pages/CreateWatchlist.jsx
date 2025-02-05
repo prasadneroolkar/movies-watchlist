@@ -55,6 +55,7 @@ const CreateWatchlist = () => {
           addMovieToWatchlist({
             name: watchlistData.watchlistName,
             description: watchlistData.description,
+            user: watchlistData.user,
             movies,
           })
         );

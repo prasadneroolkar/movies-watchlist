@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addFrommodalList } from "../../store/watchlistSlice";
 
 const Addlist = React.memo(
   ({ children, menuPosition, menuVisible, onToggleMenu, movieDetails }) => {
     // console.log("ChildComponent re-rendered");
-
+    const dispatch = useDispatch();
     const displayList = useSelector((state) => state.watchlist);
     console.log("displaylist", displayList);
     const { currentUser } = useContext(AuthContext);
@@ -42,6 +43,15 @@ const Addlist = React.memo(
       };
     }, [menuVisible, onToggleMenu]);
 
+    const addMovie = () => {
+      console.log("added");
+      dispatch(
+        addFrommodalList({
+          addMovie: movieDetails,
+        })
+      );
+    };
+
     return (
       <div className="contextClass" onClick={handleContext}>
         {children}
@@ -62,7 +72,7 @@ const Addlist = React.memo(
                   displayList?.length > 0 &&
                   displayList.map((list, index) => (
                     <li key={index}>
-                      <Link>{list.name}</Link>
+                      <Link onClick={addMovie}>{list.name}</Link>
                     </li>
                   ))}
               </ul>

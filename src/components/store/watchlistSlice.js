@@ -20,11 +20,19 @@ const watchlistSlice = createSlice({
         id: Date.now(),
         name: action.payload.name,
         description: action.payload.description,
+        user: action.payload.user,
         movi: action.payload.movies || [],
+      });
+    },
+
+    addFrommodalList(state, action) {
+      state.push({
+        addMovie: action.payload.moviies,
       });
     },
   },
 });
 
-export const { createWatchlist, addMovieToWatchlist } = watchlistSlice.actions;
+export const { createWatchlist, addMovieToWatchlist, addFrommodalList } =
+  watchlistSlice.actions;
 export default watchlistSlice.reducer;
