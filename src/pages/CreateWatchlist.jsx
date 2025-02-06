@@ -16,6 +16,7 @@ const CreateWatchlist = () => {
   const { handleErrormsg, error, setError } = useContext(AuthContext);
   const location = useLocation();
   const movies = location.state?.movieDetails;
+  console.log("from state", movies);
 
   const dispatch = useDispatch();
   const users = JSON.parse(localStorage.getItem("currentUser")) || [];

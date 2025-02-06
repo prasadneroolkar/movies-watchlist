@@ -27,7 +27,7 @@ const watchlistSlice = createSlice({
 
     addFrommodalList(state, action) {
       state.push({
-        addMovie: action.payload.moviies,
+        addMovie: action.payload.movies || [],
       });
     },
   },
