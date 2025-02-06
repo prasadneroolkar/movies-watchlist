@@ -47,27 +47,33 @@ const CreateWatchlist = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     const { watchlistName } = watchlistData;
+    const watchlistId = Date.now();
 
     let formValidate = validateForm(watchlistName);
     const val = Object.keys(formValidate).length;
     if (val === 0) {
+      // if (movies) {
+      //   dispatch(
+      //     addMovieToWatchlist({
+      //       name: watchlistData.watchlistName,
+      //       description: watchlistData.description,
+      //       user: watchlistData.user,
+      //       movies,
+      //     })
+      //   );
+      // } else {
+      //   dispatch(
+      //     createWatchlist({
+      //       name: watchlistData.watchlistName,
+      //       description: watchlistData.description,
+      //       user: watchlistData.user,
+      //     })
+      //   );
+      dispatch(createWatchlist({ id: watchlistId, name, description }));
       if (movies) {
-        dispatch(
-          addMovieToWatchlist({
-            name: watchlistData.watchlistName,
-            description: watchlistData.description,
-            user: watchlistData.user,
-            movies,
-          })
-        );
-      } else {
-        dispatch(
-          createWatchlist({
-            name: watchlistData.watchlistName,
-            description: watchlistData.description,
-            user: watchlistData.user,
-          })
-        );
+      dispatch(addMovieToWatchlist({ watchlistId, movie: movieToAdd }));
+      }
+
         console.log("watchlist added", watchlistData);
 
         const existingWatchlist =
