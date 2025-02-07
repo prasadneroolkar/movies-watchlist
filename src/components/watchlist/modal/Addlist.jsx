@@ -5,7 +5,7 @@ import AddSharpIcon from "@mui/icons-material/AddSharp";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import { addFrommodalList } from "../../store/watchlistSlice";
+import { addMovieToWatchlist } from "../../store/watchlistSlice";
 
 const Addlist = ({
   children,
@@ -14,12 +14,15 @@ const Addlist = ({
   onToggleMenu,
   movieDetails,
 }) => {
+  const [selectedMovId, setSelectedmovId] = useState("");
+
   const dispatch = useDispatch();
   const displayList = useSelector((state) => state.watchlist);
-  console.log("displaylist", displayList);
+  // console.log("displaylist", displayList);
+
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  console.log("The movieList", movieDetails);
+  // console.log("The movieList", movieDetails);
 
   const addtoList = () => {
     if (!currentUser) {
@@ -48,13 +51,15 @@ const Addlist = ({
     };
   }, [menuVisible, onToggleMenu]);
 
-  const addMovie = () => {
+  const addMovie = (selectedID) => {
     console.log("added");
     dispatch(
-      addFrommodalList({
+      addMovieToWatchlist({
+        selectedID,
         movieDetails,
       })
     );
+    setSelectedmovId(selectedID);
   };
 
   return (
@@ -75,9 +80,9 @@ const Addlist = ({
             <ul>
               {currentUser &&
                 displayList?.length > 0 &&
-                displayList.map((list, index) => (
-                  <li key={index}>
-                    <Link onClick={addMovie}>{list.name}</Link>
+                displayList.map((list) => (
+                  <li key={list.id} onClick={() => addMovie(list.id)}>
+                    <Link>{list.name}</Link>
                   </li>
                 ))}
             </ul>

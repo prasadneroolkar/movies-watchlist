@@ -9,7 +9,7 @@ export const api = async (searchQry) => {
     );
     // console.log("response", response);
     const res = response.data.Search;
-    console.log("Full Response:", res);
+    // console.log("Full Response:", res);
 
     const detailedMovies = await Promise.all(
       res.map(async (movie) => {
@@ -17,7 +17,7 @@ export const api = async (searchQry) => {
         return { ...movie, ...details }; // Ensure proper merging
       })
     );
-    console.log("map imdb", detailedMovies);
+    // console.log("map imdb", detailedMovies);
     return detailedMovies;
   } catch (error) {
     console.log("api errors:", error.message);

@@ -44,7 +44,7 @@ const Movies = ({ movSrch }) => {
 
   const fetchDetails = useCallback(
     async (mId) => {
-      console.log("fetchDetails recreated");
+      // console.log("fetchDetails recreated");
       try {
         const ImdbRes = await apiMdb(mId);
         setMovdetail(ImdbRes);
@@ -118,7 +118,7 @@ const Movies = ({ movSrch }) => {
     },
     [activeCard]
   );
-  console.log("Movies component rendered");
+  // console.log("Movies component rendered");
   return (
     <div className="slider-container card-main" onClick={handleClose}>
       {loading ? (

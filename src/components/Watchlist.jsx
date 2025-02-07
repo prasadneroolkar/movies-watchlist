@@ -16,9 +16,9 @@ const Watchlist = () => {
           <p>My lists</p>
           <ul>
             {watchlistName?.length ? (
-              watchlistName.map((val) => {
+              watchlistName.map((val, id) => {
                 return (
-                  <li key={val.id}>
+                  <li key={id}>
                     <Link to="watchlist" target="_blank">
                       <img src={mwatchlist} alt="movie.logo" />
                       {val.name}

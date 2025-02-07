@@ -16,7 +16,7 @@ const CreateWatchlist = () => {
   const { handleErrormsg, error, setError } = useContext(AuthContext);
   const location = useLocation();
   const movies = location.state?.movieDetails;
-  console.log("from state", movies);
+  // console.log("from state", movies);
 
   const dispatch = useDispatch();
   const users = JSON.parse(localStorage.getItem("currentUser")) || [];
@@ -69,16 +69,24 @@ const CreateWatchlist = () => {
       //       user: watchlistData.user,
       //     })
       //   );
-      dispatch(createWatchlist({ id: watchlistId, name, description }));
-      if (movies) {
-      dispatch(addMovieToWatchlist({ watchlistId, movie: movieToAdd }));
-      }
 
-        console.log("watchlist added", watchlistData);
+      dispatch(
+        createWatchlist({
+          id: watchlistId,
+          name: watchlistData.watchlistName,
+          description: watchlistData.description,
+          user: watchlistData.user,
+        })
+      );
+
+      if (movies) {
+        dispatch(addMovieToWatchlist({ watchlistId, movie: movies }));
+
+        // console.log("watchlist added", watchlistData);
 
         const existingWatchlist =
           JSON.parse(localStorage.getItem("watchlists")) || [];
-        console.log("existingdata", existingWatchlist);
+        // console.log("existingdata", existingWatchlist);
 
         const updatedWatchlist = [
           ...existingWatchlist,
@@ -89,7 +97,7 @@ const CreateWatchlist = () => {
           },
         ];
         localStorage.setItem("watchlists", JSON.stringify(updatedWatchlist));
-        console.log("Watchlist added:", updatedWatchlist);
+        // console.log("Watchlist added:", updatedWatchlist);
       }
     }
 
