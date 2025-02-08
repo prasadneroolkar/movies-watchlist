@@ -8,11 +8,11 @@ const watchlistSlice = createSlice({
   reducers: {
     createWatchlist(state, action) {
       state.push({
-        id: Date.now(),
+        // id: Date.now(),
         name: action.payload.name,
         description: action.payload.description,
         user: action.payload.user,
-        movi: [],
+        movi: action.payload.movies || [],
       });
     },
 
@@ -23,12 +23,14 @@ const watchlistSlice = createSlice({
       const watchlist = state.find((w) => w.id === watchlistId);
       console.log("watchlist id", watchlistId);
 
-      if (watchlist) {
-        const movieExists = watchlist.movi.some((m) => m.id === movie.id);
+      if (!watchlist) {
+        // const movieExists = watchlist.movi.some(
+        //   (m) => m.imdbID === movie.imdbID
+        // );
 
-        if (!movieExists) {
-          watchlist.movi.push(movie);
-        }
+        // if (!movieExists) {
+        state.push(movie);
+        // }
       } else {
         console.error("Watchlist not found!");
       }

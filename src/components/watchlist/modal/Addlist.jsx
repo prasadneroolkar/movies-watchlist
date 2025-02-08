@@ -61,6 +61,7 @@ const Addlist = ({
     );
     setSelectedmovId(selectedID);
   };
+  console.log("id is ", selectedMovId);
 
   return (
     <div className="contextClass" onClick={handleContext}>
@@ -80,9 +81,12 @@ const Addlist = ({
             <ul>
               {currentUser &&
                 displayList?.length > 0 &&
-                displayList.map((list) => (
-                  <li key={list.id} onClick={() => addMovie(list.id)}>
-                    <Link>{list.name}</Link>
+                displayList.map((list, ind) => (
+                  <li key={ind} onClick={() => addMovie(ind)}>
+                    <Link>
+                      {list.name}
+                      {ind}
+                    </Link>
                   </li>
                 ))}
             </ul>
