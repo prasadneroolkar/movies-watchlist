@@ -51,17 +51,17 @@ const Addlist = ({
     };
   }, [menuVisible, onToggleMenu]);
 
-  const addMovie = (selectedID) => {
+  const addMovie = (watchlistId) => {
     console.log("added");
     dispatch(
       addMovieToWatchlist({
-        selectedID,
+        watchlistId,
         movieDetails,
       })
     );
-    setSelectedmovId(selectedID);
+    setSelectedmovId(watchlistId);
+    // console.log("id is ", selectedMovId);
   };
-  console.log("id is ", selectedMovId);
 
   return (
     <div className="contextClass" onClick={handleContext}>
@@ -82,11 +82,8 @@ const Addlist = ({
               {currentUser &&
                 displayList?.length > 0 &&
                 displayList.map((list, ind) => (
-                  <li key={ind} onClick={() => addMovie(ind)}>
-                    <Link>
-                      {list.name}
-                      {ind}
-                    </Link>
+                  <li key={ind} onClick={() => addMovie(list.id)}>
+                    <Link>{list.name}</Link>
                   </li>
                 ))}
             </ul>

@@ -72,7 +72,7 @@ const CreateWatchlist = () => {
 
       dispatch(
         createWatchlist({
-          // id: watchlistId,
+          id: watchlistId,
           name: watchlistData.watchlistName,
           description: watchlistData.description,
           user: watchlistData.user,
