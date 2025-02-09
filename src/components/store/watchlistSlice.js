@@ -12,7 +12,7 @@ const watchlistSlice = createSlice({
         name: action.payload.name,
         description: action.payload.description,
         user: action.payload.user,
-        movi: action.payload.movies || [],
+        movi: action.payload.movies ? [action.payload.movies] : [],
       });
     },
 
@@ -22,21 +22,29 @@ const watchlistSlice = createSlice({
       // Find the watchlist
       const watchlist = state.find((w) => w.id === watchlistId);
 
-      console.log("Watchlist found:", JSON.stringify(watchlist, null, 2));
+      // console.log("Watchlist found:", JSON.stringify(watchlist, null, 2));
 
       if (watchlist) {
-        // Ensure the movie is not duplicated in the watchlist
+        // console.log(
+        //   "if movie exist in movie",
+        //   JSON.stringify(watchlist.movi, null, 2)
+        // );
+
+        if (!Array.isArray(watchlist.movi)) {
+          watchlist.movi = [];
+        }
+
         const movieExists = watchlist.movi.some(
           (m) => m.imdbID === movieDetails.imdbID
         );
-        console.log("Movie exists?", movieExists);
+        // console.log("Movie exists?", movieExists);
 
         if (!movieExists) {
           watchlist.movi.push(movieDetails);
-          console.log(
-            "Movie added to watchlist:",
-            JSON.stringify(watchlist, null, 2)
-          );
+          // console.log(
+          //   "Movie added to watchlist:",
+          //   JSON.stringify(watchlist, null, 2)
+          // );
         } else {
           console.log("Movie already exists in the watchlist");
         }

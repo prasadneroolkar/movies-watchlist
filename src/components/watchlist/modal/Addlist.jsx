@@ -14,7 +14,7 @@ const Addlist = ({
   onToggleMenu,
   movieDetails,
 }) => {
-  // const [selectedMovId, setSelectedmovId] = useState("");
+  const [selectedMovId, setSelectedmovId] = useState("");
 
   const dispatch = useDispatch();
   const displayList = useSelector((state) => state.watchlist);
@@ -51,23 +51,27 @@ const Addlist = ({
     };
   }, [menuVisible, onToggleMenu]);
 
-  const addMovie = (watchlistId) => {
-    try {
-      dispatch(
-        addMovieToWatchlist({
-          watchlistId,
-          movieDetails,
-        })
-      );
-    } catch (error) {
-      console.error(error.message);
-    }
+  const addMovie = useRef(null);
 
-    console.log("added");
+  useEffect(() => {
+    addMovie.current = (watchlistId) => {
+      try {
+        dispatch(
+          addMovieToWatchlist({
+            watchlistId,
+            movieDetails,
+          })
+        );
+      } catch (error) {
+        console.error(error.message);
+      }
 
-    // setSelectedmovId(watchlistId);
-    // console.log("id is ", selectedMovId);
-  };
+      console.log("added");
+
+      setSelectedmovId(watchlistId);
+      // console.log("id is ", selectedMovId);
+    };
+  }, [selectedMovId]);
 
   return (
     <div className="contextClass" onClick={handleContext}>
@@ -88,7 +92,7 @@ const Addlist = ({
               {currentUser &&
                 displayList?.length > 0 &&
                 displayList.map((list, ind) => (
-                  <li key={ind} onClick={() => addMovie(list.id)}>
+                  <li key={ind} onClick={() => addMovie.current(list.id)}>
                     <Link>{list.name}</Link>
                   </li>
                 ))}
