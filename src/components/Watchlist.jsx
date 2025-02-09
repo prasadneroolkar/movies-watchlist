@@ -21,7 +21,7 @@ const Watchlist = () => {
                   <li key={id}>
                     <Link to="watchlist" target="_blank">
                       <img src={mwatchlist} alt="movie.logo" />
-                      {/* {val.name} */}
+                      {val.name}
                     </Link>
                   </li>
                 );

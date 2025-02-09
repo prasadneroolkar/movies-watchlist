@@ -14,7 +14,7 @@ const Addlist = ({
   onToggleMenu,
   movieDetails,
 }) => {
-  const [selectedMovId, setSelectedmovId] = useState("");
+  // const [selectedMovId, setSelectedmovId] = useState("");
 
   const dispatch = useDispatch();
   const displayList = useSelector((state) => state.watchlist);
@@ -52,14 +52,20 @@ const Addlist = ({
   }, [menuVisible, onToggleMenu]);
 
   const addMovie = (watchlistId) => {
+    try {
+      dispatch(
+        addMovieToWatchlist({
+          watchlistId,
+          movieDetails,
+        })
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+
     console.log("added");
-    dispatch(
-      addMovieToWatchlist({
-        watchlistId,
-        movieDetails,
-      })
-    );
-    setSelectedmovId(watchlistId);
+
+    // setSelectedmovId(watchlistId);
     // console.log("id is ", selectedMovId);
   };
 
