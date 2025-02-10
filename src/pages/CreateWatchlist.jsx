@@ -27,6 +27,8 @@ const CreateWatchlist = () => {
     user: users.email,
   });
 
+  console.log("watchlist email", watchlistData.user);
+
   const validateForm = (data) => {
     const errorData = {};
     if (data !== undefined && !data.trim()) {
@@ -52,24 +54,6 @@ const CreateWatchlist = () => {
     let formValidate = validateForm(watchlistName);
     const val = Object.keys(formValidate).length;
     if (val === 0) {
-      // if (movies) {
-      //   dispatch(
-      //     addMovieToWatchlist({
-      //       name: watchlistData.watchlistName,
-      //       description: watchlistData.description,
-      //       user: watchlistData.user,
-      //       movies,
-      //     })
-      //   );
-      // } else {
-      //   dispatch(
-      //     createWatchlist({
-      //       name: watchlistData.watchlistName,
-      //       description: watchlistData.description,
-      //       user: watchlistData.user,
-      //     })
-      //   );
-
       dispatch(
         createWatchlist({
           id: watchlistId,
@@ -80,26 +64,20 @@ const CreateWatchlist = () => {
         })
       );
 
-      // if (movies) {
-      //   dispatch(addMovieToWatchlist({ watchlistId, movie: movies }));
+      const existingWatchlist =
+        JSON.parse(localStorage.getItem("watchlists")) || [];
+      console.log("existingdata", existingWatchlist);
 
-      //   // console.log("watchlist added", watchlistData);
-
-      //   const existingWatchlist =
-      //     JSON.parse(localStorage.getItem("watchlists")) || [];
-      //   // console.log("existingdata", existingWatchlist);
-
-      //   const updatedWatchlist = [
-      //     ...existingWatchlist,
-      //     {
-      //       name: watchlistData.watchlistName,
-      //       description: watchlistData.description,
-      //       user: watchlistData.user,
-      //     },
-      //   ];
-      //   localStorage.setItem("watchlists", JSON.stringify(updatedWatchlist));
-      //   // console.log("Watchlist added:", updatedWatchlist);
-      // }
+      const updatedWatchlist = [
+        ...existingWatchlist,
+        {
+          name: watchlistData.watchlistName,
+          description: watchlistData.description,
+          user: watchlistData.user,
+        },
+      ];
+      localStorage.setItem("watchlists", JSON.stringify(updatedWatchlist));
+      console.log("udpated watchlist:", updatedWatchlist);
     }
 
     setwatchlistData({
