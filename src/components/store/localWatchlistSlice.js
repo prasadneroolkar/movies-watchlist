@@ -20,9 +20,39 @@ const localwatchlistSlice = createSlice({
       state.length = 0; // Clear the existing state
       state.push(...storedWatchlist); // Populate it with the new data
     },
+
+    updatelocalliststorage(state, action) {
+      const { localListid, localMovie } = action.payload;
+      const localList = state.find((LocalId) => LocalId.id === localListid);
+
+      if (localList) {
+        if (!Array.isArray(localStorage.movies)) {
+          localStorage.movies = [];
+        }
+
+        const movieExists = localStorage.movies.some(
+          (m) => m.imdbID === localMovie.imdbID
+        );
+
+        if (!movieExists) {
+          localStorage.movies.push(localMovie);
+          // console.log(
+          //   "Movie added to watchlist:",
+          //   JSON.stringify(watchlist, null, 2)
+          // );
+        } else {
+          console.log("Movie already exists in the Localwatchlist");
+        }
+      } else {
+        console.error("LocalWatchlist not found!");
+      }
+    },
   },
 });
 
-export const { addWatchlistToLocalStorage, getWatchlistFromLocalStorage } =
-  localwatchlistSlice.actions;
+export const {
+  addWatchlistToLocalStorage,
+  getWatchlistFromLocalStorage,
+  updatelocalliststorage,
+} = localwatchlistSlice.actions;
 export default localwatchlistSlice.reducer;

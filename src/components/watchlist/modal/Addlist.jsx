@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { addMovieToWatchlist } from "../../store/watchlistSlice";
+import { updatelocalliststorage } from "../../store/localWatchlistSlice";
 
 const Addlist = ({
   children,
@@ -58,6 +59,12 @@ const Addlist = ({
       try {
         dispatch(
           addMovieToWatchlist({
+            watchlistId,
+            movieDetails,
+          })
+        );
+        dispatch(
+          updatelocalliststorage({
             watchlistId,
             movieDetails,
           })

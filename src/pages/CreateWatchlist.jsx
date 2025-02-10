@@ -5,10 +5,11 @@ import InputField from "../components/watchlist/InputField";
 import Textarea from "../components/watchlist/Textarea";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { createWatchlist } from "../components/store/watchlistSlice";
 import {
-  createWatchlist,
-  addMovieToWatchlist,
-} from "../components/store/watchlistSlice";
+  addWatchlistToLocalStorage,
+  getWatchlistFromLocalStorage,
+} from "../components/store/localWatchlistSlice";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
@@ -27,7 +28,7 @@ const CreateWatchlist = () => {
     user: users.email,
   });
 
-  console.log("watchlist email", watchlistData.user);
+  // console.log("watchlist email", watchlistData.user);
 
   const validateForm = (data) => {
     const errorData = {};
@@ -64,20 +65,18 @@ const CreateWatchlist = () => {
         })
       );
 
-      const existingWatchlist =
-        JSON.parse(localStorage.getItem("watchlists")) || [];
-      console.log("existingdata", existingWatchlist);
+      const newWatchlist = {
+        id: watchlistId,
+        name: watchlistData.watchlistName,
+        description: watchlistData.description,
+        user: watchlistData.user,
+        movies: movies ? [movies] : [],
+      };
 
-      const updatedWatchlist = [
-        ...existingWatchlist,
-        {
-          name: watchlistData.watchlistName,
-          description: watchlistData.description,
-          user: watchlistData.user,
-        },
-      ];
-      localStorage.setItem("watchlists", JSON.stringify(updatedWatchlist));
-      console.log("udpated watchlist:", updatedWatchlist);
+      // dispatch(createWatchlist(newWatchlist));
+      dispatch(addWatchlistToLocalStorage(newWatchlist));
+
+      console.log("udpated watchlist and createwatchlist:", newWatchlist.id);
     }
 
     setwatchlistData({
