@@ -16,6 +16,7 @@ const Addlist = ({
   movieDetails,
 }) => {
   const [selectedMovId, setSelectedmovId] = useState("");
+  const [selectedLocalId, setSelectedLocId] = useState("");
 
   const dispatch = useDispatch();
   const displayList = useSelector((state) => state.watchlist);
@@ -76,9 +77,12 @@ const Addlist = ({
       console.log("added");
 
       setSelectedmovId(watchlistId);
+      setSelectedLocId(watchlistId);
+
       // console.log("id is ", selectedMovId);
+      console.log("localListID", watchlistId);
     };
-  }, [selectedMovId]);
+  }, [selectedMovId, selectedLocalId]);
 
   return (
     <div className="contextClass" onClick={handleContext}>

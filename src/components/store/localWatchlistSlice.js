@@ -25,7 +25,18 @@ const localwatchlistSlice = createSlice({
       const { localListid, localMovie } = action.payload;
       const localList = state.find((LocalId) => LocalId.id === localListid);
 
+      console.log("localListID store", localListid);
+      console.log(
+        "LocalWatchlist found:",
+        JSON.parse(localStorage.watchlists, null, 2)
+      );
+
       if (localList) {
+        // console.log(
+        //   "if Localmovie exist in movie",
+        //   JSON.parse(localStorage.movi, null, 2)
+        // );
+
         if (!Array.isArray(localStorage.movies)) {
           localStorage.movies = [];
         }
