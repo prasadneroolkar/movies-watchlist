@@ -6,7 +6,10 @@ import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { addMovieToWatchlist } from "../../store/watchlistSlice";
-import { updatelocalliststorage } from "../../store/localWatchlistSlice";
+import {
+  updatelocalliststorage,
+  getWatchlistFromLocalStorage,
+} from "../../store/localWatchlistSlice";
 
 const Addlist = ({
   children,
@@ -19,6 +22,7 @@ const Addlist = ({
   const [selectedLocalId, setSelectedLocId] = useState("");
 
   const dispatch = useDispatch();
+
   const displayList = useSelector((state) => state.watchlist);
   const displayLocalList = useSelector((state) => state.localWatchlist);
 
@@ -60,7 +64,7 @@ const Addlist = ({
   }, [menuVisible, onToggleMenu]);
 
   const addMovie = (watchlistId, locID) => {
-    console.log("id in local ", locID);
+    // console.log("id in local ", locID);
     try {
       dispatch(
         addMovieToWatchlist({
@@ -111,12 +115,7 @@ const Addlist = ({
                       addMovie(list.id, mergeList[1]?.[ind]?.id || null)
                     }
                   >
-                    <Link>
-                      {list.name} {list.id}
-                      {/* {mergeList[0][1]?.name} {mergeList[0][1]?.id} */}
-                      {/* {list.name}
-                      {list.id} */}
-                    </Link>
+                    <Link>{list.name}</Link>
                   </li>
                 ))}
             </ul>
