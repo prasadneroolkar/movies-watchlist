@@ -21,6 +21,8 @@ const watchlistSlice = createSlice({
 
       // Find the watchlist
       const watchlist = state.find((w) => w.id === watchlistId);
+      console.log("og watchlist id ", watchlistId);
+      console.log("og watchlist ", watchlist);
 
       // console.log("Watchlist found:", JSON.stringify(watchlist, null, 2));
 

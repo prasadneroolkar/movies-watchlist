@@ -20,7 +20,13 @@ const Addlist = ({
 
   const dispatch = useDispatch();
   const displayList = useSelector((state) => state.watchlist);
+  const displayLocalList = useSelector((state) => state.localWatchlist);
+
   // console.log("displaylist", displayList);
+  // console.log("displayLocalList", displayLocalList);
+
+  const mergeList = [[...displayList], [...displayLocalList]];
+  // console.log("merged list", mergeList);
 
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -53,36 +59,32 @@ const Addlist = ({
     };
   }, [menuVisible, onToggleMenu]);
 
-  const addMovie = useRef(null);
+  const addMovie = (watchlistId, locID) => {
+    console.log("id in local ", locID);
+    try {
+      dispatch(
+        addMovieToWatchlist({
+          watchlistId,
+          movieDetails,
+        })
+      );
+      dispatch(
+        updatelocalliststorage({
+          localListid: locID,
+          localMovie: movieDetails,
+        })
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
 
-  useEffect(() => {
-    addMovie.current = (watchlistId) => {
-      try {
-        dispatch(
-          addMovieToWatchlist({
-            watchlistId,
-            movieDetails,
-          })
-        );
-        dispatch(
-          updatelocalliststorage({
-            watchlistId,
-            movieDetails,
-          })
-        );
-      } catch (error) {
-        console.error(error.message);
-      }
+    setSelectedmovId(watchlistId);
+    console.log("added");
 
-      console.log("added");
+    setSelectedLocId(locID);
 
-      setSelectedmovId(watchlistId);
-      setSelectedLocId(watchlistId);
-
-      // console.log("id is ", selectedMovId);
-      console.log("localListID", watchlistId);
-    };
-  }, [selectedMovId, selectedLocalId]);
+    // console.log("localListID in addlist jsx", watchlistId);
+  };
 
   return (
     <div className="contextClass" onClick={handleContext}>
@@ -101,10 +103,20 @@ const Addlist = ({
           <li>
             <ul>
               {currentUser &&
-                displayList?.length > 0 &&
-                displayList.map((list, ind) => (
-                  <li key={ind} onClick={() => addMovie.current(list.id)}>
-                    <Link>{list.name}</Link>
+                mergeList[0]?.length > 0 &&
+                mergeList[0].map((list, ind) => (
+                  <li
+                    key={ind}
+                    onClick={() =>
+                      addMovie(list.id, mergeList[1]?.[ind]?.id || null)
+                    }
+                  >
+                    <Link>
+                      {list.name} {list.id}
+                      {/* {mergeList[0][1]?.name} {mergeList[0][1]?.id} */}
+                      {/* {list.name}
+                      {list.id} */}
+                    </Link>
                   </li>
                 ))}
             </ul>
