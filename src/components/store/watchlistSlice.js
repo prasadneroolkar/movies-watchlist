@@ -54,12 +54,6 @@ const watchlistSlice = createSlice({
         console.error("Watchlist not found!");
       }
     },
-
-    // addFrommodalList(state, action) {
-    //   state.push({
-    //     addMovie: action.payload.movies || [],
-    //   });
-    // },
   },
 });
 
