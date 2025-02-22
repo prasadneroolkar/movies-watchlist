@@ -36,7 +36,7 @@ const Addlist = ({
   // console.log("displayLocalList", displayLocalList);
 
   const mergeList = [[...userWatchlists]];
-  console.log("merged list", mergeList);
+  // console.log("merged list", mergeList);
 
   const navigate = useNavigate();
   // console.log("The movieList", movieDetails);

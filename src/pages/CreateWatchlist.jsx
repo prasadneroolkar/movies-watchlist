@@ -12,6 +12,7 @@ import {
 } from "../components/store/localWatchlistSlice";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import CustomSnackbar from "../components/Messages/CustomSnackbar";
 
 const CreateWatchlist = () => {
   const { handleErrormsg, error, setError } = useContext(AuthContext);
@@ -49,6 +50,7 @@ const CreateWatchlist = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
+
     const { watchlistName } = watchlistData;
     const watchlistId = Date.now();
 
@@ -90,7 +92,6 @@ const CreateWatchlist = () => {
     <>
       {/* {movies && <pre>{JSON.stringify(movies, null, 2)}</pre>} */}
       <PageTitle className="create_watchlist" Title="Create a new Watchlist" />
-
       <WatchlistForm onSubmit={onSubmit}>
         <InputField
           name="watchlistName"
@@ -105,6 +106,7 @@ const CreateWatchlist = () => {
         />
         <Button btnName="Create watchlist" type="submit" />
       </WatchlistForm>
+      <CustomSnackbar />
     </>
   );
 };
