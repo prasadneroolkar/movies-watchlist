@@ -18,24 +18,24 @@ const Addlist = ({
   onToggleMenu,
   movieDetails,
 }) => {
-  const [selectedMovId, setSelectedmovId] = useState("");
+  // const [selectedMovId, setSelectedmovId] = useState("");
   const [selectedLocalId, setSelectedLocId] = useState("");
 
   const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
 
-  const displayList = useSelector((state) => state.watchlist);
+  // const displayList = useSelector((state) => state.watchlist);
   const displayLocalList = useSelector((state) => state.localWatchlist);
 
   const userWatchlists = displayLocalList?.filter(
     (watchlist) => watchlist.user === currentUser?.email
   );
-  console.log("userWatchlists", userWatchlists);
+  // console.log("userWatchlists", userWatchlists);
 
   // console.log("displaylist", displayList);
   // console.log("displayLocalList", displayLocalList);
 
-  const mergeList = [[...displayList], [...userWatchlists]];
+  const mergeList = [[...userWatchlists]];
   console.log("merged list", mergeList);
 
   const navigate = useNavigate();
@@ -68,15 +68,15 @@ const Addlist = ({
     };
   }, [menuVisible, onToggleMenu]);
 
-  const addMovie = (watchlistId, locID) => {
+  const addMovie = (locID) => {
     // console.log("id in local ", locID);
     try {
-      dispatch(
-        addMovieToWatchlist({
-          watchlistId,
-          movieDetails,
-        })
-      );
+      // dispatch(
+      //   addMovieToWatchlist({
+      //     watchlistId,
+      //     movieDetails,
+      //   })
+      // );
       dispatch(
         updatelocalliststorage({
           localListid: locID,
@@ -87,7 +87,7 @@ const Addlist = ({
       console.error(error.message);
     }
 
-    setSelectedmovId(watchlistId);
+    // setSelectedmovId(watchlistId);
     console.log("added");
 
     setSelectedLocId(locID);
@@ -114,12 +114,7 @@ const Addlist = ({
               {currentUser &&
                 mergeList[0]?.length > 0 &&
                 mergeList[0].map((list, ind) => (
-                  <li
-                    key={ind}
-                    onClick={() =>
-                      addMovie(list.id, mergeList[1]?.[ind]?.id || null)
-                    }
-                  >
+                  <li key={ind} onClick={() => addMovie(list.id || null)}>
                     <Link>{list.name}</Link>
                   </li>
                 ))}
