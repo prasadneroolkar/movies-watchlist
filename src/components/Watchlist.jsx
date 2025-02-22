@@ -7,16 +7,22 @@ import { useSelector } from "react-redux";
 
 const Watchlist = () => {
   const { currentUser } = useContext(AuthContext);
-  const watchlistName = useSelector((state) => state.watchlist);
+  const localWatchlistName = useSelector((state) => state.localWatchlist);
+
+  const userWatchlists = localWatchlistName?.filter(
+    (watchlist) => watchlist.user === currentUser?.email
+  );
+
   return (
     currentUser && (
       <>
         <hr />
         <div className="watchlist">
           <p>My lists</p>
+
           <ul>
-            {watchlistName?.length ? (
-              watchlistName.map((val, id) => {
+            {userWatchlists?.length ? (
+              userWatchlists.map((val, id) => {
                 return (
                   <li key={id}>
                     <Link to="watchlist" target="_blank">

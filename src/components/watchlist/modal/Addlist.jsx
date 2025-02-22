@@ -22,17 +22,22 @@ const Addlist = ({
   const [selectedLocalId, setSelectedLocId] = useState("");
 
   const dispatch = useDispatch();
+  const { currentUser } = useContext(AuthContext);
 
   const displayList = useSelector((state) => state.watchlist);
   const displayLocalList = useSelector((state) => state.localWatchlist);
 
+  const userWatchlists = displayLocalList?.filter(
+    (watchlist) => watchlist.user === currentUser?.email
+  );
+  console.log("userWatchlists", userWatchlists);
+
   // console.log("displaylist", displayList);
   // console.log("displayLocalList", displayLocalList);
 
-  const mergeList = [[...displayList], [...displayLocalList]];
-  // console.log("merged list", mergeList);
+  const mergeList = [[...displayList], [...userWatchlists]];
+  console.log("merged list", mergeList);
 
-  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
   // console.log("The movieList", movieDetails);
 
