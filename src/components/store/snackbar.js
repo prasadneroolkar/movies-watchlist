@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
- 
-const initialState;
+
+const initialState = { value: false };
 
 const snackbar = createSlice({
-  name:"snackbarMsg",
-  
-})
+  name: "snackbarmsg",
+  initialState,
+  reducers: {},
+});
