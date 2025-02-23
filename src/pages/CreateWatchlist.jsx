@@ -23,6 +23,8 @@ const CreateWatchlist = () => {
   const dispatch = useDispatch();
   const users = JSON.parse(localStorage.getItem("currentUser")) || [];
 
+  const [open, setOpen] = useState(false);
+
   const [watchlistData, setwatchlistData] = useState({
     watchlistName: "",
     description: "",
@@ -46,6 +48,15 @@ const CreateWatchlist = () => {
       [e.target.name]: e.target.value,
     }));
     handleErrormsg("watchlistName");
+  };
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") return;
+    setOpen(false);
   };
 
   const onSubmit = (event) => {
@@ -78,9 +89,9 @@ const CreateWatchlist = () => {
       // dispatch(createWatchlist(newWatchlist));
       dispatch(addWatchlistToLocalStorage(newWatchlist));
 
-      console.log("udpated watchlist and createwatchlist:", newWatchlist.id);
+      handleClick();
     }
-
+    handleClick();
     setwatchlistData({
       watchlistName: "",
       description: "",
@@ -106,7 +117,7 @@ const CreateWatchlist = () => {
         />
         <Button btnName="Create watchlist" type="submit" />
       </WatchlistForm>
-      <CustomSnackbar />
+      <CustomSnackbar open={open} handleClose={handleClose} message="Saved!" />
     </>
   );
 };
