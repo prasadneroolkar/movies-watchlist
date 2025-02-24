@@ -4,7 +4,7 @@ import WatchlistForm from "../components/watchlist/WatchlistForm";
 import InputField from "../components/watchlist/InputField";
 import Textarea from "../components/watchlist/Textarea";
 import { useContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createWatchlist } from "../components/store/watchlistSlice";
 import {
   addWatchlistToLocalStorage,
@@ -13,6 +13,7 @@ import {
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import CustomSnackbar from "../components/Messages/CustomSnackbar";
+import { showMsg, closeMsg } from "../components/store/snackbar";
 
 const CreateWatchlist = () => {
   const { handleErrormsg, error, setError } = useContext(AuthContext);
@@ -21,9 +22,10 @@ const CreateWatchlist = () => {
   // console.log("from state", movies);
 
   const dispatch = useDispatch();
-  const users = JSON.parse(localStorage.getItem("currentUser")) || [];
+  const snackbarState = useSelector((state) => state.snackbarMsg);
+  console.log("Snackbar state", snackbarState);
 
-  const [open, setOpen] = useState(false);
+  const users = JSON.parse(localStorage.getItem("currentUser")) || [];
 
   const [watchlistData, setwatchlistData] = useState({
     watchlistName: "",
@@ -51,12 +53,13 @@ const CreateWatchlist = () => {
   };
 
   const handleClick = () => {
-    setOpen(true);
+    console.log("In function");
+    dispatch(showMsg("Saved!"));
   };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") return;
-    setOpen(false);
+    dispatch(closeMsg());
   };
 
   const onSubmit = (event) => {
@@ -117,7 +120,11 @@ const CreateWatchlist = () => {
         />
         <Button btnName="Create watchlist" type="submit" />
       </WatchlistForm>
-      <CustomSnackbar open={open} handleClose={handleClose} message="Saved!" />
+      <CustomSnackbar
+        open={snackbarState.value}
+        handleClose={handleClose}
+        message={snackbarState.message}
+      />
     </>
   );
 };
