@@ -23,7 +23,6 @@ const CreateWatchlist = () => {
 
   const dispatch = useDispatch();
   const snackbarState = useSelector((state) => state.snackbarMsg);
-  console.log("Snackbar state", snackbarState);
 
   const users = JSON.parse(localStorage.getItem("currentUser")) || [];
 
@@ -53,8 +52,7 @@ const CreateWatchlist = () => {
   };
 
   const handleClick = () => {
-    console.log("In function");
-    dispatch(showMsg("Saved!"));
+    dispatch(showMsg("Saved Succesfully!"));
   };
 
   const handleClose = (event, reason) => {
@@ -91,8 +89,6 @@ const CreateWatchlist = () => {
 
       // dispatch(createWatchlist(newWatchlist));
       dispatch(addWatchlistToLocalStorage(newWatchlist));
-
-      handleClick();
     }
     handleClick();
     setwatchlistData({

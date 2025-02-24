@@ -7,12 +7,13 @@ const snackbarSlice = createSlice({
   initialState,
   reducers: {
     showMsg(state, action) {
-      state.open = true;
+      state.value = true;
+
       state.message = action.payload;
     },
     closeMsg(state) {
-      state.open = false;
-      state.message = "";
+      state.value = false;
+      // state.message = "";
     },
   },
 });
