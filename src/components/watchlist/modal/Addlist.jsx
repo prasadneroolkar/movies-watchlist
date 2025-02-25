@@ -30,7 +30,6 @@ const Addlist = ({
   const userWatchlists = displayLocalList?.filter(
     (watchlist) => watchlist.user === currentUser?.email
   );
-  // console.log("userWatchlists", userWatchlists);
 
   // console.log("displaylist", displayList);
   // console.log("displayLocalList", displayLocalList);

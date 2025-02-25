@@ -4,11 +4,11 @@ import mwatchlist from "/images/mwatchlist.png";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useSelector } from "react-redux";
+import { contextWatchlist } from "../context/WatchlistContext";
 
 const Watchlist = () => {
   const { currentUser } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [listDetails, setlistDetails] = useState("");
+  const { handleId } = useContext(contextWatchlist);
 
   const localWatchlistName = useSelector((state) => state.localWatchlist);
 
@@ -16,25 +16,18 @@ const Watchlist = () => {
     (watchlist) => watchlist.user === currentUser?.email
   );
 
-  const handleId = (id) => {
-    setlistDetails(id);
-    // console.log("watchlist id is", id);
-    // console.log("watchlist id details is", details);
-    // navigate("/watchlist", { state: details });
-  };
-
   return (
     currentUser && (
       <>
         <hr />
         <div className="watchlist">
           <p>My lists</p>
-
+          {/* to="/watchlist" target="_blank */}
           <ul>
             {userWatchlists?.length ? (
               userWatchlists.map((val, id) => {
                 return (
-                  <li key={id} onClick={() => handleId(id)}>
+                  <li key={id} onClick={() => handleId(val.id)}>
                     <Link to="/watchlist" target="_blank">
                       <img src={mwatchlist} alt="movie.logo" />
                       {val.name}/{val.id}
