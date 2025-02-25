@@ -27,8 +27,8 @@ const Watchlist = () => {
             {userWatchlists?.length ? (
               userWatchlists.map((val, id) => {
                 return (
-                  <li key={id} onClick={() => handleId(val.id)}>
-                    <Link to="/watchlist" target="_blank">
+                  <li key={id} onClick={() => handleId(val)}>
+                    <Link to="/watchlist">
                       <img src={mwatchlist} alt="movie.logo" />
                       {val.name}/{val.id}
                     </Link>
