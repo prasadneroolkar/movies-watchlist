@@ -4,6 +4,9 @@ import editBtn from "/images/editBtn.png";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { contextWatchlist } from "../context/WatchlistContext";
+import better from "/images/better.png";
+import good from "/images/good.png";
+import awful from "/images/awful.png";
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
@@ -18,7 +21,7 @@ const WatchlistPage = () => {
   // } else {
   //   getDetails = null;
   // }
-  // console.log("getDetails", getDetails);
+  console.log("getDetails", listID);
 
   return (
     <section className="watchlist_page">
@@ -50,24 +53,52 @@ const WatchlistPage = () => {
 
       <section className="movies_section">
         <div className="slider-container card-main ">
-          <div className="mov_card">
-            <span>
-              <img src="/images/Checkmark.png" alt="ribbon" />
-            </span>
-            <img
-              src="https://m.media-amazon.com/images/M/MV5BMDBkZDNjMWEtOTdmMi00NmExLTg5MmMtNTFlYTJlNWY5YTdmXkEyXkFqcGc@._V1_SX300.jpg"
-              className="card-img-top"
-              alt="Top Gun: Maverick"
-            />
-            <p className="ratings">
-              <img src="/images/better.png" alt="" />
-              <span>78</span>
-              <sup>/100</sup>
-            </p>
-            <h5 className="card-title">
-              Top Gun: Maverick<span>(2022)</span>
-            </h5>
-          </div>
+          {listID?.movies?.length === 0 ? (
+            <p>No movies found.</p>
+          ) : (
+            listID.movies?.map((val) => (
+              <>
+                <div className="mov_card" key={val.imdbID}>
+                  <span>
+                    <img src="/images/Checkmark.png" alt="ribbon" />
+                  </span>
+                  <img
+                    src={val.Poster}
+                    className="card-img-top"
+                    alt={val.Title}
+                  />
+                  {/* 
+                  {val.Ratings?.map(
+                    (rate, index) => {
+                      if (rate.Source === "Metacritic") {
+                        return (
+                          <p className="ratings" key={index}>
+                            <img
+                              src={
+                                parseInt(val.Value.slice(0, 2)) > 50
+                                  ? better
+                                  : parseInt(val.Value.slice(0, 2)) < 35
+                                  ? awful
+                                  : good
+                              }
+                              alt=""
+                            />
+                            <span>{rate.Value.slice(0, 2)}</span>
+                            <sup>/100</sup>
+                          </p>
+                        );
+                      }
+                    }
+                    //  if(rate.Source==="Metacritic")
+                  )} */}
+                  <h5 className="card-title">
+                    {val.Title}
+                    <span>({val.Year})</span>
+                  </h5>
+                </div>
+              </>
+            ))
+          )}
         </div>
       </section>
     </section>
