@@ -32,10 +32,10 @@ const Addlist = ({
   );
 
   // console.log("displaylist", displayList);
-  // console.log("displayLocalList", displayLocalList);
+  // console.log("displayLocalList", userWatchlists);
 
   const mergeList = [[...userWatchlists]];
-  // console.log("merged list", mergeList);
+  console.log("merged list", mergeList);
 
   const navigate = useNavigate();
   // console.log("The movieList", movieDetails);
@@ -87,11 +87,11 @@ const Addlist = ({
     }
 
     // setSelectedmovId(watchlistId);
-    console.log("added");
+    // console.log("added");
 
     setSelectedLocId(locID);
 
-    // console.log("localListID in addlist jsx", watchlistId);
+    // console.log("localListID in addlist jsx", locID);
   };
 
   return (

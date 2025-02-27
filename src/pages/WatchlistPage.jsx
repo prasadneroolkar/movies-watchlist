@@ -11,22 +11,22 @@ import awful from "/images/awful.png";
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
 
-  // const currentLocalid = JSON.parse(localStorage.getItem("currentID"));
+  const currentLocalid = JSON.parse(localStorage.getItem("currentID"));
 
-  // const watchlistDetails = useSelector((state) => state.localWatchlist);
+  const watchlistDetails = useSelector((state) => state.localWatchlist);
 
-  // let getDetails;
-  // if (currentLocalid != undefined) {
-  //   getDetails = watchlistDetails?.find((data) => data.id === currentLocalid);
-  // } else {
-  //   getDetails = null;
-  // }
-  console.log("getDetails", listID);
+  let getDetails;
+  if (currentLocalid != undefined) {
+    getDetails = watchlistDetails?.find((data) => data.id === currentLocalid);
+  } else {
+    getDetails = null;
+  }
+  console.log("getDetails", getDetails);
 
   return (
     <section className="watchlist_page">
       <div className="editbtn">
-        <PageTitle className="mb-0" Title={listID?.name} />
+        <PageTitle className="mb-0" Title={getDetails?.name} />
         <Link to="/editlist">
           <img src={editBtn} alt="edit btn" />
         </Link>
@@ -53,10 +53,10 @@ const WatchlistPage = () => {
 
       <section className="movies_section">
         <div className="slider-container card-main ">
-          {listID?.movies?.length === 0 ? (
+          {getDetails?.movies?.length === 0 ? (
             <p>No movies found.</p>
           ) : (
-            listID.movies?.map((val) => (
+            getDetails?.movies?.map((val) => (
               <>
                 <div className="mov_card" key={val.imdbID}>
                   <span>
@@ -67,30 +67,35 @@ const WatchlistPage = () => {
                     className="card-img-top"
                     alt={val.Title}
                   />
-                  {/* 
-                  {val.Ratings?.map(
-                    (rate, index) => {
-                      if (rate.Source === "Metacritic") {
-                        return (
-                          <p className="ratings" key={index}>
-                            <img
-                              src={
-                                parseInt(val.Value.slice(0, 2)) > 50
-                                  ? better
-                                  : parseInt(val.Value.slice(0, 2)) < 35
-                                  ? awful
-                                  : good
-                              }
-                              alt=""
-                            />
-                            <span>{rate.Value.slice(0, 2)}</span>
-                            <sup>/100</sup>
-                          </p>
-                        );
-                      }
-                    }
-                    //  if(rate.Source==="Metacritic")
-                  )} */}
+
+                  {val.Ratings?.map((rate, index) =>
+                    rate.Source === "Metacritic" ? (
+                      <p className="ratings" key={index}>
+                        {(() => {
+                          const ratingValue = parseInt(
+                            rate.Value.slice(0, 2),
+                            10
+                          );
+                          return (
+                            <>
+                              <img
+                                src={
+                                  ratingValue > 50
+                                    ? better
+                                    : ratingValue < 35
+                                    ? awful
+                                    : good
+                                }
+                                alt="rating-icon"
+                              />
+                              <span>{ratingValue}</span>
+                              <sup>/100</sup>
+                            </>
+                          );
+                        })()}
+                      </p>
+                    ) : null
+                  )}
                   <h5 className="card-title">
                     {val.Title}
                     <span>({val.Year})</span>

@@ -22,12 +22,11 @@ const Watchlist = () => {
         <hr />
         <div className="watchlist">
           <p>My lists</p>
-          {/* to="/watchlist" target="_blank */}
           <ul>
             {userWatchlists?.length ? (
               userWatchlists.map((val, id) => {
                 return (
-                  <li key={id} onClick={() => handleId(val)}>
+                  <li key={id} onClick={() => handleId(val.id)}>
                     <Link to="/watchlist">
                       <img src={mwatchlist} alt="movie.logo" />
                       {val.name}/{val.id}

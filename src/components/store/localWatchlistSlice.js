@@ -19,6 +19,7 @@ const localwatchlistSlice = createSlice({
         JSON.parse(localStorage.getItem("watchlists")) || [];
       state.length = 0; // Clear the existing state
       state.push(...storedWatchlist); // Populate it with the new data
+      console.log("storaed locallist", storedWatchlist);
     },
 
     updatelocalliststorage(state, action) {
