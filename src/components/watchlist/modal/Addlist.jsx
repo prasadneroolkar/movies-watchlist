@@ -12,6 +12,7 @@ import {
   updatelocalliststorage,
   getWatchlistFromLocalStorage,
 } from "../../store/localWatchlistSlice";
+import { showMsg } from "../../store/snackbar";
 
 const Addlist = ({
   children,
@@ -28,16 +29,21 @@ const Addlist = ({
 
   // const displayList = useSelector((state) => state.watchlist);
   const displayLocalList = useSelector((state) => state.localWatchlist);
+  console.log("displayLocalList", displayLocalList);
+
+  const statusMessage = useSelector(
+    (state) => state.localwatchlist.statusMessage
+  );
+  const statusType = useSelector((state) => state.localwatchlist.statusType);
 
   const userWatchlists = displayLocalList?.filter(
     (watchlist) => watchlist.user === currentUser?.email
   );
 
   // console.log("displaylist", displayList);
-  // console.log("displayLocalList", userWatchlists);
 
   const mergeList = [[...userWatchlists]];
-  console.log("merged list", mergeList);
+  // console.log("merged list", mergeList);
 
   const navigate = useNavigate();
   // console.log("The movieList", movieDetails);
@@ -84,6 +90,16 @@ const Addlist = ({
           localMovie: movieDetails,
         })
       );
+
+      // ✅ Dispatch snackbar message
+      if (statusMessage) {
+        dispatch(
+          showMsg({
+            message: statusMessage,
+            type: statusType,
+          })
+        );
+      }
     } catch (error) {
       console.error(error.message);
     }

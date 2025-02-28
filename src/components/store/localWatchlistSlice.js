@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { showMsg } from "./snackbar";
 
 const initialState = [];
 
@@ -22,30 +21,68 @@ const localwatchlistSlice = createSlice({
       state.push(...storedWatchlist); // Populate it with the new data
     },
 
+    // updatelocalliststorage(state, action) {
+    //   const { localListid, localMovie } = action.payload;
+
+    //   const localList = state.find((lw) => lw.id === localListid);
+
+    //   if (localList) {
+    //     if (!Array.isArray(localList.movies)) {
+    //       localList.movies = [];
+    //     }
+
+    //     const movieExists = localList.movies.some(
+    //       (m) => m.imdbID === localMovie.imdbID
+    //     );
+
+    //     if (!movieExists) {
+    //       localList.movies.push(localMovie);
+    //       localStorage.setItem("watchlists", JSON.stringify(state));
+    //       state.statusMessage = "Added Successfully!";
+    //       state.statusType = "success";
+    //     } else {
+    //       state.statusMessage = "Movie already exists";
+    //       state.statusType = "error";
+    //     }
+    //   } else {
+    //     state.statusMessage = "Watchlist not found";
+    //     state.statusType = "error";
+    //   }
+    // },
     updatelocalliststorage(state, action) {
       const { localListid, localMovie } = action.payload;
 
-      const localList = state.find((lw) => lw.id === localListid);
+      const updatedState = state.map((watchlist) => {
+        if (watchlist.id === localListid) {
+          if (!Array.isArray(watchlist.movies)) {
+            watchlist.movies = [];
+          }
 
-      if (localList) {
-        if (!Array.isArray(localList.movies)) {
-          localList.movies = [];
+          const movieExists = watchlist.movies.some(
+            (m) => m.imdbID === localMovie.imdbID
+          );
+
+          if (!movieExists) {
+            watchlist.movies.push(localMovie);
+            localStorage.setItem("watchlists", JSON.stringify(state));
+
+            return {
+              ...state,
+              statusMessage: "Added Successfully!",
+              statusType: "success",
+            };
+          } else {
+            return {
+              ...state,
+              statusMessage: "Movie already exists",
+              statusType: "error",
+            };
+          }
         }
+        return watchlist;
+      });
 
-        const movieExists = localList.movies.some(
-          (m) => m.imdbID === localMovie.imdbID
-        );
-
-        if (!movieExists) {
-          localList.movies.push(localMovie);
-          localStorage.setItem("watchlists", JSON.stringify(state));
-          return showMsg({ message: "Added Succesfully !", type: "success" });
-        } else {
-          return showMsg({ message: "Movie already exists", type: "error" });
-        }
-      } else {
-        return showMsg({ message: "Watchlist not found", type: "error" });
-      }
+      return updatedState;
     },
   },
 });
