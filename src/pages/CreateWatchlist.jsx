@@ -6,14 +6,10 @@ import Textarea from "../components/watchlist/Textarea";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createWatchlist } from "../components/store/watchlistSlice";
-import {
-  addWatchlistToLocalStorage,
-  getWatchlistFromLocalStorage,
-} from "../components/store/localWatchlistSlice";
+import { addWatchlistToLocalStorage } from "../components/store/localWatchlistSlice";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import CustomSnackbar from "../components/Messages/CustomSnackbar";
-import { showMsg, closeMsg } from "../components/store/snackbar";
+import { showMsg } from "../components/store/snackbar";
 
 const CreateWatchlist = () => {
   const { handleErrormsg, error, setError } = useContext(AuthContext);
@@ -51,15 +47,6 @@ const CreateWatchlist = () => {
     handleErrormsg("watchlistName");
   };
 
-  const handleClick = () => {
-    dispatch(showMsg("Saved Succesfully!"));
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") return;
-    dispatch(closeMsg());
-  };
-
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -87,10 +74,9 @@ const CreateWatchlist = () => {
         movies: movies ? [movies] : [],
       };
 
-      // dispatch(createWatchlist(newWatchlist));
       dispatch(addWatchlistToLocalStorage(newWatchlist));
+      dispatch(showMsg({ message: "Saved Succesfully !", type: "success" }));
     }
-    handleClick();
     setwatchlistData({
       watchlistName: "",
       description: "",
@@ -116,11 +102,6 @@ const CreateWatchlist = () => {
         />
         <Button btnName="Create watchlist" type="submit" />
       </WatchlistForm>
-      <CustomSnackbar
-        open={snackbarState.value}
-        handleClose={handleClose}
-        message={snackbarState.message}
-      />
     </>
   );
 };

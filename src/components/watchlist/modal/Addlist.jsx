@@ -6,6 +6,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { addMovieToWatchlist } from "../../store/watchlistSlice";
+import CustomSnackbar from "../../Messages/CustomSnackbar";
+
 import {
   updatelocalliststorage,
   getWatchlistFromLocalStorage,

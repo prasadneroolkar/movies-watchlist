@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { showMsg } from "./snackbar";
 
 const initialState = [];
 
@@ -27,8 +28,6 @@ const localwatchlistSlice = createSlice({
       const localList = state.find((lw) => lw.id === localListid);
 
       if (localList) {
-        console.log("localList movies", localList.movies);
-
         if (!Array.isArray(localList.movies)) {
           localList.movies = [];
         }
@@ -40,11 +39,12 @@ const localwatchlistSlice = createSlice({
         if (!movieExists) {
           localList.movies.push(localMovie);
           localStorage.setItem("watchlists", JSON.stringify(state));
+          return showMsg({ message: "Added Succesfully !", type: "success" });
         } else {
-          console.log("Movie already exists in the Localwatchlist");
+          return showMsg({ message: "Movie already exists", type: "error" });
         }
       } else {
-        console.error("LocalWatchlist not found!");
+        return showMsg({ message: "Watchlist not found", type: "error" });
       }
     },
   },

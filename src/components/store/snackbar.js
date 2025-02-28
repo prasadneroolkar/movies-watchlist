@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { value: false, message: "" };
+const initialState = { open: false, message: "", type: "info" };
 
 const snackbarSlice = createSlice({
   name: "snackbarmsg",
   initialState,
   reducers: {
     showMsg(state, action) {
-      state.value = true;
-
-      state.message = action.payload;
+      state.open = true;
+      state.message = action.payload.message;
+      state.type = action.payload.type || "info";
     },
     closeMsg(state) {
-      state.value = false;
+      state.open = false;
       // state.message = "";
     },
   },

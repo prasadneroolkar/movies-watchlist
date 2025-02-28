@@ -4,6 +4,7 @@ import "./assets/scss/main.scss";
 import { lazy, useEffect } from "react";
 import { getWatchlistFromLocalStorage } from "./components/store/localWatchlistSlice";
 import { useSelector, useDispatch } from "react-redux";
+import CustomSnackbar from "./components/Messages/CustomSnackbar";
 
 const Layout = lazy(() => import("./components/Layout"));
 const Signup = lazy(() => import("./pages/Signup"));
@@ -38,6 +39,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+      <CustomSnackbar />
     </>
   );
 }
