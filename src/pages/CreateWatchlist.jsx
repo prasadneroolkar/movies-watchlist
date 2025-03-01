@@ -56,25 +56,29 @@ const CreateWatchlist = () => {
     let formValidate = validateForm(watchlistName);
     const val = Object.keys(formValidate).length;
     if (val === 0) {
-      dispatch(
-        createWatchlist({
+      try {
+        dispatch(
+          createWatchlist({
+            id: watchlistId,
+            name: watchlistData.watchlistName,
+            description: watchlistData.description,
+            user: watchlistData.user,
+            movies,
+          })
+        );
+
+        const newWatchlist = {
           id: watchlistId,
           name: watchlistData.watchlistName,
           description: watchlistData.description,
           user: watchlistData.user,
-          movies,
-        })
-      );
+          movies: movies ? [movies] : [],
+        };
 
-      const newWatchlist = {
-        id: watchlistId,
-        name: watchlistData.watchlistName,
-        description: watchlistData.description,
-        user: watchlistData.user,
-        movies: movies ? [movies] : [],
-      };
-
-      dispatch(addWatchlistToLocalStorage(newWatchlist));
+        dispatch(addWatchlistToLocalStorage(newWatchlist));
+      } catch (error) {
+        console.error(error.message);
+      }
       dispatch(showMsg({ message: "Saved Succesfully !", type: "success" }));
     }
     setwatchlistData({

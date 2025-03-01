@@ -10,7 +10,9 @@ const Watchlist = () => {
   const { currentUser } = useContext(AuthContext);
   const { handleId } = useContext(contextWatchlist);
 
-  const localWatchlistName = useSelector((state) => state.localWatchlist);
+  const localWatchlistName = useSelector(
+    (state) => state.localWatchlist.watchlists
+  );
 
   const userWatchlists = localWatchlistName?.filter(
     (watchlist) => watchlist.user === currentUser?.email

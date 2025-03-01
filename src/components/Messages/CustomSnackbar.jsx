@@ -20,7 +20,7 @@ const CustomSnackbar = () => {
   return (
     <>
       <Snackbar
-        autoHideDuration={5000}
+        autoHideDuration={1000}
         open={open}
         onClose={handleClose}
         TransitionComponent={SlideTransition}

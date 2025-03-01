@@ -13,7 +13,10 @@ const WatchlistPage = () => {
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID"));
 
-  const watchlistDetails = useSelector((state) => state.localWatchlist);
+  const watchlistDetails = useSelector(
+    (state) => state.localWatchlist.watchlists
+  );
+  console.log("watchlistDetails", watchlistDetails);
 
   let getDetails;
   if (currentLocalid != undefined) {
@@ -21,7 +24,6 @@ const WatchlistPage = () => {
   } else {
     getDetails = null;
   }
-  console.log("getDetails", getDetails);
 
   return (
     <section className="watchlist_page">

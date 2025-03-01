@@ -27,20 +27,20 @@ const Addlist = ({
   const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
 
-  // const displayList = useSelector((state) => state.watchlist);
-  const displayLocalList = useSelector((state) => state.localWatchlist);
-  console.log("displayLocalList", displayLocalList);
-
-  const statusMessage = useSelector(
-    (state) => state.localwatchlist.statusMessage
+  const displayLocalList = useSelector(
+    (state) => state.localWatchlist.watchlists
   );
-  const statusType = useSelector((state) => state.localwatchlist.statusType);
+  // console.log("displayLocalList", displayLocalList);
+
+  const { statusMessage, statusType } = useSelector(
+    (state) => state.localWatchlist
+  );
 
   const userWatchlists = displayLocalList?.filter(
     (watchlist) => watchlist.user === currentUser?.email
   );
 
-  // console.log("displaylist", displayList);
+  // console.log("userWatchlists", userWatchlists);
 
   const mergeList = [[...userWatchlists]];
   // console.log("merged list", mergeList);
@@ -90,27 +90,18 @@ const Addlist = ({
           localMovie: movieDetails,
         })
       );
-
-      // ✅ Dispatch snackbar message
-      if (statusMessage) {
-        dispatch(
-          showMsg({
-            message: statusMessage,
-            type: statusType,
-          })
-        );
-      }
     } catch (error) {
       console.error(error.message);
     }
 
-    // setSelectedmovId(watchlistId);
-    // console.log("added");
-
     setSelectedLocId(locID);
-
-    // console.log("localListID in addlist jsx", locID);
   };
+
+  useEffect(() => {
+    if (statusMessage) {
+      dispatch(showMsg({ message: statusMessage, type: statusType }));
+    }
+  }, [statusMessage, statusType, dispatch]);
 
   return (
     <div className="contextClass" onClick={handleContext}>
