@@ -18,7 +18,6 @@ const CreateWatchlist = () => {
   // console.log("from state", movies);
 
   const dispatch = useDispatch();
-  const snackbarState = useSelector((state) => state.snackbarMsg);
 
   const users = JSON.parse(localStorage.getItem("currentUser")) || [];
 

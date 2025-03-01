@@ -1,9 +1,9 @@
 import React from "react";
 import Skeleton from "@mui/material/Skeleton";
 
-const MoviesSkimmer = () => {
-  const SkimArray = Array.from({ length: 5 });
+const SkimArray = Array.from({ length: 5 });
 
+const MoviesSkimmer = React.memo(() => {
   return (
     <div className="skimmer_cls">
       {SkimArray.map((_, ind) => (
@@ -24,6 +24,6 @@ const MoviesSkimmer = () => {
       ))}
     </div>
   );
-};
+});
 
 export default MoviesSkimmer;
