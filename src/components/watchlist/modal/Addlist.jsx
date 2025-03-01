@@ -10,7 +10,7 @@ import CustomSnackbar from "../../Messages/CustomSnackbar";
 
 import {
   updatelocalliststorage,
-  getWatchlistFromLocalStorage,
+  resetStatusMessage,
 } from "../../store/localWatchlistSlice";
 import { showMsg } from "../../store/snackbar";
 
@@ -100,6 +100,11 @@ const Addlist = ({
   useEffect(() => {
     if (statusMessage) {
       dispatch(showMsg({ message: statusMessage, type: statusType }));
+
+      // Reset status after a delay to prevent stale updates
+      setTimeout(() => {
+        dispatch(resetStatusMessage());
+      }, 2000);
     }
   }, [statusMessage, statusType, dispatch]);
 

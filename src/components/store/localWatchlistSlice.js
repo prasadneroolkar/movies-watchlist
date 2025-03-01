@@ -57,11 +57,16 @@ const localwatchlistSlice = createSlice({
         state.statusType = "success";
       }
     },
+    resetStatusMessage(state) {
+      state.statusMessage = null;
+      state.statusType = null;
+    },
   },
 });
 
 export const {
   addWatchlistToLocalStorage,
+  resetStatusMessage,
   getWatchlistFromLocalStorage,
   updatelocalliststorage,
 } = localwatchlistSlice.actions;
