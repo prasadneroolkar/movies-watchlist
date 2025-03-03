@@ -17,7 +17,7 @@ const WatchlistPage = () => {
   const watchlistDetails = useSelector(
     (state) => state.localWatchlist.watchlists
   );
-  console.log("watchlistDetails", watchlistDetails);
+  // console.log("watchlistDetails", watchlistDetails);
 
   let getDetails;
   if (currentLocalid != undefined) {
@@ -30,24 +30,48 @@ const WatchlistPage = () => {
   // let res = Array.isArray(getDetails);
   const getAVg = () => {
     const getMov = getDetails?.movies;
-    const getRatings = getMov.map((rate) => rate.Ratings);
-    console.log("Before Flat getRatings", getRatings);
-    const getRatings2 = getMov.map((rate) => rate.Ratings).flat();
-    console.log("afer Flat getRatings", getRatings2);
 
-    let res = Array.isArray(getRatings2);
-    console.log(res);
-    const getSource = getRatings2.map((src) => src);
-    console.log("getSource", getSource.Source);
+    const getRatings = getMov.map((rate) => rate.Ratings).flat();
 
-    if (getSource.Source === "Metacritic") {
-      console.log("getSource Vallue", getSource.Value);
-    }
+    const getSource = getRatings.map((src) => src);
 
-    console.log("getMov", getMov);
-    console.log("getRatings", getRatings);
+    const getRes = getSource.filter((fil) => fil.Source === "Metacritic");
+
+    const getSourceLen = getRes.length;
+
+    const getLen = getMov.length;
+    const remainLen = getLen - getSourceLen;
+
+    const SrcVal = getRes?.map((val) => {
+      return parseInt(val.Value.slice(0, 2));
+    });
+
+    const fillArray = SrcVal.concat(Array(remainLen).fill(0));
+
+    const totalRate = fillArray.reduce((cur, next) => cur + next, 0);
+    const avgrate = parseInt(totalRate / getLen);
+
+    return avgrate;
   };
-  getAVg();
+  const avgRate = getAVg();
+
+  const runTime = () => {
+    const getMov = getDetails?.movies.map((time) =>
+      parseInt(time.Runtime.split(" ")[0])
+    );
+    console.log("getMov", getMov);
+
+    const totalTime = getMov.reduce((acc, curr) => acc + curr, 0);
+
+    const convertMin = (totalTime) => {
+      const Hour = Math.floor(totalTime / 60);
+      const mins = totalTime % 60;
+      return `${Hour}h ${mins}m`;
+    };
+    return convertMin(totalTime);
+  };
+
+  const unWatchtime = runTime();
 
   return (
     <>
@@ -85,12 +109,12 @@ const WatchlistPage = () => {
           </div>
           <div>
             <p>UNWATCHED RUNTIME</p>
-            <span>14h 30m</span>
+            <span>{unWatchtime && unWatchtime}</span>
           </div>
           <div>
             <p>AVERAGE SCORE</p>
 
-            <span>73</span>
+            <span>{avgRate ? avgRate : "0"}</span>
           </div>
         </section>
 
