@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PageTitle from "../components/watchlist/PageTitle";
 import editBtn from "/images/editBtn.png";
 import { Link, useLocation } from "react-router-dom";
@@ -7,17 +7,21 @@ import { contextWatchlist } from "../context/WatchlistContext";
 import better from "/images/better.png";
 import good from "/images/good.png";
 import awful from "/images/awful.png";
+import unCheck from "/images/tick.png";
+import Check from "/images/Checkmark.png";
 import { Value } from "sass";
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
+
+  const [unWatched, setunWatched] = useState(false);
+  const [activeId, setactiveId] = useState(null);
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID"));
 
   const watchlistDetails = useSelector(
     (state) => state.localWatchlist.watchlists
   );
-  // console.log("watchlistDetails", watchlistDetails);
 
   let getDetails;
   if (currentLocalid != undefined) {
@@ -25,7 +29,7 @@ const WatchlistPage = () => {
   } else {
     getDetails = null;
   }
-  console.log("getDetails", getDetails);
+  // console.log("getDetails", getDetails);
 
   // let res = Array.isArray(getDetails);
   const getAVg = () => {
@@ -59,7 +63,7 @@ const WatchlistPage = () => {
     const getMov = getDetails?.movies.map((time) =>
       parseInt(time.Runtime.split(" ")[0])
     );
-    console.log("getMov", getMov);
+    // console.log("getMov", getMov);
 
     const totalTime = getMov.reduce((acc, curr) => acc + curr, 0);
 
@@ -73,22 +77,16 @@ const WatchlistPage = () => {
 
   const unWatchtime = runTime();
 
+  const handleCheck = (event, id) => {
+    event.stopPropagation();
+    setactiveId(id);
+    setunWatched(!unWatched);
+    console.log(id);
+  };
+
   return (
     <>
       <section className="watchlist_page">
-        {/* <div>
-          {getDetails?.movies?.map((val, index) => (
-            <p key={index}>
-              {val.Ratings?.map((rate, rIndex) => (
-                <span key={rIndex}>
-                  {rate.Source === "Metacritic" &&
-                    parseInt(rate.Value.slice(0, 2))}
-                </span>
-              ))}
-            </p>
-          ))}
-          <pre>getdetails:{res.toString()}</pre>
-        </div> */}
         <div className="editbtn">
           <PageTitle className="mb-0" Title={getDetails?.name} />
           <Link to="/editlist">
@@ -126,8 +124,17 @@ const WatchlistPage = () => {
               getDetails?.movies?.map((val) => (
                 <>
                   <div className="mov_card" key={val.imdbID}>
-                    <span>
-                      <img src="/images/Checkmark.png" alt="ribbon" />
+                    <span onClick={() => handleCheck(event, val.imdbID)}>
+                      <img
+                        src={
+                          activeId === val.imdbID
+                            ? unWatched
+                              ? unCheck
+                              : Check
+                            : null
+                        }
+                        alt="ribbon"
+                      />
                     </span>
                     <img
                       src={val.Poster}

@@ -41,15 +41,11 @@
   ul {
     width: 100%;
     position: absolute;
-    // top: menuPosition.y,
-    // left: menuPosition.x,
+
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     list-style: none;
     background-color: #161616;
-    // max-height: calc(100vh - 50px);
-    // max-width: 350px;
-    // min-width: 160px;
-    // overflow-y: auto;
+
     top: auto;
     left: 0;
 
@@ -276,6 +272,20 @@ section.watchlist_page {
       column-gap: 50px;
       row-gap: 50px;
 
+      &.card-main {
+        .mov_card {
+          position: relative;
+
+          span {
+            img {
+              position: absolute;
+              left: auto;
+              top: 16px;
+              right: 9px;
+            }
+          }
+        }
+      }
     }
   }
 

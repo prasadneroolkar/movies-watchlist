@@ -6,6 +6,18 @@ const MovieDetails = () => {
   const location = useLocation();
   const { movDetail } = location.state;
 
+  const runTime = () => {
+    const moviTime = parseInt(movDetail.Runtime.split(" ")[0]);
+    const convertMin = (moviTime) => {
+      const Hour = Math.floor(moviTime / 60);
+      const mins = moviTime % 60;
+      return `${Hour}h ${mins}m`;
+    };
+
+    return convertMin(moviTime);
+  };
+  const movieTime = runTime();
+
   return (
     <>
       {movDetail && (
@@ -25,7 +37,7 @@ const MovieDetails = () => {
                 <p className="category">
                   <ul>
                     <li>{movDetail.Genre}</li>
-                    <li>{movDetail.Runtime}</li>
+                    <li>{movieTime && movieTime}</li>
                   </ul>
                 </p>
                 <h2>Overview</h2>
