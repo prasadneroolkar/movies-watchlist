@@ -26,89 +26,100 @@ const WatchlistPage = () => {
   }
 
   return (
-    <section className="watchlist_page">
-      <div className="editbtn">
-        <PageTitle className="mb-0" Title={getDetails?.name} />
-        <Link to="/editlist">
-          <img src={editBtn} alt="edit btn" />
-        </Link>
-      </div>
-      <div className="description">
-        <h3>About this watchlist</h3>
-        <p>"listID.description"</p>
-      </div>
+    <>
+      <section className="watchlist_page">
+        <div>
+          {/* {getDetails?.length?.map((val, index) => (
+            <p key={index}>{val.name}</p>
+          ))} */}
+          {let res=Array.isArray(getDetails)}
+        </div>
+        <div className="editbtn">
+          <PageTitle className="mb-0" Title={getDetails?.name} />
+          <Link to="/editlist">
+            <img src={editBtn} alt="edit btn" />
+          </Link>
+        </div>
+        {getDetails?.description && (
+          <div className="description">
+            <h3>About this watchlist</h3>
+            <p>{getDetails.description}</p>
+          </div>
+        )}
 
-      <section className="stats_details">
-        <div>
-          <p>ITEMS ON LIST</p>
-          <span>10</span>
-        </div>
-        <div>
-          <p>UNWATCHED RUNTIME</p>
-          <span>14h 30m</span>
-        </div>
-        <div>
-          <p>AVERAGE SCORE</p>
-          <span>73</span>
-        </div>
+        <section className="stats_details">
+          <div>
+            <p>ITEMS ON LIST</p>
+            <span>{getDetails?.movies.length}</span>
+          </div>
+          <div>
+            <p>UNWATCHED RUNTIME</p>
+            <span>14h 30m</span>
+          </div>
+          <div>
+            <p>AVERAGE SCORE</p>
+
+            <span>73</span>
+          </div>
+        </section>
+
+        <section className="movies_section">
+          <div className="slider-container card-main ">
+            {getDetails?.movies?.length === 0 ? (
+              <p>No movies found.</p>
+            ) : (
+              getDetails?.movies?.map((val) => (
+                <>
+                  <div className="mov_card" key={val.imdbID}>
+                    <span>
+                      <img src="/images/Checkmark.png" alt="ribbon" />
+                    </span>
+                    <img
+                      src={val.Poster}
+                      className="card-img-top"
+                      alt={val.Title}
+                    />
+
+                    {val.Ratings?.map((rate, index) =>
+                      rate.Source === "Metacritic" ? (
+                        <p className="ratings" key={index}>
+                          {(() => {
+                            const ratingValue = parseInt(
+                              rate.Value.slice(0, 2),
+                              10
+                            );
+                            return (
+                              <>
+                                <img
+                                  src={
+                                    ratingValue > 50
+                                      ? better
+                                      : ratingValue < 35
+                                      ? awful
+                                      : good
+                                  }
+                                  alt="rating-icon"
+                                />
+                                <span>{ratingValue}</span>
+                                <sup>/100</sup>
+                              </>
+                            );
+                          })()}
+                        </p>
+                      ) : null
+                    )}
+                    <h5 className="card-title">
+                      {val.Title}
+                      <span>({val.Year})</span>
+                    </h5>
+                  </div>
+                </>
+              ))
+            )}
+          </div>
+        </section>
       </section>
-
-      <section className="movies_section">
-        <div className="slider-container card-main ">
-          {getDetails?.movies?.length === 0 ? (
-            <p>No movies found.</p>
-          ) : (
-            getDetails?.movies?.map((val) => (
-              <>
-                <div className="mov_card" key={val.imdbID}>
-                  <span>
-                    <img src="/images/Checkmark.png" alt="ribbon" />
-                  </span>
-                  <img
-                    src={val.Poster}
-                    className="card-img-top"
-                    alt={val.Title}
-                  />
-
-                  {val.Ratings?.map((rate, index) =>
-                    rate.Source === "Metacritic" ? (
-                      <p className="ratings" key={index}>
-                        {(() => {
-                          const ratingValue = parseInt(
-                            rate.Value.slice(0, 2),
-                            10
-                          );
-                          return (
-                            <>
-                              <img
-                                src={
-                                  ratingValue > 50
-                                    ? better
-                                    : ratingValue < 35
-                                    ? awful
-                                    : good
-                                }
-                                alt="rating-icon"
-                              />
-                              <span>{ratingValue}</span>
-                              <sup>/100</sup>
-                            </>
-                          );
-                        })()}
-                      </p>
-                    ) : null
-                  )}
-                  <h5 className="card-title">
-                    {val.Title}
-                    <span>({val.Year})</span>
-                  </h5>
-                </div>
-              </>
-            ))
-          )}
-        </div>
-      </section>
-    </section>
+    </>
   );
 };
 
