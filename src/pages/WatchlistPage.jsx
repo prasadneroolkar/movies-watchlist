@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PageTitle from "../components/watchlist/PageTitle";
 import editBtn from "/images/editBtn.png";
 import { Link, useLocation } from "react-router-dom";
@@ -14,8 +14,11 @@ import { Value } from "sass";
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
 
-  const [unWatched, setunWatched] = useState(false);
-  const [activeId, setactiveId] = useState(null);
+  const [unWatched, setunWatched] = useState([]);
+  const [activeId, setactiveId] = useState(false);
+  useEffect(() => {
+    console.log("Updated unWatched:", unWatched);
+  }, [unWatched]);
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID"));
 
@@ -30,7 +33,7 @@ const WatchlistPage = () => {
     getDetails = null;
   }
 
-  const getMovieId = getDetails?.movies.map((mov) => mov.imdbID);
+  // const getMovieId = getDetails?.movies.map((mov) => mov.imdbID);
   // console.log("getMovieId", getMovieId);
 
   // let res = Array.isArray(getDetails);
@@ -79,15 +82,16 @@ const WatchlistPage = () => {
 
   const unWatchtime = runTime();
 
-  const handleCheck = (event, id) => {
-    // event.stopPropagation();
-    console.log("clicked id", id);
-    const filterID = getMovieId.filter((valID) => valID === id);
-    if (filterID) {
-      console.log("filterID", filterID);
-      setactiveId(filterID);
-      setunWatched(!unWatched);
-    }
+  const handleCheck = (id) => {
+    setunWatched((prev) => {
+      const isWatched = prev.some((mId) => mId.moveId === id);
+
+      if (isWatched) {
+        return prev.filter((mId) => mId.moveId.toString() !== id);
+      } else {
+        return [...prev, { moveId: id.toString(), liked: true }];
+      }
+    });
   };
 
   return (
@@ -130,10 +134,13 @@ const WatchlistPage = () => {
               getDetails?.movies?.map((val) => (
                 <>
                   <div className="mov_card" key={val.imdbID}>
-                    <span onClick={() => handleCheck(event, val.imdbID)}>
+                    <span onClick={() => handleCheck(val.imdbID)}>
                       <img
                         src={
-                          val.imdbID === activeId && !unWatched
+                          unWatched.some(
+                            (m) =>
+                              m.moveId === val.imdbID?.toString() && m.liked
+                          )
                             ? Check
                             : unCheck
                         }
@@ -145,9 +152,6 @@ const WatchlistPage = () => {
                       className="card-img-top"
                       alt={val.Title}
                     />
-                    <p>
-                      {val.imdbID}/{activeId}
-                    </p>
                     {val.Ratings?.map((rate, index) =>
                       rate.Source === "Metacritic" ? (
                         <p className="ratings" key={index}>
