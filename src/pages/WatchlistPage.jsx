@@ -29,7 +29,9 @@ const WatchlistPage = () => {
   } else {
     getDetails = null;
   }
-  // console.log("getDetails", getDetails);
+
+  const getMovieId = getDetails?.movies.map((mov) => mov.imdbID);
+  // console.log("getMovieId", getMovieId);
 
   // let res = Array.isArray(getDetails);
   const getAVg = () => {
@@ -78,10 +80,14 @@ const WatchlistPage = () => {
   const unWatchtime = runTime();
 
   const handleCheck = (event, id) => {
-    event.stopPropagation();
-    setactiveId(id);
-    setunWatched(!unWatched);
-    console.log(id);
+    // event.stopPropagation();
+    console.log("clicked id", id);
+    const filterID = getMovieId.filter((valID) => valID === id);
+    if (filterID) {
+      console.log("filterID", filterID);
+      setactiveId(filterID);
+      setunWatched(!unWatched);
+    }
   };
 
   return (
@@ -127,11 +133,9 @@ const WatchlistPage = () => {
                     <span onClick={() => handleCheck(event, val.imdbID)}>
                       <img
                         src={
-                          activeId === val.imdbID
-                            ? unWatched
-                              ? unCheck
-                              : Check
-                            : null
+                          val.imdbID === activeId && !unWatched
+                            ? Check
+                            : unCheck
                         }
                         alt="ribbon"
                       />
@@ -141,7 +145,9 @@ const WatchlistPage = () => {
                       className="card-img-top"
                       alt={val.Title}
                     />
-
+                    <p>
+                      {val.imdbID}/{activeId}
+                    </p>
                     {val.Ratings?.map((rate, index) =>
                       rate.Source === "Metacritic" ? (
                         <p className="ratings" key={index}>
