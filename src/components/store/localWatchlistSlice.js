@@ -61,6 +61,12 @@ const localwatchlistSlice = createSlice({
       state.statusMessage = null;
       state.statusType = null;
     },
+    watchedMovie(state, action) {
+      console.log("dispatchedd w");
+      state.watchlists.push({
+        unWatched: [{ movid: action.payload, liked: true }],
+      });
+    },
   },
 });
 
@@ -69,5 +75,6 @@ export const {
   resetStatusMessage,
   getWatchlistFromLocalStorage,
   updatelocalliststorage,
+  watchedMovie,
 } = localwatchlistSlice.actions;
 export default localwatchlistSlice.reducer;

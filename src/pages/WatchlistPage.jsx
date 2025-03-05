@@ -14,6 +14,9 @@ const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
 
   const [unWatched, setunWatched] = useState([]);
+  useEffect(() => {
+    console.log("unWatched", unWatched);
+  }, [unWatched]);
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID")) || null;
 
