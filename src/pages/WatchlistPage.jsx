@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import PageTitle from "../components/watchlist/PageTitle";
 import editBtn from "/images/editBtn.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { contextWatchlist } from "../context/WatchlistContext";
 import better from "/images/better.png";
@@ -9,21 +9,16 @@ import good from "/images/good.png";
 import awful from "/images/awful.png";
 import unCheck from "/images/tick.png";
 import Check from "/images/Checkmark.png";
-import { Value } from "sass";
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
 
   const [unWatched, setunWatched] = useState([]);
-  const [activeId, setactiveId] = useState(false);
-  useEffect(() => {
-    console.log("Updated unWatched:", unWatched);
-  }, [unWatched]);
 
-  const currentLocalid = JSON.parse(localStorage.getItem("currentID"));
+  const currentLocalid = JSON.parse(localStorage.getItem("currentID")) || null;
 
   const watchlistDetails = useSelector(
-    (state) => state.localWatchlist.watchlists
+    (state) => state.localWatchlist.watchlists || []
   );
 
   let getDetails;
@@ -33,24 +28,14 @@ const WatchlistPage = () => {
     getDetails = null;
   }
 
-  // const getMovieId = getDetails?.movies.map((mov) => mov.imdbID);
-  // console.log("getMovieId", getMovieId);
-
-  // let res = Array.isArray(getDetails);
   const getAVg = () => {
-    const getMov = getDetails?.movies;
-
+    const getMov = getDetails?.movies || [];
     const getRatings = getMov.map((rate) => rate.Ratings).flat();
-
     const getSource = getRatings.map((src) => src);
-
     const getRes = getSource.filter((fil) => fil.Source === "Metacritic");
-
     const getSourceLen = getRes.length;
-
     const getLen = getMov.length;
     const remainLen = getLen - getSourceLen;
-
     const SrcVal = getRes?.map((val) => {
       return parseInt(val.Value.slice(0, 2));
     });
@@ -68,9 +53,8 @@ const WatchlistPage = () => {
     const getMov = getDetails?.movies.map((time) =>
       parseInt(time.Runtime.split(" ")[0])
     );
-    // console.log("getMov", getMov);
 
-    const totalTime = getMov.reduce((acc, curr) => acc + curr, 0);
+    const totalTime = getMov?.reduce((acc, curr) => acc + curr, 0);
 
     const convertMin = (totalTime) => {
       const Hour = Math.floor(totalTime / 60);
@@ -132,60 +116,57 @@ const WatchlistPage = () => {
               <p>No movies found.</p>
             ) : (
               getDetails?.movies?.map((val) => (
-                <>
-                  <div className="mov_card" key={val.imdbID}>
-                    <span onClick={() => handleCheck(val.imdbID)}>
-                      <img
-                        src={
-                          unWatched.some(
-                            (m) =>
-                              m.moveId === val.imdbID?.toString() && m.liked
-                          )
-                            ? Check
-                            : unCheck
-                        }
-                        alt="ribbon"
-                      />
-                    </span>
+                <div className="mov_card" key={val.imdbID}>
+                  <span onClick={() => handleCheck(val.imdbID)}>
                     <img
-                      src={val.Poster}
-                      className="card-img-top"
-                      alt={val.Title}
+                      src={
+                        unWatched.some(
+                          (m) => m.moveId === val.imdbID?.toString() && m.liked
+                        )
+                          ? Check
+                          : unCheck
+                      }
+                      alt="ribbon"
                     />
-                    {val.Ratings?.map((rate, index) =>
-                      rate.Source === "Metacritic" ? (
-                        <p className="ratings" key={index}>
-                          {(() => {
-                            const ratingValue = parseInt(
-                              rate.Value.slice(0, 2),
-                              10
-                            );
-                            return (
-                              <>
-                                <img
-                                  src={
-                                    ratingValue > 50
-                                      ? better
-                                      : ratingValue < 35
-                                      ? awful
-                                      : good
-                                  }
-                                  alt="rating-icon"
-                                />
-                                <span>{ratingValue}</span>
-                                <sup>/100</sup>
-                              </>
-                            );
-                          })()}
-                        </p>
-                      ) : null
-                    )}
-                    <h5 className="card-title">
-                      {val.Title}
-                      <span>({val.Year})</span>
-                    </h5>
-                  </div>
-                </>
+                  </span>
+                  <img
+                    src={val.Poster}
+                    className="card-img-top"
+                    alt={val.Title}
+                  />
+                  {val.Ratings?.map((rate, index) =>
+                    rate.Source === "Metacritic" ? (
+                      <p className="ratings" key={index}>
+                        {(() => {
+                          const ratingValue = parseInt(
+                            rate.Value.slice(0, 2),
+                            10
+                          );
+                          return (
+                            <>
+                              <img
+                                src={
+                                  ratingValue > 50
+                                    ? better
+                                    : ratingValue < 35
+                                    ? awful
+                                    : good
+                                }
+                                alt="rating-icon"
+                              />
+                              <span>{ratingValue}</span>
+                              <sup>/100</sup>
+                            </>
+                          );
+                        })()}
+                      </p>
+                    ) : null
+                  )}
+                  <h5 className="card-title">
+                    {val.Title}
+                    <span>({val.Year})</span>
+                  </h5>
+                </div>
               ))
             )}
           </div>

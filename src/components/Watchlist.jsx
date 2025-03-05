@@ -26,12 +26,12 @@ const Watchlist = () => {
           <p>My lists</p>
           <ul>
             {userWatchlists?.length ? (
-              userWatchlists.map((val, id) => {
+              userWatchlists.map((val) => {
                 return (
-                  <li key={id} onClick={() => handleId(val.id)}>
+                  <li key={val.id} onClick={() => handleId && handleId(val.id)}>
                     <Link to="/watchlist">
                       <img src={mwatchlist} alt="movie.logo" />
-                      {val.name}/{val.id}
+                      {val.name}
                     </Link>
                   </li>
                 );
