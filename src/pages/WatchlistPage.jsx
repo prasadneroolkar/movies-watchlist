@@ -2,26 +2,33 @@ import React, { useContext, useState, useEffect } from "react";
 import PageTitle from "../components/watchlist/PageTitle";
 import editBtn from "/images/editBtn.png";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { contextWatchlist } from "../context/WatchlistContext";
 import better from "/images/better.png";
 import good from "/images/good.png";
 import awful from "/images/awful.png";
 import unCheck from "/images/tick.png";
 import Check from "/images/Checkmark.png";
+import { watchedMovie } from "../components/store/localWatchlistSlice.js";
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
 
-  const [unWatched, setunWatched] = useState([]);
-  useEffect(() => {
-    console.log("unWatched", unWatched);
-  }, [unWatched]);
+  const dispatch = useDispatch();
+
+  // const [unWatched, setunWatched] = useState([]);
+  // useEffect(() => {
+  //   console.log("unWatched", unWatched);
+  // }, [unWatched]);
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID")) || null;
 
   const watchlistDetails = useSelector(
     (state) => state.localWatchlist.watchlists || []
+  );
+
+  const unWatchedDetails = useSelector(
+    (state) => state.localWatchlist.watchMovies || []
   );
 
   let getDetails;
@@ -70,15 +77,22 @@ const WatchlistPage = () => {
   const unWatchtime = runTime();
 
   const handleCheck = (id) => {
-    setunWatched((prev) => {
-      const isWatched = prev.some((mId) => mId.moveId === id);
+    // setunWatched((prev) => {
+    //   const isWatched = prev.some((mId) => mId.moveId === id);
+    //   if (isWatched) {
+    //     console.log("iswatched is true");
+    //     return prev.filter((mId) => mId.moveId.toString() !== id);
+    //   } else {
+    //     return [...prev, { moveId: id.toString(), liked: true }];
+    //   }
+    // });
 
-      if (isWatched) {
-        return prev.filter((mId) => mId.moveId.toString() !== id);
-      } else {
-        return [...prev, { moveId: id.toString(), liked: true }];
-      }
-    });
+    dispatch(
+      watchedMovie({
+        watchId: id.toString(),
+        liked: true,
+      })
+    );
   };
 
   return (
@@ -123,7 +137,7 @@ const WatchlistPage = () => {
                   <span onClick={() => handleCheck(val.imdbID)}>
                     <img
                       src={
-                        unWatched.some(
+                        unWatchedDetails.some(
                           (m) => m.moveId === val.imdbID?.toString() && m.liked
                         )
                           ? Check

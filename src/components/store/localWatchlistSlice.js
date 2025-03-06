@@ -4,6 +4,7 @@ const initialState = {
   watchlists: [], // Store the watchlists
   statusMessage: null, // Store success/error message
   statusType: null, // Store success/error type
+  watchMovies: [],
 };
 
 const localwatchlistSlice = createSlice({
@@ -62,10 +63,20 @@ const localwatchlistSlice = createSlice({
       state.statusType = null;
     },
     watchedMovie(state, action) {
-      console.log("dispatchedd w");
-      state.watchlists.push({
-        unWatched: [{ movid: action.payload, liked: true }],
-      });
+      const watchId = action.payload.watchId;
+      const liked = action.payload.liked;
+      console.log("watchId", watchId);
+      console.log("liked", liked);
+
+      const isWatched = state.watchMovies.some((mId) => mId.moveId === watchId);
+
+      if (isWatched) {
+        return state.watchMovies.filter(
+          (mId) => mId.moveId.toString() !== watchId
+        );
+      } else {
+        state.watchMovies.push({ moveId: watchId.toString(), liked });
+      }
     },
   },
 });
