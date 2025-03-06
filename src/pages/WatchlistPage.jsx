@@ -27,9 +27,9 @@ const WatchlistPage = () => {
     (state) => state.localWatchlist.watchlists || []
   );
 
-  const unWatchedDetails = useSelector(
-    (state) => state.localWatchlist.watchMovies || []
-  );
+  // const unWatchedDetails = useSelector(
+  //   (state) => state.localWatchlist.watchMovies || []
+  // );
 
   let getDetails;
   if (currentLocalid != undefined) {
@@ -76,7 +76,7 @@ const WatchlistPage = () => {
 
   const unWatchtime = runTime();
 
-  const handleCheck = (id) => {
+  const handleCheck = (id, listId) => {
     // setunWatched((prev) => {
     //   const isWatched = prev.some((mId) => mId.moveId === id);
     //   if (isWatched) {
@@ -89,6 +89,7 @@ const WatchlistPage = () => {
 
     dispatch(
       watchedMovie({
+        // listId: listId,
         watchId: id.toString(),
         liked: true,
       })
@@ -137,11 +138,11 @@ const WatchlistPage = () => {
                   <span onClick={() => handleCheck(val.imdbID)}>
                     <img
                       src={
-                        unWatchedDetails.some(
-                          (m) => m.moveId === val.imdbID?.toString() && m.liked
-                        )
-                          ? Check
-                          : unCheck
+                        // unWatchedDetails.some(
+                        //   (m) => m.moveId === val.imdbID?.toString() && m.liked
+                        // )
+                        Check
+                        // : unCheck
                       }
                       alt="ribbon"
                     />
@@ -151,6 +152,7 @@ const WatchlistPage = () => {
                     className="card-img-top"
                     alt={val.Title}
                   />
+
                   {val.Ratings?.map((rate, index) =>
                     rate.Source === "Metacritic" ? (
                       <p className="ratings" key={index}>

@@ -13,6 +13,9 @@ const watchlistSlice = createSlice({
         description: action.payload.description,
         user: action.payload.user,
         movi: action.payload.movies ? [action.payload.movies] : [],
+        watchedmovlist: action.payload.watchedmovlist
+          ? [action.payload.watchedmovlist]
+          : [],
       });
     },
 
