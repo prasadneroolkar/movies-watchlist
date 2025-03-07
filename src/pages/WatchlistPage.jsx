@@ -27,9 +27,11 @@ const WatchlistPage = () => {
     (state) => state.localWatchlist.watchlists || []
   );
 
-  // const unWatchedDetails = useSelector(
-  //   (state) => state.localWatchlist.watchMovies || []
-  // );
+  const unWatchedDetails = useSelector(
+    (state) => state.localWatchlist.watchlists || []
+  );
+  const resUnwatched = unWatchedDetails.find((m) => m.id === listID);
+  console.log("unWatchedDetails", resUnwatched.watchedMov);
 
   let getDetails;
   if (currentLocalid != undefined) {
@@ -76,7 +78,7 @@ const WatchlistPage = () => {
 
   const unWatchtime = runTime();
 
-  const handleCheck = (id, currentLocalid) => {
+  const handleCheck = (id) => {
     // setunWatched((prev) => {
     //   const isWatched = prev.some((mId) => mId.moveId === id);
     //   if (isWatched) {
@@ -135,14 +137,14 @@ const WatchlistPage = () => {
             ) : (
               getDetails?.movies?.map((val) => (
                 <div className="mov_card" key={val.imdbID}>
-                  <span onClick={() => handleCheck(val.imdbID, currentLocalid)}>
+                  <span onClick={() => handleCheck(val.imdbID)}>
                     <img
                       src={
-                        // unWatchedDetails.some(
-                        //   (m) => m.moveId === val.imdbID?.toString() && m.liked
-                        // )
-                        Check
-                        // : unCheck
+                        resUnwatched.watchedMov.some(
+                          (m) => m.moveId === val.imdbID?.toString() && m.liked
+                        )
+                          ? Check
+                          : unCheck
                       }
                       alt="ribbon"
                     />

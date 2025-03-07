@@ -66,44 +66,57 @@ const localwatchlistSlice = createSlice({
       const watchId = action.payload.watchId;
       const liked = action.payload.liked;
       const listId = action.payload.listId;
+
       console.log("watchId", typeof watchId);
       console.log("liked", liked);
       console.log("listId", listId);
 
-      let localList;
+      // Retrieve watchlists from localStorage
+      let watchlists =
+        JSON.parse(localStorage.getItem("watchlists")) || state.watchlists;
 
-      localList = state.watchlists.find((lw) => lw.id === listId);
-      // if (!Array.isArray(localList)) {
-      //   localList = [];
-      // }
+      // Find the watchlist by id
+      const localList = watchlists.find((lw) => lw.id === listId);
 
-      console.log("find the wayckist", JSON.parse(JSON.stringify(localList)));
+      if (!localList) {
+        console.log("Watchlist not found!");
+        return;
+      }
 
-      const isWatched = localList?.moveId === watchId;
+      console.log("Found Watchlist", JSON.parse(JSON.stringify(localList)));
+
+      // Ensure watchedMov is an array
+      if (!Array.isArray(localList.watchedMov)) {
+        localList.watchedMov = [];
+      }
+
+      // Check if the movie is already watched
+      const isWatched = localList.watchedMov.some((m) => m.moveId === watchId);
       console.log("isWatched", isWatched);
-      console.log("moveId", typeof localList.moveId);
 
       if (isWatched) {
-        state.watchlists = state.watchlists.filter(
+        // Remove from watchedMov
+        localList.watchedMov = localList.watchedMov.filter(
           (m) => m.moveId.toString() !== watchId
         );
         console.log(
           "watchMovies after deleting:",
-          JSON.parse(JSON.stringify(state.watchlists))
+          JSON.parse(JSON.stringify(localList))
         );
       } else {
-        // Add new movie directly
-        state.watchlists.push({
+        // Add new movie to watchedMov
+        localList.watchedMov.push({
           moveId: watchId.toString(),
           liked,
         });
-        // state.watchlists.push([{ moveId: watchId.toString(), liked }]);
-
         console.log(
           "watchMovies after adding:",
-          JSON.parse(JSON.stringify(state.watchlists))
+          JSON.parse(JSON.stringify(localList))
         );
       }
+
+      // Save the updated watchlists back to localStorage
+      localStorage.setItem("watchlists", JSON.stringify(watchlists));
     },
   },
 });
