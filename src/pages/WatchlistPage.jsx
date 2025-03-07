@@ -76,7 +76,7 @@ const WatchlistPage = () => {
 
   const unWatchtime = runTime();
 
-  const handleCheck = (id, listId) => {
+  const handleCheck = (id, currentLocalid) => {
     // setunWatched((prev) => {
     //   const isWatched = prev.some((mId) => mId.moveId === id);
     //   if (isWatched) {
@@ -89,7 +89,7 @@ const WatchlistPage = () => {
 
     dispatch(
       watchedMovie({
-        // listId: listId,
+        listId: currentLocalid,
         watchId: id.toString(),
         liked: true,
       })
@@ -135,7 +135,7 @@ const WatchlistPage = () => {
             ) : (
               getDetails?.movies?.map((val) => (
                 <div className="mov_card" key={val.imdbID}>
-                  <span onClick={() => handleCheck(val.imdbID)}>
+                  <span onClick={() => handleCheck(val.imdbID, currentLocalid)}>
                     <img
                       src={
                         // unWatchedDetails.some(

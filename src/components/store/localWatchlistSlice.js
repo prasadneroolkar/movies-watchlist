@@ -64,44 +64,46 @@ const localwatchlistSlice = createSlice({
     },
     watchedMovie(state, action) {
       const watchId = action.payload.watchId;
-      const listId = action.payload.listId;
       const liked = action.payload.liked;
-      // console.log("watchId", watchId);
+      const listId = action.payload.listId;
+      console.log("watchId", typeof watchId);
       console.log("liked", liked);
       console.log("listId", listId);
 
-      const localList = state.watchlists.find((lw) => lw.id === listId);
-      console.log(
-        "watchMovies after adding:",
-        JSON.parse(JSON.stringify(localList))
-      );
+      let localList;
 
-      // const isWatched = state.watchlists.some(
-      //   (m) => m.watchedmovlist.moveId === watchId
-      // );
-      // console.log("isWatched", isWatched);
-
-      // if (isWatched) {
-      //   state.watchlists = state.watchlists.filter(
-      //     (m) => m.watchedmovlist.moveId.toString() !== watchId
-      //   );
-      //   console.log(
-      //     "watchMovies after deleting:",
-      //     JSON.parse(JSON.stringify(state.watchlists))
-      //   );
-      // } else {
-      //   // Add new movie directly
-      //   state.watchlists.push({
-      //     moveId: watchId.toString(),
-      //     liked,
-      //   });
-      //   // state.watchlists.push([{ moveId: watchId.toString(), liked }]);
-
-      //   console.log(
-      //     "watchMovies after adding:",
-      //     JSON.parse(JSON.stringify(state.watchlists))
-      //   );
+      localList = state.watchlists.find((lw) => lw.id === listId);
+      // if (!Array.isArray(localList)) {
+      //   localList = [];
       // }
+
+      console.log("find the wayckist", JSON.parse(JSON.stringify(localList)));
+
+      const isWatched = localList?.moveId === watchId;
+      console.log("isWatched", isWatched);
+      console.log("moveId", typeof localList.moveId);
+
+      if (isWatched) {
+        state.watchlists = state.watchlists.filter(
+          (m) => m.moveId.toString() !== watchId
+        );
+        console.log(
+          "watchMovies after deleting:",
+          JSON.parse(JSON.stringify(state.watchlists))
+        );
+      } else {
+        // Add new movie directly
+        state.watchlists.push({
+          moveId: watchId.toString(),
+          liked,
+        });
+        // state.watchlists.push([{ moveId: watchId.toString(), liked }]);
+
+        console.log(
+          "watchMovies after adding:",
+          JSON.parse(JSON.stringify(state.watchlists))
+        );
+      }
     },
   },
 });

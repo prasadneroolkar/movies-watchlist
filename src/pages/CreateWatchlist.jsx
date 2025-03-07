@@ -25,7 +25,6 @@ const CreateWatchlist = () => {
     watchlistName: "",
     description: "",
     user: users.email,
-    watchedmovlist: null,
   });
 
   // console.log("watchlist email", watchlistData.user);
@@ -64,7 +63,6 @@ const CreateWatchlist = () => {
             description: watchlistData.description,
             user: watchlistData.user,
             movies,
-            watchedmovlist: watchlistData.watchedmovlist,
           })
         );
 
@@ -74,12 +72,9 @@ const CreateWatchlist = () => {
           description: watchlistData.description,
           user: watchlistData.user,
           movies: movies ? [movies] : [],
-          watchedmovlist: watchlistData.watchedmovlist
-            ? [watchlistData.watchedmovlist]
-            : [],
         };
 
-        console.log("newWatchlist", newWatchlist);
+        // console.log("newWatchlist", newWatchlist);
         dispatch(addWatchlistToLocalStorage(newWatchlist));
       } catch (error) {
         console.error(error.message);
