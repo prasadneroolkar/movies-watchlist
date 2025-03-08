@@ -18,19 +18,6 @@ const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    try {
-      dispatch(getWatchlistFromLocalStorage());
-      console.log("dispatched in watchlist");
-    } catch (error) {
-      console.error("error msg", error);
-    }
-  }, [dispatch]);
-
-  const [unWatched, setunWatched] = useState([]);
-  // useEffect(() => {
-  //   console.log("unWatched", unWatched);
-  // }, [unWatched]);
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID")) || null;
 
@@ -38,11 +25,9 @@ const WatchlistPage = () => {
     (state) => state.localWatchlist.watchlists || []
   );
 
-  const unWatchedDetails = useSelector(
-    (state) => state.localWatchlist.watchlists || []
-  );
-  const resUnwatched = unWatchedDetails.find((m) => m.id === listID);
-  console.log("unWatchedDetails", resUnwatched.watchedMov);
+  const resUnwatched = watchlistDetails.find((m) => m.id === currentLocalid);
+
+  useEffect(() => {}, []);
 
   let getDetails;
   if (currentLocalid != undefined) {
@@ -97,7 +82,6 @@ const WatchlistPage = () => {
         liked: true,
       })
     );
-    setunWatched(unWatchedDetails);
   };
 
   return (
@@ -142,7 +126,7 @@ const WatchlistPage = () => {
                   <span onClick={() => handleCheck(val.imdbID)}>
                     <img
                       src={
-                        resUnwatched.watchedMov.some(
+                        resUnwatched?.watchedMov.some(
                           (m) => m.moveId === val.imdbID?.toString() && m.liked
                         )
                           ? Check

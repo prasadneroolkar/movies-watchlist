@@ -63,61 +63,96 @@ const localwatchlistSlice = createSlice({
       state.statusMessage = null;
       state.statusType = null;
     },
+    // watchedMovie(state, action) {
+    //   const watchId = action.payload.watchId;
+    //   const liked = action.payload.liked;
+    //   const listId = action.payload.listId;
+
+    //   // Retrieve watchlists from localStorage
+    //   let watchlists =
+    //     JSON.parse(localStorage.getItem("watchlists")) || state.watchlists;
+
+    //   // Find the watchlist by id
+    //   const localList = watchlists.find((lw) => lw.id === listId);
+
+    //   if (!localList) {
+    //     console.log("Watchlist not found!");
+    //     return;
+    //   }
+
+    //   // console.log("Found Watchlist", JSON.parse(JSON.stringify(localList)));
+
+    //   // Ensure watchedMov is an array
+    //   if (!Array.isArray(localList.watchedMov)) {
+    //     localList.watchedMov = [];
+    //   }
+
+    //   // Check if the movie is already watched
+    //   const isWatched = localList.watchedMov.some((m) => m.moveId === watchId);
+    //   // console.log("isWatched", isWatched);
+
+    //   if (isWatched) {
+    //     // Remove from watchedMov
+    //     localList.watchedMov = localList.watchedMov.filter(
+    //       (m) => m.moveId.toString() !== watchId
+    //     );
+    //     console.log(
+    //       "watchMovies after deleting:",
+    //       JSON.parse(JSON.stringify(localList))
+    //     );
+    //   } else {
+    //     // Add new movie to watchedMov
+    //     localList.watchedMov.push({
+    //       moveId: watchId.toString(),
+    //       liked,
+    //     });
+    //     console.log(
+    //       "watchMovies after adding:",
+    //       JSON.parse(JSON.stringify(localList))
+    //     );
+    //   }
+
+    //   // Save the updated watchlists back to localStorage
+    //   localStorage.setItem("watchlists", JSON.stringify(watchlists));
+    // },
     watchedMovie(state, action) {
-      const watchId = action.payload.watchId;
-      const liked = action.payload.liked;
-      const listId = action.payload.listId;
+      const { watchId, liked, listId } = action.payload;
 
-      // console.log("watchId", typeof watchId);
-      // console.log("liked", liked);
-      // console.log("listId", listId);
-
-      // Retrieve watchlists from localStorage
+      // Retrieve watchlists from localStorage or fallback to Redux state
       let watchlists =
         JSON.parse(localStorage.getItem("watchlists")) || state.watchlists;
 
-      // Find the watchlist by id
-      const localList = watchlists.find((lw) => lw.id === listId);
+      // Create a new array to maintain immutability
+      const updatedWatchlists = watchlists.map((list) => {
+        if (list.id === listId) {
+          // Ensure watchedMov is an array
+          const watchedMov = Array.isArray(list.watchedMov)
+            ? [...list.watchedMov]
+            : [];
 
-      if (!localList) {
-        console.log("Watchlist not found!");
-        return;
-      }
+          // Check if the movie is already watched
+          const isWatched = watchedMov.some(
+            (m) => m.moveId === watchId.toString()
+          );
 
-      // console.log("Found Watchlist", JSON.parse(JSON.stringify(localList)));
+          // Update watchedMov list
+          const updatedWatchedMov = isWatched
+            ? watchedMov.filter((m) => m.moveId !== watchId.toString()) // Remove movie
+            : [...watchedMov, { moveId: watchId.toString(), liked }]; // Add movie
 
-      // Ensure watchedMov is an array
-      if (!Array.isArray(localList.watchedMov)) {
-        localList.watchedMov = [];
-      }
+          return { ...list, watchedMov: updatedWatchedMov };
+        }
+        return list;
+      });
 
-      // Check if the movie is already watched
-      const isWatched = localList.watchedMov.some((m) => m.moveId === watchId);
-      // console.log("isWatched", isWatched);
+      // Save to localStorage
+      localStorage.setItem("watchlists", JSON.stringify(updatedWatchlists));
 
-      if (isWatched) {
-        // Remove from watchedMov
-        localList.watchedMov = localList.watchedMov.filter(
-          (m) => m.moveId.toString() !== watchId
-        );
-        // console.log(
-        //   "watchMovies after deleting:",
-        //   JSON.parse(JSON.stringify(localList))
-        // );
-      } else {
-        // Add new movie to watchedMov
-        localList.watchedMov.push({
-          moveId: watchId.toString(),
-          liked,
-        });
-        // console.log(
-        //   "watchMovies after adding:",
-        //   JSON.parse(JSON.stringify(localList))
-        // );
-      }
-
-      // Save the updated watchlists back to localStorage
-      localStorage.setItem("watchlists", JSON.stringify(watchlists));
+      // Return new state
+      return {
+        ...state,
+        watchlists: updatedWatchlists, // Ensure Redux state is updated
+      };
     },
   },
 });
