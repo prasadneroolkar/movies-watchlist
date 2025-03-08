@@ -9,14 +9,25 @@ import good from "/images/good.png";
 import awful from "/images/awful.png";
 import unCheck from "/images/tick.png";
 import Check from "/images/Checkmark.png";
-import { watchedMovie } from "../components/store/localWatchlistSlice.js";
+import {
+  watchedMovie,
+  getWatchlistFromLocalStorage,
+} from "../components/store/localWatchlistSlice.js";
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    try {
+      dispatch(getWatchlistFromLocalStorage());
+      console.log("dispatched in watchlist");
+    } catch (error) {
+      console.error("error msg", error);
+    }
+  }, [dispatch]);
 
-  // const [unWatched, setunWatched] = useState([]);
+  const [unWatched, setunWatched] = useState([]);
   // useEffect(() => {
   //   console.log("unWatched", unWatched);
   // }, [unWatched]);
@@ -79,16 +90,6 @@ const WatchlistPage = () => {
   const unWatchtime = runTime();
 
   const handleCheck = (id) => {
-    // setunWatched((prev) => {
-    //   const isWatched = prev.some((mId) => mId.moveId === id);
-    //   if (isWatched) {
-    //     console.log("iswatched is true");
-    //     return prev.filter((mId) => mId.moveId.toString() !== id);
-    //   } else {
-    //     return [...prev, { moveId: id.toString(), liked: true }];
-    //   }
-    // });
-
     dispatch(
       watchedMovie({
         listId: currentLocalid,
@@ -96,6 +97,7 @@ const WatchlistPage = () => {
         liked: true,
       })
     );
+    setunWatched(unWatchedDetails);
   };
 
   return (
