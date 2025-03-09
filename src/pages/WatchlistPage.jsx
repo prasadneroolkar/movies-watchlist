@@ -79,7 +79,7 @@ const WatchlistPage = () => {
       watchedMovie({
         listId: currentLocalid,
         watchId: id.toString(),
-        liked: true,
+        // liked: true,
       })
     );
   };
