@@ -36,6 +36,8 @@ const WatchlistPage = () => {
     getDetails = null;
   }
 
+  console.log("Get details", getDetails);
+
   const getAVg = () => {
     const getMov = getDetails?.movies || [];
     const getRatings = getMov.map((rate) => rate.Ratings).flat();
@@ -58,9 +60,33 @@ const WatchlistPage = () => {
   const avgRate = getAVg();
 
   const runTime = () => {
-    const getMov = getDetails?.movies.map((time) =>
-      parseInt(time.Runtime.split(" ")[0])
-    );
+    const findId = getDetails?.movies
+      .filter((idmov) => idmov.imdbID)
+      .map((movie) => movie.imdbID);
+    console.log("findId", findId);
+
+    const watchedmov = getDetails?.watchedMov.map((idWatch) => idWatch.moveId);
+
+   for(let i=0; i<=watchedmov.length; i++){
+    for (let j=0; j<=)
+   }
+
+
+    const getMov = getDetails?.movies.map((time) => {
+      return time.imdbID;
+      // if (watchedmov === time.imdbID) {
+      //   return parseInt(time.Runtime.split(" ")[0]);
+      // }
+    });
+    console.log("getMov", getMov);
+
+    for(let i=0; i<=watchedmov.length; i++){
+      for (let j=0; j<=getMov.length; j++){
+        if(watchedmov[i]===getMov[j]){
+          console.log("time")
+        }
+      }
+     }
 
     const totalTime = getMov?.reduce((acc, curr) => acc + curr, 0);
 
