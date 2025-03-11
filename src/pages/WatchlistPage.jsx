@@ -60,33 +60,13 @@ const WatchlistPage = () => {
   const avgRate = getAVg();
 
   const runTime = () => {
-    const findId = getDetails?.movies
-      .filter((idmov) => idmov.imdbID)
-      .map((movie) => movie.imdbID);
-    console.log("findId", findId);
+    const findId = getDetails?.movies.filter((idmov) =>
+      getDetails?.watchedMov.some((item2) => idmov.imdbID !== item2.moveId)
+    );
 
-    const watchedmov = getDetails?.watchedMov.map((idWatch) => idWatch.moveId);
-
-   for(let i=0; i<=watchedmov.length; i++){
-    for (let j=0; j<=)
-   }
-
-
-    const getMov = getDetails?.movies.map((time) => {
-      return time.imdbID;
-      // if (watchedmov === time.imdbID) {
-      //   return parseInt(time.Runtime.split(" ")[0]);
-      // }
+    const getMov = findId?.map((time) => {
+      return parseInt(time.Runtime.split(" ")[0]);
     });
-    console.log("getMov", getMov);
-
-    for(let i=0; i<=watchedmov.length; i++){
-      for (let j=0; j<=getMov.length; j++){
-        if(watchedmov[i]===getMov[j]){
-          console.log("time")
-        }
-      }
-     }
 
     const totalTime = getMov?.reduce((acc, curr) => acc + curr, 0);
 
