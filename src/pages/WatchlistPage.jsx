@@ -36,7 +36,7 @@ const WatchlistPage = () => {
     getDetails = null;
   }
 
-  console.log("Get details", getDetails);
+  // console.log("Get details", getDetails);
 
   const getAVg = () => {
     const getMov = getDetails?.movies || [];
@@ -64,11 +64,34 @@ const WatchlistPage = () => {
       getDetails?.watchedMov.some((item2) => idmov.imdbID !== item2.moveId)
     );
 
-    const getMov = findId?.map((time) => {
-      return parseInt(time.Runtime.split(" ")[0]);
-    });
+    console.log("findId", findId);
+    console.log("findId", findId?.length);
 
-    const totalTime = getMov?.reduce((acc, curr) => acc + curr, 0);
+    function getMovieTimes(findId, getDetails) {
+      if (findId?.length === 0) {
+        const allmov = getDetails?.movies.map((time) => {
+          return parseInt(time.Runtime.split(" ")[0]);
+        });
+
+        return allmov;
+      }
+      // return 0;
+      // }
+      else {
+        const unwatMov = findId?.map((time) => {
+          return parseInt(time.Runtime.split(" ")[0]);
+        });
+        return unwatMov;
+      }
+    }
+
+    const returnesVal = getMovieTimes(findId, getDetails);
+    // console.log("returnesVal", returnesVal);
+    console.log("getDetails", getDetails?.movies.length);
+
+    const totalTime =
+      returnesVal !== 0 ? returnesVal?.reduce((acc, curr) => acc + curr, 0) : 0;
+    console.log("Total Time", totalTime);
 
     const convertMin = (totalTime) => {
       const Hour = Math.floor(totalTime / 60);
