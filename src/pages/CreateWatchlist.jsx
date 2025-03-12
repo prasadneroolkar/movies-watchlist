@@ -47,7 +47,7 @@ const CreateWatchlist = () => {
     handleErrormsg("watchlistName");
   };
 
-  const onSubmit = (event) => {
+  const onUpdate = (event) => {
     event.preventDefault();
 
     const { watchlistName } = watchlistData;
@@ -96,7 +96,7 @@ const CreateWatchlist = () => {
     <>
       {/* {movies && <pre>{JSON.stringify(movies, null, 2)}</pre>} */}
       <PageTitle className="create_watchlist" Title="Create a new Watchlist" />
-      <WatchlistForm onSubmit={onSubmit}>
+      <WatchlistForm onSubmit={onUpdate}>
         <InputField
           name="watchlistName"
           value={watchlistData.watchlistName}

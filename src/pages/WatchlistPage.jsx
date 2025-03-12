@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import PageTitle from "../components/watchlist/PageTitle";
 import editBtn from "/images/editBtn.png";
 import { Link } from "react-router-dom";
@@ -16,6 +17,7 @@ import {
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -114,12 +116,18 @@ const WatchlistPage = () => {
     );
   };
 
+  const sendTo = () => {
+    if (getDetails) {
+      navigate("/editlist", { state: { getDetails } });
+    }
+  };
+
   return (
     <>
       <section className="watchlist_page">
         <div className="editbtn">
           <PageTitle className="mb-0" Title={getDetails?.name} />
-          <button className="slick-arrow" to="/editlist">
+          <button className="" onClick={sendTo}>
             <img src={editBtn} alt="edit btn" />
           </button>
         </div>

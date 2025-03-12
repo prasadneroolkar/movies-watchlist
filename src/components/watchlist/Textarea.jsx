@@ -1,6 +1,8 @@
 import React from "react";
 
-const Textarea = ({ onChange, value, name }) => {
+const Textarea = React.memo(({ onChange, value, name }) => {
+  console.log("Textarea rendered");
+
   return (
     <>
       <div className="fields">
@@ -11,6 +13,6 @@ const Textarea = ({ onChange, value, name }) => {
       </div>
     </>
   );
-};
+});
 
 export default Textarea;
