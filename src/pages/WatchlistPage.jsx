@@ -61,23 +61,24 @@ const WatchlistPage = () => {
 
   const runTime = () => {
     const findId = getDetails?.movies.filter((idmov) =>
-      getDetails?.watchedMov.some((item2) => idmov.imdbID !== item2.moveId)
+      getDetails?.watchedMov.every((item2) => item2.moveId !== idmov.imdbID)
     );
 
-    console.log("findId", findId);
-    console.log("findId", findId?.length);
+    // console.log("findId", findId);
+    // console.log("getDetails", getDetails);
 
-    function getMovieTimes(findId, getDetails) {
+    // console.log("findId", findId?.length);
+
+    function getMovieTimes(findId) {
       if (findId?.length === 0) {
-        const allmov = getDetails?.movies.map((time) => {
-          return parseInt(time.Runtime.split(" ")[0]);
-        });
+        // const allmov = getDetails?.movies.map((time) => {
+        //   return parseInt(time.Runtime.split(" ")[0]);
+        // });
 
-        return allmov;
-      }
-      // return 0;
-      // }
-      else {
+        // return allmov;
+        // }
+        return 0;
+      } else {
         const unwatMov = findId?.map((time) => {
           return parseInt(time.Runtime.split(" ")[0]);
         });
@@ -85,13 +86,13 @@ const WatchlistPage = () => {
       }
     }
 
-    const returnesVal = getMovieTimes(findId, getDetails);
+    const returnesVal = getMovieTimes(findId);
     // console.log("returnesVal", returnesVal);
-    console.log("getDetails", getDetails?.movies.length);
+    // console.log("getDetails", getDetails?.movies.length);
 
     const totalTime =
       returnesVal !== 0 ? returnesVal?.reduce((acc, curr) => acc + curr, 0) : 0;
-    console.log("Total Time", totalTime);
+    // console.log("Total Time", totalTime);
 
     const convertMin = (totalTime) => {
       const Hour = Math.floor(totalTime / 60);
@@ -118,9 +119,9 @@ const WatchlistPage = () => {
       <section className="watchlist_page">
         <div className="editbtn">
           <PageTitle className="mb-0" Title={getDetails?.name} />
-          <Link to="/editlist">
+          <button className="slick-arrow" to="/editlist">
             <img src={editBtn} alt="edit btn" />
-          </Link>
+          </button>
         </div>
         {getDetails?.description && (
           <div className="description">
