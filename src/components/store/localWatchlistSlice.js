@@ -105,9 +105,21 @@ const localwatchlistSlice = createSlice({
     },
 
     updateWatchlistdetails(state, action) {
-      state.watchlists.id = action.payload.id;
-      state.watchlists.name = action.payload.name;
-      state.watchlists.description = action.payload.description;
+      const id = action.payload.id;
+      const name = action.payload.name;
+      const description = action.payload.description;
+
+      const loadDetails = JSON.parse(localStorage.getItem("watchlists")) || [];
+      console.log("loadDetails", loadDetails);
+
+      const index = loadDetails.findIndex((item) => item.id === id);
+      if (index !== -1) {
+        loadDetails[index] = { ...loadDetails[index], name, description };
+        localStorage.setItem("watchlists", JSON.stringify(loadDetails));
+
+        // Update Redux state
+        state.watchlists = loadDetails;
+      }
     },
   },
 });

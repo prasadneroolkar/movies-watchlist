@@ -39,27 +39,40 @@ const Editwatchlist = () => {
   // console.log(typeof recDetails.id, recDetails.id);
   // console.log(getLocalId.map((item) => [typeof item.id, item.id]));
 
+  // dispatch(
+  //   updateWatchlistdetails({
+  //     id: editDetails.id,
+  //     name: editDetails.watchlistName,
+  //     description: editDetails.watchlistDes,
+  //   })
+  // );
+
   const onUpdate = (event) => {
     event.preventDefault();
     console.log("inside submit");
 
     try {
-      const findId = getLocalId.some((val) => val.id === recDetails.id);
-      console.log(findId);
-      if (find) {
-        dispatch(
-          updateWatchlistdetails({
-            id: editDetails.id,
-            name: editDetails.watchlistName,
-            description: editDetails.watchlistDes,
-          })
-        );
+      dispatch(
+        updateWatchlistdetails({
+          id: editDetails.id,
+          name: editDetails.watchlistName,
+          description: editDetails.watchlistDes,
+        })
+      );
 
-        console.log("update successfully");
-      }
+      console.log("update successfully");
     } catch (error) {
       console.error(error.message);
     }
+  };
+
+  const [remMovie, setRemmovie] = useState(recDetails);
+
+  const removeMovie = (id) => {
+    console.log("removeid", id);
+    const moviesLeft = remMovie?.movies.filter((item) => item.imdbID !== id);
+    setRemmovie(moviesLeft);
+    console.log("moviesLeft", moviesLeft);
   };
   return (
     <>
@@ -93,7 +106,7 @@ const Editwatchlist = () => {
           Movies
         </p>
         <ul>
-          {recDetails?.movies?.map((details) => (
+          {remMovie?.movies?.map((details) => (
             <li key={details.imdbID}>
               <span>
                 <img
@@ -103,7 +116,11 @@ const Editwatchlist = () => {
                 />
                 {details.Title}
               </span>
-              <Button className="remove_btn" btnName="remove" />
+              <Button
+                className="remove_btn"
+                btnName="remove"
+                onClick={() => removeMovie(details.imdbID)}
+              />
             </li>
           ))}
         </ul>
