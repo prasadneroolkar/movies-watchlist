@@ -16,7 +16,6 @@ const Editwatchlist = () => {
   const locate = useLocation();
   const recDetails = locate.state?.getDetails || [];
   console.log("recDetails", recDetails);
-
   const dispatch = useDispatch();
   const getLocalId = useSelector((state) => state.localWatchlist.watchlists);
   console.log("getLocalId", getLocalId);
@@ -27,15 +26,12 @@ const Editwatchlist = () => {
     watchlistDes: recDetails?.description || "",
   });
 
-  const onhandleInput = useCallback(
-    (e) => {
-      seteditDetails((prevData) => ({
-        ...prevData,
-        [e.target.name]: e.target.value,
-      }));
-    },
-    [editDetails]
-  );
+  const onhandleInput = useCallback((e) => {
+    seteditDetails((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  }, []);
   // console.log(typeof recDetails.id, recDetails.id);
   // console.log(getLocalId.map((item) => [typeof item.id, item.id]));
 
@@ -70,9 +66,12 @@ const Editwatchlist = () => {
 
   const removeMovie = (id) => {
     console.log("removeid", id);
-    const moviesLeft = remMovie?.movies.filter((item) => item.imdbID !== id);
-    setRemmovie(moviesLeft);
-    console.log("moviesLeft", moviesLeft);
+    console.log(typeof moviesLeft);
+    setRemmovie((prev) => ({
+      ...prev,
+      movies: prev.movies.filter((item) => item.imdbID !== id),
+    }));
+    console.log("setRemmovie", remMovie);
   };
   return (
     <>
@@ -95,35 +94,44 @@ const Editwatchlist = () => {
           onChange={onhandleInput}
         />
       </WatchlistForm>
+
       <section
         className="editmovie_list
       "
       >
-        <p
-          className="mb-1"
-          style={{ fontSize: "18px", lineHeight: "22px", fontWeight: "bold" }}
-        >
-          Movies
-        </p>
-        <ul>
-          {remMovie?.movies?.map((details) => (
-            <li key={details.imdbID}>
-              <span>
-                <img
-                  src={details.Poster}
-                  className="posterround"
-                  alt={details.Title}
-                />
-                {details.Title}
-              </span>
-              <Button
-                className="remove_btn"
-                btnName="remove"
-                onClick={() => removeMovie(details.imdbID)}
-              />
-            </li>
-          ))}
-        </ul>
+        {remMovie?.movies.length > 0 && (
+          <>
+            <p
+              className="mb-1"
+              style={{
+                fontSize: "18px",
+                lineHeight: "22px",
+                fontWeight: "bold",
+              }}
+            >
+              Movies
+            </p>
+            <ul>
+              {remMovie.movies.map((details) => (
+                <li key={details.imdbID} className="">
+                  <span>
+                    <img
+                      src={details.Poster}
+                      className="posterround"
+                      alt={details.Title}
+                    />
+                    {details.Title}
+                  </span>
+                  <Button
+                    className="remove_btn"
+                    btnName="remove"
+                    onClick={() => removeMovie(details.imdbID)}
+                  />
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
         <Button btnName="save" type="submit" onClick={onUpdate} />
       </section>
     </>

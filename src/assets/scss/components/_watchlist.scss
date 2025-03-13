@@ -300,6 +300,7 @@ section.watchlist_page {
   }
 }
 
+// ------------------Editwatchlist_page----------------------//
 section.editmovie_list {
 
   ul {
@@ -307,6 +308,7 @@ section.editmovie_list {
     flex-direction: column;
     row-gap: 10px;
     margin-bottom: 40px;
+    transition: all 0.5s linear;
 
     li {
       display: flex;
@@ -316,6 +318,7 @@ section.editmovie_list {
       padding: 17px 17px 17px 17px;
       column-gap: 10px;
       border-radius: 4px;
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out, height 0.3s ease-out;
 
       img {
         height: 32px;
@@ -333,6 +336,29 @@ section.editmovie_list {
         min-width: unset;
         padding: 11px 10px;
       }
+
+      // @keyframes fadeOut {
+      //   0% {
+      //     opacity: 1;
+      //     transform: translateX(0);
+      //   }
+
+      //   100% {
+      //     opacity: 0;
+      //     transform: translateX(20px);
+      //   }
+      // }
+
+      // &.removing {
+      //   animation: fadeOut 0.3s ease-out forwards;
+      // }
+    }
+
+    &:not(:has(li)) {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
     }
   }
 }
+
+// ------------------Editwatchlist_page----------------------//
