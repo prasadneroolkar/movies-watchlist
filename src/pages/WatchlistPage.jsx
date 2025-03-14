@@ -127,7 +127,7 @@ const WatchlistPage = () => {
       <section className="watchlist_page">
         <div className="editbtn">
           <PageTitle className="mb-0" Title={getDetails?.name} />
-          <button className="" onClick={sendTo}>
+          <button onClick={sendTo}>
             <img src={editBtn} alt="edit btn" />
           </button>
         </div>

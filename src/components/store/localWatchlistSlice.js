@@ -108,6 +108,9 @@ const localwatchlistSlice = createSlice({
       const id = action.payload.id;
       const name = action.payload.name;
       const description = action.payload.description;
+      const delMov = action.payload.movies;
+
+      console.log("delMov", delMov);
 
       const loadDetails = JSON.parse(localStorage.getItem("watchlists")) || [];
       console.log("loadDetails", loadDetails);
@@ -115,7 +118,15 @@ const localwatchlistSlice = createSlice({
       const index = loadDetails.findIndex((item) => item.id === id);
 
       if (index !== -1) {
-        loadDetails[index] = { ...loadDetails[index], name, description };
+        loadDetails[index] = {
+          ...loadDetails[index],
+          name,
+          description,
+          movies: delMov,
+        };
+
+        console.log("new arrayslice", loadDetails[index]);
+
         localStorage.setItem("watchlists", JSON.stringify(loadDetails));
 
         // Update Redux state
@@ -125,18 +136,14 @@ const localwatchlistSlice = createSlice({
 
     removeMovies(state, action) {
       const removeId = action.payload.id;
-      console.log("removeId", removeId);
-      const loadDetails = JSON.parse(localStorage.getItem("watchlists")) || [];
-      console.log("removeloadDetails", loadDetails);
-
-      const updatedWatchlists = loadDetails.map((watchlist) => ({
+      const updatedWatchlists = state.watchlists.map((watchlist) => ({
         ...watchlist,
         movies: watchlist.movies.filter((mov) => mov.imdbID !== removeId),
       }));
 
-      console.log("updatedWatchlists", updatedWatchlists);
+      // console.log("updatedWatchlists slice", updatedWatchlists);
 
-      localStorage.setItem("watchlists", JSON.stringify(updatedWatchlists));
+      // localStorage.setItem("watchlists", JSON.stringify(updatedWatchlists));
       state.watchlists = updatedWatchlists;
     },
   },

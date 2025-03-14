@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { useLocation } from "react-router-dom";
 import PageTitle from "../components/watchlist/PageTitle";
 import Button from "../components/Button";
@@ -9,50 +10,45 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateWatchlistdetails,
-  getWatchlistFromLocalStorage,
   removeMovies,
 } from "../components/store/localWatchlistSlice";
+import { showMsg } from "../components/store/snackbar";
 
 const Editwatchlist = () => {
   const locate = useLocation();
   const recDetails = locate.state?.getDetails || [];
-  // console.log("recDetails", recDetails);
+  // console.log("recDetails", recDetails)
+  const { handleErrormsg, error, setError } = useContext(AuthContext);
 
   const dispatch = useDispatch();
-
-  const getLocalId = useSelector((state) => state.localWatchlist.watchlists);
-
   const [editDetails, seteditDetails] = useState({
     id: recDetails?.id,
     watchlistName: recDetails?.name || "",
     watchlistDes: recDetails?.description || "",
   });
 
+  const getLocalId = useSelector((state) => state.localWatchlist.watchlists);
+  // console.log("getlocalid", getLocalId);
+
+  const updatedWatchlist = getLocalId?.find((val) => val.id === recDetails.id);
+  console.log("updatedWatchlist", updatedWatchlist);
+
+  const validateForm = (data) => {
+    const errorData = {};
+    if (data !== undefined && !data.trim()) {
+      errorData.data = "Please enter watchlist name";
+    }
+    setError(errorData);
+    return errorData;
+  };
+
   const onhandleInput = useCallback((e) => {
     seteditDetails((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
+    handleErrormsg("watchlistName");
   }, []);
-
-  const onUpdate = (event) => {
-    event.preventDefault();
-    // console.log("inside submit");
-
-    try {
-      dispatch(
-        updateWatchlistdetails({
-          id: editDetails.id,
-          name: editDetails.watchlistName,
-          description: editDetails.watchlistDes,
-        })
-      );
-
-      console.log("update successfully");
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
 
   const removeMovie = (id) => {
     dispatch(
@@ -61,6 +57,32 @@ const Editwatchlist = () => {
       })
     );
   };
+
+  const onUpdate = (event) => {
+    event.preventDefault();
+    const { watchlistName } = editDetails;
+    let formValidate = validateForm(watchlistName);
+    const val = Object.keys(formValidate).length;
+    if (val === 0) {
+      try {
+        dispatch(
+          updateWatchlistdetails({
+            id: editDetails.id,
+            name: editDetails.watchlistName,
+            description: editDetails.watchlistDes,
+            movies: updatedWatchlist?.movies,
+          })
+        );
+
+        dispatch(showMsg({ message: "Saved Succesfully !", type: "success" }));
+      } catch (error) {
+        console.error(error.message);
+      }
+    } else {
+      dispatch(showMsg({ message: "Somthing went wrong !", type: "error" }));
+    }
+  };
+
   return (
     <>
       <div className="editpage_title d-flex justify-content-between align-items-center">
@@ -75,6 +97,7 @@ const Editwatchlist = () => {
           value={editDetails.watchlistName}
           name="watchlistName"
           onChange={onhandleInput}
+          errorMsg={error.data && error.data}
         />
         <Textarea
           value={editDetails.watchlistDes}
@@ -87,7 +110,7 @@ const Editwatchlist = () => {
         className="editmovie_list
       "
       >
-        {recDetails?.movies.length > 0 && (
+        {updatedWatchlist?.movies.length > 0 && (
           <>
             <p
               className="mb-1"
@@ -100,7 +123,7 @@ const Editwatchlist = () => {
               Movies
             </p>
             <ul>
-              {recDetails.movies.map((details) => (
+              {updatedWatchlist?.movies.map((details) => (
                 <li key={details.imdbID} className="">
                   <span>
                     <img

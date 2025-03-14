@@ -207,6 +207,12 @@ section.watchlist_page {
       color: $text-color;
       font-weight: bold;
     }
+
+    button {
+      background-color: unset;
+      outline: 0;
+      border: 0
+    }
   }
 
   .description {

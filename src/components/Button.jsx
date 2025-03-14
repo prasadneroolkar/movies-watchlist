@@ -2,7 +2,7 @@ import React from "react";
 import AddSharpIcon from "@mui/icons-material/AddSharp";
 
 const Button = React.memo(({ btnName, className, type, onClick }) => {
-  console.log("Button rendered");
+  // console.log("Button rendered");
 
   return (
     <>
