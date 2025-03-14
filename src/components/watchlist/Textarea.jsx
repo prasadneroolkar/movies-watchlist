@@ -1,7 +1,7 @@
 import React from "react";
 
 const Textarea = React.memo(({ onChange, value, name }) => {
-  console.log("Textarea rendered");
+  // console.log("Textarea rendered");
 
   return (
     <>

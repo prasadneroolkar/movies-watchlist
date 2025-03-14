@@ -1,7 +1,7 @@
 import React from "react";
 
 const WatchlistForm = React.memo(({ children, onSubmit }) => {
-  console.log("WatchlistForm rendered");
+  // console.log("WatchlistForm rendered");
   return (
     <>
       <div className="simpleForm">

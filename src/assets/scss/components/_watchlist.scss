@@ -337,27 +337,10 @@ section.editmovie_list {
         padding: 11px 10px;
       }
 
-      // @keyframes fadeOut {
-      //   0% {
-      //     opacity: 1;
-      //     transform: translateX(0);
-      //   }
 
-      //   100% {
-      //     opacity: 0;
-      //     transform: translateX(20px);
-      //   }
-      // }
-
-      // &.removing {
-      //   animation: fadeOut 0.3s ease-out forwards;
-      // }
     }
 
-    &:not(:has(li)) {
-      opacity: 0;
-      transition: opacity 0.3s ease-out;
-    }
+
   }
 }
 

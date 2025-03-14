@@ -113,6 +113,7 @@ const localwatchlistSlice = createSlice({
       console.log("loadDetails", loadDetails);
 
       const index = loadDetails.findIndex((item) => item.id === id);
+
       if (index !== -1) {
         loadDetails[index] = { ...loadDetails[index], name, description };
         localStorage.setItem("watchlists", JSON.stringify(loadDetails));
@@ -120,6 +121,23 @@ const localwatchlistSlice = createSlice({
         // Update Redux state
         state.watchlists = loadDetails;
       }
+    },
+
+    removeMovies(state, action) {
+      const removeId = action.payload.id;
+      console.log("removeId", removeId);
+      const loadDetails = JSON.parse(localStorage.getItem("watchlists")) || [];
+      console.log("removeloadDetails", loadDetails);
+
+      const updatedWatchlists = loadDetails.map((watchlist) => ({
+        ...watchlist,
+        movies: watchlist.movies.filter((mov) => mov.imdbID !== removeId),
+      }));
+
+      console.log("updatedWatchlists", updatedWatchlists);
+
+      localStorage.setItem("watchlists", JSON.stringify(updatedWatchlists));
+      state.watchlists = updatedWatchlists;
     },
   },
 });
@@ -131,5 +149,6 @@ export const {
   updatelocalliststorage,
   watchedMovie,
   updateWatchlistdetails,
+  removeMovies,
 } = localwatchlistSlice.actions;
 export default localwatchlistSlice.reducer;

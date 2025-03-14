@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import PageTitle from "../components/watchlist/PageTitle";
 import Button from "../components/Button";
@@ -10,15 +10,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateWatchlistdetails,
   getWatchlistFromLocalStorage,
+  removeMovies,
 } from "../components/store/localWatchlistSlice";
 
 const Editwatchlist = () => {
   const locate = useLocation();
   const recDetails = locate.state?.getDetails || [];
-  console.log("recDetails", recDetails);
+  // console.log("recDetails", recDetails);
+
   const dispatch = useDispatch();
+
   const getLocalId = useSelector((state) => state.localWatchlist.watchlists);
-  console.log("getLocalId", getLocalId);
 
   const [editDetails, seteditDetails] = useState({
     id: recDetails?.id,
@@ -32,20 +34,10 @@ const Editwatchlist = () => {
       [e.target.name]: e.target.value,
     }));
   }, []);
-  // console.log(typeof recDetails.id, recDetails.id);
-  // console.log(getLocalId.map((item) => [typeof item.id, item.id]));
-
-  // dispatch(
-  //   updateWatchlistdetails({
-  //     id: editDetails.id,
-  //     name: editDetails.watchlistName,
-  //     description: editDetails.watchlistDes,
-  //   })
-  // );
 
   const onUpdate = (event) => {
     event.preventDefault();
-    console.log("inside submit");
+    // console.log("inside submit");
 
     try {
       dispatch(
@@ -62,16 +54,12 @@ const Editwatchlist = () => {
     }
   };
 
-  const [remMovie, setRemmovie] = useState(recDetails);
-
   const removeMovie = (id) => {
-    console.log("removeid", id);
-    console.log(typeof moviesLeft);
-    setRemmovie((prev) => ({
-      ...prev,
-      movies: prev.movies.filter((item) => item.imdbID !== id),
-    }));
-    console.log("setRemmovie", remMovie);
+    dispatch(
+      removeMovies({
+        id: id,
+      })
+    );
   };
   return (
     <>
@@ -99,7 +87,7 @@ const Editwatchlist = () => {
         className="editmovie_list
       "
       >
-        {remMovie?.movies.length > 0 && (
+        {recDetails?.movies.length > 0 && (
           <>
             <p
               className="mb-1"
@@ -112,7 +100,7 @@ const Editwatchlist = () => {
               Movies
             </p>
             <ul>
-              {remMovie.movies.map((details) => (
+              {recDetails.movies.map((details) => (
                 <li key={details.imdbID} className="">
                   <span>
                     <img
