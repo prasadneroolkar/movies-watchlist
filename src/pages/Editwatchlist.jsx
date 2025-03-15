@@ -14,13 +14,13 @@ import {
   deleteWatchlist,
 } from "../components/store/localWatchlistSlice";
 import { showMsg } from "../components/store/snackbar";
+import Popup from "../components/watchlist/modal/Popup";
 
 const Editwatchlist = () => {
   const locate = useLocation();
   const recDetails = locate.state?.getDetails || [];
-  const { handleErrormsg, error, setError, currentUser } =
+  const { handleErrormsg, error, setError, currentUser, setPopup, popup } =
     useContext(AuthContext);
-
   const dispatch = useDispatch();
   const [editDetails, seteditDetails] = useState({
     id: recDetails?.id,
@@ -93,12 +93,13 @@ const Editwatchlist = () => {
 
     if (currentUser?.email === getUsermail?.user) {
       console.log("recDetails", recDetails?.id);
+      setPopup(!popup);
 
-      dispatch(
-        deleteWatchlist({
-          watchlistId: recDetails.id,
-        })
-      );
+      // dispatch(
+      //   deleteWatchlist({
+      //     watchlistId: recDetails.id,
+      //   })
+      // );
     }
   };
 
@@ -110,6 +111,7 @@ const Editwatchlist = () => {
           Title="Edit your Watchlist"
         />
         <Link onClick={onhandleDelete}>Delete Watchlist</Link>
+        {popup && <Popup status={popup} />}
       </div>
       <WatchlistForm>
         <InputField

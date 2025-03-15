@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const [popup, setPopup] = useState(false);
   const [currentUser, setcurrentUser] = useState(null);
   const [error, setError] = useState({});
 
@@ -87,6 +88,8 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
+        popup,
+        setPopup,
         currentUser,
         signUp,
         login,

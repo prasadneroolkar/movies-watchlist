@@ -1,9 +1,12 @@
 import React from "react";
 
-const Popup = () => {
+const Popup = ({ status }) => {
   return (
-    <div>
-      <p>hi</p>
+    <div className="modalup">
+      <p>hhhhhhhhhhhhhhhhhhhhhhhh</p>
+      <div id="myPopover">
+        <p>This is a popover!</p>
+      </div>
     </div>
   );
 };
