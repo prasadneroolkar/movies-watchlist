@@ -11,14 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateWatchlistdetails,
   removeMovies,
+  deleteWatchlist,
 } from "../components/store/localWatchlistSlice";
 import { showMsg } from "../components/store/snackbar";
 
 const Editwatchlist = () => {
   const locate = useLocation();
   const recDetails = locate.state?.getDetails || [];
-  // console.log("recDetails", recDetails)
-  const { handleErrormsg, error, setError } = useContext(AuthContext);
+  const { handleErrormsg, error, setError, currentUser } =
+    useContext(AuthContext);
 
   const dispatch = useDispatch();
   const [editDetails, seteditDetails] = useState({
@@ -28,7 +29,9 @@ const Editwatchlist = () => {
   });
 
   const getLocalId = useSelector((state) => state.localWatchlist.watchlists);
-  // console.log("getlocalid", getLocalId);
+  const getUsermail = getLocalId?.find(
+    (list) => list.user === currentUser?.email
+  );
 
   const updatedWatchlist = getLocalId?.find((val) => val.id === recDetails.id);
   console.log("updatedWatchlist", updatedWatchlist);
@@ -82,6 +85,22 @@ const Editwatchlist = () => {
       dispatch(showMsg({ message: "Somthing went wrong !", type: "error" }));
     }
   };
+  console.log(
+    `current:${currentUser?.email} and watclist:${getUsermail?.user}`
+  );
+  const onhandleDelete = (event) => {
+    event.preventDefault();
+
+    if (currentUser?.email === getUsermail?.user) {
+      console.log("recDetails", recDetails?.id);
+
+      dispatch(
+        deleteWatchlist({
+          watchlistId: recDetails.id,
+        })
+      );
+    }
+  };
 
   return (
     <>
@@ -90,7 +109,7 @@ const Editwatchlist = () => {
           className="create_watchlist mt-0"
           Title="Edit your Watchlist"
         />
-        <Link to="/">Delete Watchlist</Link>
+        <Link onClick={onhandleDelete}>Delete Watchlist</Link>
       </div>
       <WatchlistForm>
         <InputField

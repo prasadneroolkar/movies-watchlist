@@ -141,10 +141,17 @@ const localwatchlistSlice = createSlice({
         movies: watchlist.movies.filter((mov) => mov.imdbID !== removeId),
       }));
 
-      // console.log("updatedWatchlists slice", updatedWatchlists);
-
-      // localStorage.setItem("watchlists", JSON.stringify(updatedWatchlists));
       state.watchlists = updatedWatchlists;
+    },
+
+    deleteWatchlist(state, action) {
+      const watchlistId = action.payload.watchlistId;
+      console.log("watchlistId", watchlistId);
+
+      const getWatchlist = state.watchlists.filter(
+        (list) => list.id !== watchlistId
+      );
+      state.watchlists = getWatchlist;
     },
   },
 });
@@ -156,6 +163,7 @@ export const {
   updatelocalliststorage,
   watchedMovie,
   updateWatchlistdetails,
+  deleteWatchlist,
   removeMovies,
 } = localwatchlistSlice.actions;
 export default localwatchlistSlice.reducer;
