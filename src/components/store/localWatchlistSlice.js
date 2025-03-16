@@ -151,6 +151,7 @@ const localwatchlistSlice = createSlice({
       const getWatchlist = state.watchlists.filter(
         (list) => list.id !== watchlistId
       );
+      localStorage.setItem("watchlists", JSON.stringify(getWatchlist));
       state.watchlists = getWatchlist;
     },
   },

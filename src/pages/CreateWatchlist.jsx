@@ -18,6 +18,9 @@ const CreateWatchlist = () => {
   // console.log("from state", movies);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    setError({});
+  }, []);
 
   const users = JSON.parse(localStorage.getItem("currentUser")) || [];
 

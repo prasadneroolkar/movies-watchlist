@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PageTitle from "../components/watchlist/PageTitle";
 import Button from "../components/Button";
 import WatchlistForm from "../components/watchlist/WatchlistForm";
@@ -18,9 +18,14 @@ import Popup from "../components/watchlist/modal/Popup";
 
 const Editwatchlist = () => {
   const locate = useLocation();
+  const navigate = useNavigate();
   const recDetails = locate.state?.getDetails || [];
   const { handleErrormsg, error, setError, currentUser, setPopup, popup } =
     useContext(AuthContext);
+  useEffect(() => {
+    setError({});
+  }, []);
+
   const dispatch = useDispatch();
   const [editDetails, seteditDetails] = useState({
     id: recDetails?.id,
@@ -61,7 +66,11 @@ const Editwatchlist = () => {
     );
   };
 
-  const onUpdate = (event) => {
+  const handleRedirect = () => {
+    navigate("/");
+  };
+
+  const onUpdate = (event, callback) => {
     event.preventDefault();
     const { watchlistName } = editDetails;
     let formValidate = validateForm(watchlistName);
@@ -77,7 +86,12 @@ const Editwatchlist = () => {
           })
         );
 
-        dispatch(showMsg({ message: "Saved Succesfully !", type: "success" }));
+        dispatch(
+          showMsg({ message: "Updated Succesfully !", type: "success" })
+        );
+        setTimeout(() => {
+          callback();
+        }, 1000);
       } catch (error) {
         console.error(error.message);
       }
@@ -101,13 +115,22 @@ const Editwatchlist = () => {
 
     if (currentUser?.email === getUsermail?.user) {
       console.log("recDetails", recDetails?.id);
-
-      dispatch(
-        deleteWatchlist({
-          watchlistId: recDetails.id,
-        })
-      );
-      setPopup(false);
+      try {
+        dispatch(
+          deleteWatchlist({
+            watchlistId: recDetails.id,
+          })
+        );
+        setPopup(false);
+        dispatch(
+          showMsg({ message: "Removed from watchlists !", type: "success" })
+        );
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -126,6 +149,7 @@ const Editwatchlist = () => {
             status={popup}
             delteList={onhandleDelete}
             closeList={onhandleClose}
+            message={editDetails.watchlistName}
           />
         )}
       </div>
@@ -180,7 +204,11 @@ const Editwatchlist = () => {
             </ul>
           </>
         )}
-        <Button btnName="save" type="submit" onClick={onUpdate} />
+        <Button
+          btnName="save"
+          type="submit"
+          onClick={() => onUpdate(event, handleRedirect)}
+        />
       </section>
     </>
   );
