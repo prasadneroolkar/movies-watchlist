@@ -300,7 +300,9 @@ section.watchlist_page {
 .editpage_title {
   margin-bottom: 50px;
 
-  a {
+  .delete_link {
+    font-size: 16px;
+    line-height: 19px;
     color: $primary-color;
     text-decoration: underline;
   }
@@ -325,10 +327,7 @@ section.watchlist_page {
 
 
     div#myPopover {
-      // position: fixed;
-      // top: 50%;
-      // right: 50%;
-      // z-index: 1;
+
       border-radius: 8px;
       background-color: aliceblue;
       color: black;
@@ -367,6 +366,23 @@ section.watchlist_page {
 
         button {
           font-weight: 700;
+          padding: 8px 32px;
+          min-block-size: 48px;
+          background-color: unset;
+          outline: 0;
+          border: 0;
+        }
+
+        button.del_btn {
+
+          border-radius: 6px;
+          text-transform: capitalize;
+          background-color: #F33F3F;
+          border: none;
+          color: #141414;
+          outline: 0;
+          font-size: 16px;
+          line-height: 19px;
         }
       }
     }

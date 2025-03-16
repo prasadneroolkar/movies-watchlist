@@ -88,18 +88,26 @@ const Editwatchlist = () => {
   console.log(
     `current:${currentUser?.email} and watclist:${getUsermail?.user}`
   );
+
+  const openModal = () => {
+    setPopup(!popup);
+  };
+
+  const onhandleClose = () => {
+    setPopup(false);
+  };
   const onhandleDelete = (event) => {
     event.preventDefault();
 
     if (currentUser?.email === getUsermail?.user) {
       console.log("recDetails", recDetails?.id);
-      setPopup(!popup);
 
-      // dispatch(
-      //   deleteWatchlist({
-      //     watchlistId: recDetails.id,
-      //   })
-      // );
+      dispatch(
+        deleteWatchlist({
+          watchlistId: recDetails.id,
+        })
+      );
+      setPopup(false);
     }
   };
 
@@ -110,8 +118,16 @@ const Editwatchlist = () => {
           className="create_watchlist mt-0"
           Title="Edit your Watchlist"
         />
-        <Link onClick={onhandleDelete}>Delete Watchlist</Link>
-        {popup && <Popup status={popup} />}
+        <button className="delete_link" onClick={openModal}>
+          Delete Watchlist
+        </button>
+        {popup && (
+          <Popup
+            status={popup}
+            delteList={onhandleDelete}
+            closeList={onhandleClose}
+          />
+        )}
       </div>
       <WatchlistForm>
         <InputField

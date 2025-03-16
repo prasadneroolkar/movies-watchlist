@@ -1,7 +1,8 @@
-import React from "react";
+import { React, memo } from "react";
 import Button from "../../../components/Button";
 
-const Popup = ({ status }) => {
+const Popup = ({ status, delteList, closeList }) => {
+  console.log(" Popup triggered");
   return (
     <div className={`modalup ${status && " opacityModal"}`}>
       <div id="myPopover" className={`${status && " opacitypopup"}`}>
@@ -10,12 +11,14 @@ const Popup = ({ status }) => {
           This will delete <b>Tune Jo Na Kaha</b> from <b>Your Library.</b>
         </p>
         <div>
-          <button>Cancel</button>
-          <Button btnName="Delete" />
+          <button onClick={closeList}>Cancel</button>
+          <button className="del_btn" onClick={delteList}>
+            Delete
+          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default Popup;
+export default memo(Popup);
