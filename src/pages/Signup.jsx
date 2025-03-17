@@ -20,9 +20,14 @@ const Signup = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const cnfpassRef = useRef();
+  const profilePic = useRef(null);
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfpassVisible, setConfpassVisible] = useState(false);
+
+  const handleFileChange = () => {
+    const file = profilePic.current.files[0];
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -30,16 +35,23 @@ const Signup = () => {
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value.trim();
     const confirm = cnfpassRef.current.value.trim();
+    const userPic = profilePic.current.files[0];
 
-    const validateRes = validateForm({ username, email, password, confirm });
+    const validateRes = validateForm({
+      username,
+      email,
+      password,
+      confirm,
+    });
     console.log(Object.keys(validateRes).length);
     if (Object.keys(validateRes).length === 0) {
-      const signupRes = signUp(username, email, password);
+      const signupRes = signUp(userPic, username, email, password);
       console.log(signupRes);
       if (signupRes === false) {
         alert("Signup failed, please try again.");
         return;
       }
+      profilePic.current.files[0] = "";
       usernameRef.current.value = "";
       emailRef.current.value = "";
       passwordRef.current.value = "";
@@ -51,7 +63,7 @@ const Signup = () => {
   return (
     <section className="login_section vh-100">
       <FormLayout formname="Sign up" onAction={onSubmit}>
-        <ImageUpload />
+        <ImageUpload InputRef={profilePic} onChange={handleFileChange} />
         <div className="form-group d-flex justify-content-start align-items-center">
           <PersonIcon sx={{ fontSize: 22 }} />
           <FormInput

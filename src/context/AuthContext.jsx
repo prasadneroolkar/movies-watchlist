@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
     // console.log(storedUser);
   }, []);
 
-  const signUp = (username, email, password) => {
+  const signUp = (profielpic, username, email, password) => {
     const users = JSON.parse(localStorage.getItem("userDetails")) || [];
     // console.log(users);
     if (users.find((user) => user.email === email)) {
