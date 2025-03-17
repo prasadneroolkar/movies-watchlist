@@ -11,10 +11,13 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { showMsg } from "../components/store/snackbar";
+import { useDispatch } from "react-redux";
 
 const Signup = () => {
   const { signUp, validateForm, error, setError, handleErrormsg } =
     useContext(AuthContext);
+  const [selectedImage, setSelectedImage] = useState();
   const navigate = useNavigate();
   const usernameRef = useRef();
   const emailRef = useRef();
@@ -22,11 +25,21 @@ const Signup = () => {
   const cnfpassRef = useRef();
   const profilePic = useRef(null);
 
+  const dispatch = useDispatch();
+
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfpassVisible, setConfpassVisible] = useState(false);
 
   const handleFileChange = () => {
     const file = profilePic.current.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const onSubmit = (e) => {
@@ -45,13 +58,17 @@ const Signup = () => {
     });
     console.log(Object.keys(validateRes).length);
     if (Object.keys(validateRes).length === 0) {
-      const signupRes = signUp(userPic, username, email, password);
-      console.log(signupRes);
+      const signupRes = signUp(selectedImage, username, email, password);
       if (signupRes === false) {
-        alert("Signup failed, please try again.");
+        dispatch(
+          showMsg({
+            message: "Something went wrong! try again",
+            type: "error",
+          })
+        );
         return;
       }
-      profilePic.current.files[0] = "";
+      profilePic.current.value;
       usernameRef.current.value = "";
       emailRef.current.value = "";
       passwordRef.current.value = "";
@@ -63,7 +80,11 @@ const Signup = () => {
   return (
     <section className="login_section vh-100">
       <FormLayout formname="Sign up" onAction={onSubmit}>
-        <ImageUpload InputRef={profilePic} onChange={handleFileChange} />
+        <ImageUpload
+          InputRef={profilePic}
+          onChange={handleFileChange}
+          Image={selectedImage}
+        />
         <div className="form-group d-flex justify-content-start align-items-center">
           <PersonIcon sx={{ fontSize: 22 }} />
           <FormInput

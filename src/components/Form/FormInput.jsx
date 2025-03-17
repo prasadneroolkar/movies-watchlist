@@ -10,7 +10,6 @@ const FormInput = ({ Labelname, type = "text", onChange, value, InputRef }) => {
           value={value}
           onChange={onChange}
           ref={InputRef}
-          autoComplete
         />
         <label htmlFor="">{Labelname}</label>
       </div>
