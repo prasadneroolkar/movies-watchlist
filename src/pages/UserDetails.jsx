@@ -10,6 +10,8 @@ import ImageUpload from "../components/Form/ImageUpload";
 import PageTitle from "../components/watchlist/PageTitle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { useDispatch, useSelector } from "react-redux";
+import { loggedinUsers, updateUser } from "../components/store/userSlice.js";
 
 const UserDetails = () => {
   const {
@@ -22,8 +24,64 @@ const UserDetails = () => {
     setPasswordVisible,
   } = useContext(AuthContext);
 
+  const dispatch = useDispatch();
+  const currentStateUser = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(loggedinUsers());
+  }, [dispatch]);
+
+  const [editDetails, seteditDetails] = useState({
+    userPic: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    if (currentStateUser) {
+      seteditDetails({
+        userPic: currentStateUser?.userPic || "",
+        username: currentStateUser?.username || "",
+        email: currentStateUser?.email || "",
+        password: currentStateUser?.password || "",
+      });
+    }
+  }, [currentStateUser]);
+
+  const handleEdit = (e) => {
+    seteditDetails((prevData) => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+    handleErrormsg("[e.target.name]");
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        seteditDetails({ userPic: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
+    try {
+      dispatch(
+        updateUser({
+          profilepic: editDetails.userPic,
+          username: editDetails.username,
+          email: editDetails.email,
+          password: editDetails.password,
+        })
+      );
+    } catch (error) {
+      console.log("error update", error);
+    }
   };
   return (
     <>
@@ -34,16 +92,19 @@ const UserDetails = () => {
       <section className="editprofile_form">
         <WatchlistForm onSubmit={onSubmit} className="formDiv">
           <ImageUpload
-          // InputRef={profilePic}
-          // onChange={handleFileChange}
-          // Image={selectedImage}
+            name="userPic"
+            // InputRef={currentStateUser?.userPic}
+            onChange={handleFileChange}
+            Image={editDetails?.userPic}
           />
           <div className="form-group d-flex justify-content-start align-items-center">
             <PersonIcon sx={{ fontSize: 22 }} />
             <FormInput
-              // InputRef={usernameRef}
+              value={editDetails?.username}
               Labelname="Name"
-              onChange={() => handleErrormsg("username")}
+              name="username"
+              // onChange={() => handleErrormsg("username")}
+              onChange={handleEdit}
             />
 
             <span>{error.username}</span>
@@ -52,10 +113,11 @@ const UserDetails = () => {
             <EmailIcon sx={{ fontSize: 22 }} />
 
             <FormInput
+              value={editDetails?.email}
               type="email"
               Labelname="Email"
-              // InputRef={emailRef}
-              onChange={() => handleErrormsg("email")}
+              name="email"
+              onChange={handleEdit}
             />
             <span>{error.email}</span>
           </div>
@@ -63,10 +125,12 @@ const UserDetails = () => {
             <LockIcon sx={{ fontSize: 22 }} />
 
             <FormInput
-              // type={isPasswordVisible ? "text" : "password"}
+              type={isPasswordVisible ? "text" : "password"}
               Labelname="Password"
+              name="password"
+              value={editDetails?.password}
               // InputRef={passwordRef}
-              onChange={() => handleErrormsg("password")}
+              onChange={handleEdit}
             />
             <p onClick={() => setPasswordVisible(!isPasswordVisible)}>
               {isPasswordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}

@@ -2,7 +2,7 @@ import React from "react";
 import loginpic from "/images/loginpic.png";
 import camera from "/images/camera.png";
 
-const ImageUpload = ({ InputRef, onChange, Image }) => {
+const ImageUpload = ({ InputRef, onChange, Image, name }) => {
   return (
     <div className="form_avatar d-flex flex-column justify-content-center align-items-center">
       <label
@@ -19,6 +19,7 @@ const ImageUpload = ({ InputRef, onChange, Image }) => {
         />
 
         <input
+          name={name}
           id="imagepicker"
           type="file"
           accept="image/*"

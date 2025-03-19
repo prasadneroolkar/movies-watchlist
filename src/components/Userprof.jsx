@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 const Userprof = () => {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser?.userPic);
   return (
     <div className="profile_status d-flex justify-content-between align-items-center">
       <p className="d-flex column-gap-2 justify-content-start align-items-center">
