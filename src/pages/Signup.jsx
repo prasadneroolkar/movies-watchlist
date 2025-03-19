@@ -15,8 +15,15 @@ import { showMsg } from "../components/store/snackbar";
 import { useDispatch } from "react-redux";
 
 const Signup = () => {
-  const { signUp, validateForm, error, setError, handleErrormsg } =
-    useContext(AuthContext);
+  const {
+    signUp,
+    validateForm,
+    error,
+    setError,
+    handleErrormsg,
+    isPasswordVisible,
+    setPasswordVisible,
+  } = useContext(AuthContext);
   const [selectedImage, setSelectedImage] = useState();
   const navigate = useNavigate();
   const usernameRef = useRef();
@@ -27,7 +34,6 @@ const Signup = () => {
 
   const dispatch = useDispatch();
 
-  const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isConfpassVisible, setConfpassVisible] = useState(false);
 
   const handleFileChange = () => {

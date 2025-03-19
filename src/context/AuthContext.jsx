@@ -6,6 +6,7 @@ const AuthProvider = ({ children }) => {
   const [popup, setPopup] = useState(false);
   const [currentUser, setcurrentUser] = useState(null);
   const [error, setError] = useState({});
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("currentUser")) || null;
@@ -99,6 +100,8 @@ const AuthProvider = ({ children }) => {
         error,
         setError,
         handleErrormsg,
+        isPasswordVisible,
+        setPasswordVisible,
       }}
     >
       {children}

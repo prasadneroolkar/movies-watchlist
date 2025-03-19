@@ -101,3 +101,16 @@
   }
 
 }
+
+.editprofile_form {
+  .formDiv {
+    background-color: unset;
+    padding: 0;
+    border-radius: 0;
+
+    .button_2 {
+      min-inline-size: 50px;
+      padding-inline: 50px;
+    }
+  }
+}
