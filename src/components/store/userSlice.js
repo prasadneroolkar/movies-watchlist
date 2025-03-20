@@ -22,25 +22,29 @@ const userSlice = createSlice({
       const allUsers = JSON.parse(localStorage.getItem("userDetails")) || [];
       console.log("allUsers", allUsers);
 
-      const userExists = allUsers.some((user) => user.id === userid);
-      console.log("userExists", userExists);
+      const userIndex = allUsers.findIndex((user) => user.id === userid);
+      console.log("userExists", userIndex);
 
-      if (userExists) {
-        const finduser = allUsers.find((user) => user.id === userid);
-        console.log("finduser", finduser);
-        const finalUpdate = {
-          ...finduser,
+      if (userIndex !== -1) {
+        allUsers[userIndex] = {
+          ...allUsers[userIndex],
           userPic,
           username,
           email,
           password,
         };
-        console.log("finfinalUpdateduser", finalUpdate);
+        localStorage.setItem("userDetails", JSON.stringify(allUsers));
+        localStorage.setItem(
+          "currentUser",
+          JSON.stringify(allUsers[userIndex])
+        );
       }
-      const updateUsers = { ...state, userPic, username, email, password };
-      // localStorage.setItem("userDetails", JSON.stringify(updateUsers));
+      // const updateUsers = { ...state, userPic, username, email, password };
+      // if (updateUser) {
+      //   localStorage.setItem("currentUser", JSON.stringify(updateUsers));
+      // }
 
-      return updateUsers;
+      return allUsers;
     },
   },
 });

@@ -3,8 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/scss/main.scss";
 import { lazy, useEffect } from "react";
 import { getWatchlistFromLocalStorage } from "./components/store/localWatchlistSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import CustomSnackbar from "./components/Messages/CustomSnackbar";
+import { loggedinUsers } from "./components/store/userSlice.js";
 
 const Layout = lazy(() => import("./components/Layout"));
 const Signup = lazy(() => import("./pages/Signup"));
@@ -22,6 +23,14 @@ function App() {
     try {
       dispatchLocal(getWatchlistFromLocalStorage());
       console.log("dispatched in app");
+    } catch (error) {
+      console.error("error msg", error);
+    }
+  }, [dispatchLocal]);
+
+  useEffect(() => {
+    try {
+      dispatchLocal(loggedinUsers());
     } catch (error) {
       console.error("error msg", error);
     }

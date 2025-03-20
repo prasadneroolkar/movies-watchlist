@@ -10,54 +10,53 @@ import ImageUpload from "../components/Form/ImageUpload";
 import PageTitle from "../components/watchlist/PageTitle";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useDispatch, useSelector } from "react-redux";
-import { loggedinUsers, updateUser } from "../components/store/userSlice.js";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../components/store/userSlice.js";
+import { showMsg } from "../components/store/snackbar";
+import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
   const {
-    signUp,
+    updateCurrentUser,
     validateForm,
     error,
-    setError,
     handleErrormsg,
     isPasswordVisible,
     setPasswordVisible,
+    logout,
   } = useContext(AuthContext);
 
   const dispatch = useDispatch();
-  const currentStateUser = useSelector((state) => state.users);
-  // console.log("currentStateUser", currentStateUser);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    dispatch(loggedinUsers());
-  }, [dispatch]);
+  const currentStateUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const [editDetails, seteditDetails] = useState({
-    id: "",
-    userPic: "",
-    username: "",
-    email: "",
-    password: "",
+    id: currentStateUser?.id || "",
+    userPic: currentStateUser?.userPic || "",
+    username: currentStateUser?.username || "",
+    email: currentStateUser?.email || "",
+    password: currentStateUser?.password || "",
   });
 
-  useEffect(() => {
-    if (currentStateUser) {
-      seteditDetails({
-        id: currentStateUser?.id || "",
-        userPic: currentStateUser?.userPic || "",
-        username: currentStateUser?.username || "",
-        email: currentStateUser?.email || "",
-        password: currentStateUser?.password || "",
-      });
-    }
-  }, [currentStateUser]);
+  // useEffect(() => {
+  //   if (currentStateUser) {
+  //     seteditDetails({
+  //       id: currentStateUser?.id || "",
+  //       userPic: currentStateUser?.userPic || "",
+  //       username: currentStateUser?.username || "",
+  //       email: currentStateUser?.email || "",
+  //       password: currentStateUser?.password || "",
+  //     });
+  //   }
+  // }, [currentStateUser]);
 
   const handleEdit = (e) => {
     seteditDetails((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
-    handleErrormsg("[e.target.name]");
+    handleErrormsg([e.target.name]);
   };
 
   const handleFileChange = (e) => {
@@ -66,7 +65,7 @@ const UserDetails = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         seteditDetails((prevData) => ({
-          ...prevData, // ✅ Keep existing values
+          ...prevData,
           userPic: reader.result,
         }));
       };
@@ -74,33 +73,58 @@ const UserDetails = () => {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    seteditDetails({
+      id: "",
+      userPic: "",
+      username: "",
+      email: "",
+      password: "",
+    });
+    navigate("/login");
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
-    try {
-      dispatch(
-        updateUser({
+    const validateRes = validateForm(editDetails);
+    console.log(Object.keys(validateRes).length);
+    if (Object.keys(validateRes).length === 0) {
+      try {
+        const updatedUser = {
           id: editDetails.id,
-          profilepic: editDetails.userPic,
+          userPic: editDetails.userPic,
           username: editDetails.username,
           email: editDetails.email,
           password: editDetails.password,
-        })
-      );
-    } catch (error) {
-      console.log("error update", error);
+        };
+        dispatch(updateUser(updatedUser));
+
+        updateCurrentUser(updatedUser); //  Update Context & trigger re-render
+
+        dispatch(
+          showMsg({
+            message: "Updated Successfully!",
+            type: "success",
+          })
+        );
+      } catch (error) {
+        console.log("error update", error);
+      }
     }
   };
   return (
     <>
       <section className="editpage_title d-flex justify-content-between align-items-center">
         <PageTitle className="create_watchlist mt-0" Title="Edit profile" />
-        <button className="delete_link">Log out</button>
+        <button className="delete_link" onClick={handleLogout}>
+          Log out
+        </button>
       </section>
       <section className="editprofile_form">
         <WatchlistForm onSubmit={onSubmit} className="formDiv">
           <ImageUpload
             name="userPic"
-            // InputRef={currentStateUser?.userPic}
             onChange={handleFileChange}
             Image={editDetails?.userPic}
           />
@@ -110,10 +134,8 @@ const UserDetails = () => {
               value={editDetails?.username}
               Labelname="Name"
               name="username"
-              // onChange={() => handleErrormsg("username")}
               onChange={handleEdit}
             />
-
             <span>{error.username}</span>
           </div>
           <div className="form-group d-flex justify-content-start align-items-center">
@@ -146,7 +168,12 @@ const UserDetails = () => {
           </div>
           <div className="d-flex justify-content-center align-items-center column-gap-4">
             <Button btnName="Update" type="submit" className="button_2" />
-            <Button btnName="cancel" type="cancel" className="button_2" />
+            <Button
+              btnName="cancel"
+              type="button"
+              className="button_2"
+              onClick={() => seteditDetails(currentStateUser)}
+            />
           </div>
         </WatchlistForm>
       </section>

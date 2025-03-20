@@ -14,6 +14,12 @@ const AuthProvider = ({ children }) => {
     // console.log(storedUser);
   }, []);
 
+  // ✅ Function to update user state globally
+  const updateCurrentUser = (user) => {
+    setcurrentUser(user);
+    localStorage.setItem("currentUser", JSON.stringify(user));
+  };
+
   const signUp = (id, userPic, username, email, password) => {
     const users = JSON.parse(localStorage.getItem("userDetails")) || [];
     console.log(users);
@@ -102,6 +108,7 @@ const AuthProvider = ({ children }) => {
         handleErrormsg,
         isPasswordVisible,
         setPasswordVisible,
+        updateCurrentUser,
       }}
     >
       {children}
