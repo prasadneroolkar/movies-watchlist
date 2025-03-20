@@ -26,12 +26,14 @@ const UserDetails = () => {
 
   const dispatch = useDispatch();
   const currentStateUser = useSelector((state) => state.users);
+  // console.log("currentStateUser", currentStateUser);
 
   useEffect(() => {
     dispatch(loggedinUsers());
   }, [dispatch]);
 
   const [editDetails, seteditDetails] = useState({
+    id: "",
     userPic: "",
     username: "",
     email: "",
@@ -41,6 +43,7 @@ const UserDetails = () => {
   useEffect(() => {
     if (currentStateUser) {
       seteditDetails({
+        id: currentStateUser?.id || "",
         userPic: currentStateUser?.userPic || "",
         username: currentStateUser?.username || "",
         email: currentStateUser?.email || "",
@@ -62,7 +65,10 @@ const UserDetails = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        seteditDetails({ userPic: reader.result });
+        seteditDetails((prevData) => ({
+          ...prevData, // ✅ Keep existing values
+          userPic: reader.result,
+        }));
       };
       reader.readAsDataURL(file);
     }
@@ -73,6 +79,7 @@ const UserDetails = () => {
     try {
       dispatch(
         updateUser({
+          id: editDetails.id,
           profilepic: editDetails.userPic,
           username: editDetails.username,
           email: editDetails.email,

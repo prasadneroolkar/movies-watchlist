@@ -32,6 +32,8 @@ const Signup = () => {
   const cnfpassRef = useRef();
   const profilePic = useRef(null);
 
+  const id = Date.now();
+
   const dispatch = useDispatch();
 
   const [isConfpassVisible, setConfpassVisible] = useState(false);
@@ -64,7 +66,7 @@ const Signup = () => {
     });
     console.log(Object.keys(validateRes).length);
     if (Object.keys(validateRes).length === 0) {
-      const signupRes = signUp(selectedImage, username, email, password);
+      const signupRes = signUp(id, selectedImage, username, email, password);
       if (signupRes === false) {
         dispatch(
           showMsg({

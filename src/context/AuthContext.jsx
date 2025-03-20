@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
     // console.log(storedUser);
   }, []);
 
-  const signUp = (userPic, username, email, password) => {
+  const signUp = (id, userPic, username, email, password) => {
     const users = JSON.parse(localStorage.getItem("userDetails")) || [];
     console.log(users);
     if (users.find((user) => user.email === email)) {
@@ -22,7 +22,7 @@ const AuthProvider = ({ children }) => {
       return false;
     }
 
-    const newUser = { userPic, username, email, password };
+    const newUser = { id, userPic, username, email, password };
     console.log(newUser);
     users.push(newUser);
     localStorage.setItem("userDetails", JSON.stringify(users));
