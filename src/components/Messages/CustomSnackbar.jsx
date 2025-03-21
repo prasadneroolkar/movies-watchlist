@@ -9,7 +9,7 @@ function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
 }
 
-const CustomSnackbar = () => {
+const CustomSnackbar = ({ autoHideDuration = 2000 }) => {
   const dispatch = useDispatch();
   const { open, message, type } = useSelector((state) => state.snackbarMsg);
 
@@ -20,7 +20,7 @@ const CustomSnackbar = () => {
   return (
     <>
       <Snackbar
-        autoHideDuration={2000}
+        autoHideDuration={autoHideDuration}
         open={open}
         onClose={handleClose}
         TransitionComponent={SlideTransition}

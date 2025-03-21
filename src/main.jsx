@@ -9,14 +9,14 @@ import { store } from "./components/store/store.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <WatchlistContext>
-          <Provider store={store}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AuthProvider>
+          <WatchlistContext>
             <App />
-          </Provider>
-        </WatchlistContext>
-      </AuthProvider>
-    </BrowserRouter>
+          </WatchlistContext>
+        </AuthProvider>
+      </BrowserRouter>
+    </Provider>
   </StrictMode>
 );

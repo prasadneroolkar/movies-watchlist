@@ -1,4 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
+import { showMsg } from "../components/store/snackbar.js";
+import { useDispatch } from "react-redux";
 
 export const AuthContext = createContext();
 
@@ -7,6 +9,7 @@ const AuthProvider = ({ children }) => {
   const [currentUser, setcurrentUser] = useState(null);
   const [error, setError] = useState({});
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("currentUser")) || null;
@@ -14,7 +17,6 @@ const AuthProvider = ({ children }) => {
     // console.log(storedUser);
   }, []);
 
-  // ✅ Function to update user state globally
   const updateCurrentUser = (user) => {
     setcurrentUser(user);
     localStorage.setItem("currentUser", JSON.stringify(user));
@@ -24,7 +26,12 @@ const AuthProvider = ({ children }) => {
     const users = JSON.parse(localStorage.getItem("userDetails")) || [];
     console.log(users);
     if (users.find((user) => user.email === email)) {
-      alert("user already existing");
+      dispatch(
+        showMsg({
+          message: "User already existing",
+          type: "error",
+        })
+      );
       return false;
     }
 
@@ -40,17 +47,19 @@ const AuthProvider = ({ children }) => {
 
   const login = (email, password) => {
     const user = JSON.parse(localStorage.getItem("userDetails"));
-    // console.log(user);
     const matchedUser = user.find(
       (user) => user.email === email && user.password === password
     );
-    // console.log(matchedUser);
     if (matchedUser) {
-      // alert("matched");
       localStorage.setItem("currentUser", JSON.stringify(matchedUser));
       setcurrentUser(matchedUser);
     } else {
-      alert("Incorrect email and login password");
+      dispatch(
+        showMsg({
+          message: "Incorrect email and login password",
+          type: "error",
+        })
+      );
       return false;
     }
     return true;
