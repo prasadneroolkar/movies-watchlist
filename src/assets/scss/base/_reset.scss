@@ -120,3 +120,16 @@ button.slick-arrow {
     color: $ruby-red;
   }
 }
+
+#account-menu {
+  // position: unset;
+
+  .MuiBackdrop-root.MuiBackdrop-invisible.MuiModal-backdrop.css-vl6bb4-MuiBackdrop-root-MuiModal-backdrop {
+    // position: unset;
+  }
+
+  .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation0.MuiPopover-paper.MuiMenu-paper.MuiMenu-paper.css-1gvn426-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+    position: absolute;
+    // top: 1138px !important
+  }
+}

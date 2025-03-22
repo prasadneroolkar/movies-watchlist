@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import avatar from "/images/avatar.png";
 import { Link } from "react-router-dom";
+import AccountMenu from "../components/AccountMenu";
 
 const Userprof = () => {
   const { currentUser } = useContext(AuthContext);
@@ -11,9 +12,7 @@ const Userprof = () => {
         <img src={currentUser?.userPic || avatar} alt="profile" />
         <span>{currentUser?.username || "Guest"} </span>
       </p>
-      <Link to="/userdetail">
-        <img src="/images/dot.png" alt="" />
-      </Link>
+      <AccountMenu />
     </div>
   );
 };

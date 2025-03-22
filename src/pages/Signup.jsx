@@ -13,7 +13,6 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { showMsg } from "../components/store/snackbar";
 import { useDispatch } from "react-redux";
-import CustomSnackbar from "../components/Messages/CustomSnackbar";
 
 const Signup = () => {
   const {
@@ -151,7 +150,6 @@ const Signup = () => {
           </Link>
         </p>
       </FormLayout>
-      <CustomSnackbar autoHideDuration={3000} />
     </section>
   );
 };

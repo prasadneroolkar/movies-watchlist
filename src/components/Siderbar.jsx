@@ -33,7 +33,6 @@ const Siderbar = () => {
         <p className="mt-4">
           {currentUser ? <Logout /> : <Link to="/login">Sign in</Link>}
         </p>
-
         <Userprof />
       </aside>
     </>
