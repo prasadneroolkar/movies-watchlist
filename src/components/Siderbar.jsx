@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import Searchbar from "../components/Searchbar";
 import Menu from "../components/Menu";
 import Button from "../components/Button";
@@ -10,12 +10,17 @@ import Logout from "./Form/Logout";
 import { Link } from "react-router-dom";
 
 const Siderbar = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, searchList, handleSearch } = useContext(AuthContext);
+
   return (
     <>
       <aside className="sidebar">
         <h1>watchlist</h1>
-        <Searchbar placeholder="Search" />
+        <Searchbar
+          placeholder="Search"
+          onChange={handleSearch}
+          value={searchList}
+        />
         <Menu />
 
         <Button

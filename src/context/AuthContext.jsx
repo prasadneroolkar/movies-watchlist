@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import { showMsg } from "../components/store/snackbar.js";
 import { useDispatch } from "react-redux";
 
@@ -9,6 +9,10 @@ const AuthProvider = ({ children }) => {
   const [currentUser, setcurrentUser] = useState(null);
   const [error, setError] = useState({});
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [searchList, setSearchList] = useState("");
+  const handleSearch = useCallback((e) => {
+    setSearchList(e.target.value);
+  }, []);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -118,6 +122,8 @@ const AuthProvider = ({ children }) => {
         isPasswordVisible,
         setPasswordVisible,
         updateCurrentUser,
+        searchList,
+        handleSearch,
       }}
     >
       {children}

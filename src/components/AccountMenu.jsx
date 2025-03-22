@@ -71,9 +71,9 @@ const AccountMenu = () => {
               // position: "fixed",
               bgcolor: "#191919",
               color: "#E1E1E1",
-              left: "41px !important",
-              "min-width": "240px",
-              top: "528px  !important",
+              // left: "41px !important",
+              minWidth: "240px",
+              // top: "528px  !important",
               overflow: "visible",
               filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
               mt: 1.5,
@@ -85,9 +85,9 @@ const AccountMenu = () => {
               },
 
               "& .MuiMenuItem-root": {
-                "font-size": "16px",
-                "line-height": "19px",
-                "font-family": "lato, sans-serif",
+                fontSize: "16px",
+                lineHeight: "19px",
+                fontFamily: "lato, sans-serif",
               },
               "&::before": {
                 content: '""',
@@ -110,12 +110,16 @@ const AccountMenu = () => {
         {!currentUser ? (
           <MenuItem onClick={handleLogin}>Login</MenuItem>
         ) : (
-          <>
-            <MenuItem onClick={handleProfile}>Profile</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </>
+          [
+            <MenuItem key="profile" onClick={handleProfile}>
+              Profile
+            </MenuItem>,
+            <MenuItem key="logout" onClick={handleLogout}>
+              Logout
+            </MenuItem>,
+          ]
         )}
-      </Menu>{" "}
+      </Menu>
     </React.Fragment>
   );
 };
