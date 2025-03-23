@@ -1,13 +1,22 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import Popup from "../components/watchlist/modal/Popup";
+import AddwatchlistModal from "../components/watchlist/modal/AddwatchlistModal";
 import Button from "../components/Button";
 import { AuthContext } from "../context/AuthContext";
+import { useSelector } from "react-redux";
 
 const MovieDetails = () => {
   const location = useLocation();
   const { movDetail } = location.state;
-  const { setPopup, popup } = useContext(AuthContext);
+  const { setPopup, popup, currentUser } = useContext(AuthContext);
+
+  const localWatchlistName = useSelector(
+    (state) => state.localWatchlist.watchlists
+  );
+
+  const userWatchlists = localWatchlistName?.filter(
+    (watchlist) => watchlist.user === currentUser?.email
+  );
 
   const runTime = () => {
     const moviTime = parseInt(movDetail.Runtime.split(" ")[0]);
@@ -63,18 +72,19 @@ const MovieDetails = () => {
                     {movDetail.Metascore}
                   </p>
                   <Button btnName="Add to Watchlist" onClick={openModal} />
-                  {popup && (
-                    <Popup
-                      popname="addWatchlist"
-                      status={popup}
-                      closeList={onhandleClose}
-                    />
-                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
+      )}
+      {popup && (
+        <AddwatchlistModal
+          movieDetails={movDetail}
+          status={popup}
+          closeList={onhandleClose}
+          list={userWatchlists}
+        />
       )}
     </>
   );

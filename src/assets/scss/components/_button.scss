@@ -10,6 +10,10 @@ button.btn_create {
   min-width: 241px;
   font-size: 16px;
   line-height: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 4px;
 
   a {
     color: $magic-black;

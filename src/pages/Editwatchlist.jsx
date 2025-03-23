@@ -146,7 +146,6 @@ const Editwatchlist = () => {
         </button>
         {popup && (
           <Popup
-            popname="delwatchlist"
             status={popup}
             delteList={onhandleDelete}
             closeList={onhandleClose}

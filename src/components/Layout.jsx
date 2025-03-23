@@ -5,13 +5,13 @@ import { store } from "../components/store/store";
 import { Provider } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 
-const Layout = ({ children, status }) => {
+const Layout = ({ children }) => {
   const boxRef = useRef(null);
   const { popup } = useContext(AuthContext);
   return (
     <>
       <Provider store={store}>
-        <section className={`main d-flex  ${popup === true ? "modalup " : ""}`}>
+        <section className={`main d-flex  `}>
           <Siderbar />
           <div className="right_common" ref={boxRef}>
             <Outlet context={{ boxRef }} />

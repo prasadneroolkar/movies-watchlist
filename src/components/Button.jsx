@@ -9,7 +9,7 @@ const Button = React.memo(({ btnName, className, type, onClick }) => {
       <button
         onClick={onClick}
         type={type}
-        className={`btn_create d-flex justify-content-center align-items-center column-gap-1 ${className}`}
+        className={`btn_create  ${className}`}
       >
         {btnName}
       </button>
