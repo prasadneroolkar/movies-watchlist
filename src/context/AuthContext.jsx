@@ -10,6 +10,7 @@ const AuthProvider = ({ children }) => {
   const [error, setError] = useState({});
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [searchList, setSearchList] = useState("");
+
   const handleSearch = useCallback((e) => {
     setSearchList(e.target.value);
   }, []);

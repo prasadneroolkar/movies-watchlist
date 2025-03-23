@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { contextWatchlist } from "../context/WatchlistContext";
 
 const Watchlist = () => {
-  const { currentUser, searchList, handleSearch } = useContext(AuthContext);
+  const { currentUser, searchList } = useContext(AuthContext);
   const [debouncedTerm, setDebouncedTerm] = useState("");
 
   const { handleId } = useContext(contextWatchlist);
@@ -15,6 +15,7 @@ const Watchlist = () => {
   const localWatchlistName = useSelector(
     (state) => state.localWatchlist.watchlists
   );
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedTerm(searchList);
@@ -25,23 +26,12 @@ const Watchlist = () => {
   const userWatchlists = localWatchlistName?.filter(
     (watchlist) => watchlist.user === currentUser?.email
   );
-  console.log("userWatchlists", userWatchlists);
 
-  const searchListArray = userWatchlists?.findIndex((item) =>
-    item.name.toLowerCase().includes(debouncedTerm.toLowerCase())
-  );
-
-  console.log("searchListArray", searchListArray);
-  const resultFn = () => {
-    if (searchListArray !== -1) {
-      userWatchlists[searchListArray] = [userWatchlists[searchListArray]];
-      return userWatchlists[searchListArray];
-    }
-  };
-
-  const finalarray = searchList !== "" ? resultFn() : userWatchlists;
-
-  console.log("finalarray", finalarray);
+  const searchListArray = debouncedTerm
+    ? userWatchlists?.filter((item) =>
+        item.name.toLowerCase().includes(debouncedTerm.toLowerCase())
+      )
+    : userWatchlists;
 
   return (
     currentUser && (
@@ -50,8 +40,8 @@ const Watchlist = () => {
         <div className="watchlist">
           <p>My lists</p>
           <ul>
-            {finalarray?.length ? (
-              finalarray.map((val) => {
+            {searchListArray?.length ? (
+              searchListArray.map((val) => {
                 return (
                   <li key={val.id} onClick={() => handleId && handleId(val.id)}>
                     <Link to="/watchlist">

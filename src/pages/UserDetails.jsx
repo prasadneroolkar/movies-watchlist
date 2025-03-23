@@ -39,18 +39,6 @@ const UserDetails = () => {
     password: currentStateUser?.password || "",
   });
 
-  // useEffect(() => {
-  //   if (currentStateUser) {
-  //     seteditDetails({
-  //       id: currentStateUser?.id || "",
-  //       userPic: currentStateUser?.userPic || "",
-  //       username: currentStateUser?.username || "",
-  //       email: currentStateUser?.email || "",
-  //       password: currentStateUser?.password || "",
-  //     });
-  //   }
-  // }, [currentStateUser]);
-
   const handleEdit = (e) => {
     seteditDetails((prevData) => ({
       ...prevData,

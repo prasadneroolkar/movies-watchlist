@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
+import Popup from "../components/watchlist/modal/Popup";
 import Button from "../components/Button";
+import { AuthContext } from "../context/AuthContext";
 
 const MovieDetails = () => {
   const location = useLocation();
   const { movDetail } = location.state;
+  const { setPopup, popup } = useContext(AuthContext);
 
   const runTime = () => {
     const moviTime = parseInt(movDetail.Runtime.split(" ")[0]);
@@ -17,6 +20,14 @@ const MovieDetails = () => {
     return convertMin(moviTime);
   };
   const movieTime = runTime();
+
+  const openModal = () => {
+    setPopup(!popup);
+  };
+
+  const onhandleClose = () => {
+    setPopup(false);
+  };
 
   return (
     <>
@@ -51,7 +62,14 @@ const MovieDetails = () => {
                     <span>Score</span>
                     {movDetail.Metascore}
                   </p>
-                  <Button btnName="Add to Watchlist" />
+                  <Button btnName="Add to Watchlist" onClick={openModal} />
+                  {popup && (
+                    <Popup
+                      popname="addWatchlist"
+                      status={popup}
+                      closeList={onhandleClose}
+                    />
+                  )}
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from "react";
+import React, { useContext, useEffect } from "react";
 import Searchbar from "../components/Searchbar";
 import Menu from "../components/Menu";
 import Button from "../components/Button";
@@ -17,7 +17,7 @@ const Siderbar = () => {
       <aside className="sidebar">
         <h1>watchlist</h1>
         <Searchbar
-          placeholder="Search"
+          placeholder="Search watchlists"
           onChange={handleSearch}
           value={searchList}
         />
