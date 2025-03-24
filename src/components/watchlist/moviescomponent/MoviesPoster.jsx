@@ -2,13 +2,14 @@ import React from "react";
 import unCheck from "/images/tick.png";
 import Check from "/images/Checkmark.png";
 
-const MoviesPoster = ({ onClick, moviearray, mapval }) => {
+const MoviesPoster = ({ onClick, moviearray, mapval, flag }) => {
   return (
     <>
       <span onClick={onClick}>
         <img
           src={
-            moviearray?.watchedMov.some(
+            flag ||
+            moviearray?.watchedMov?.some(
               (m) => m.moveId === mapval.imdbID?.toString() && m.liked
             )
               ? Check

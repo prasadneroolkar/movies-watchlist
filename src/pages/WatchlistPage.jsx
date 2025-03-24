@@ -89,12 +89,18 @@ const WatchlistPage = () => {
 
   const unWatchtime = runTime();
 
+  const now = new Date();
+  const formattedDate = `${
+    now.toISOString().split("T")[0]
+  } ${now.getHours()}:${now.getMinutes()}`;
+
   const handleCheck = (id) => {
     dispatch(
       watchedMovie({
         listId: currentLocalid,
         watchId: id.toString(),
         liked: true,
+        date: formattedDate,
       })
     );
   };
@@ -207,6 +213,7 @@ const WatchlistPage = () => {
                   <MoviesPoster
                     onClick={() => handleCheck(val.imdbID)}
                     moviearray={resUnwatched}
+                    // subarray={watchedMov}
                     mapval={val}
                   />
                   {val.Ratings?.map((rate, index) =>

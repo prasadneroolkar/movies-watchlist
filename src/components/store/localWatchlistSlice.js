@@ -65,7 +65,7 @@ const localwatchlistSlice = createSlice({
     },
 
     watchedMovie(state, action) {
-      const { watchId, liked, listId } = action.payload;
+      const { watchId, liked, listId, date } = action.payload;
 
       // Retrieve watchlists from localStorage or fallback to Redux state
       let watchlists =
@@ -87,7 +87,11 @@ const localwatchlistSlice = createSlice({
           // Update watchedMov list
           const updatedWatchedMov = isWatched
             ? watchedMov.filter((m) => m.moveId !== watchId.toString()) // Remove movie
-            : [...watchedMov, { moveId: watchId.toString(), liked }]; // Add movie
+            : [...watchedMov, { moveId: watchId.toString(), liked, date }]; // Add movie
+          console.log("updatedWatchedMov", {
+            ...list,
+            watchedMov: updatedWatchedMov,
+          });
 
           return { ...list, watchedMov: updatedWatchedMov };
         }
@@ -154,6 +158,54 @@ const localwatchlistSlice = createSlice({
       localStorage.setItem("watchlists", JSON.stringify(getWatchlist));
       state.watchlists = getWatchlist;
     },
+
+    recentlyWatched(state, action) {
+      const currentUser = action.payload.user;
+
+      const currentList = JSON.parse(localStorage.getItem("watchlists")) || [];
+
+      const listMovies = currentList
+        ?.filter((u) => u.user === currentUser)
+        .map((m) => m.watchedMov?.filter((l) => l.liked === true) || []);
+      console.log("listMovies", listMovies);
+
+      const sortDate = listMovies.flat();
+      console.log("sortDate", sortDate);
+
+      const latestList = sortDate.sort((a, b) => {
+        const dateA = new Date(
+          a.date ? a.date.replace(" ", "T") : "1970-01-01T00:00"
+        );
+        const dateB = new Date(
+          b.date ? b.date.replace(" ", "T") : "1970-01-01T00:00"
+        );
+
+        return dateB - dateA;
+      });
+
+      console.log(latestList);
+
+      const notEmpty =
+        latestList?.flat().map(
+          (m) => m.moveId
+          // { moveid: m.moveId, date: m.date }
+        ) || [];
+
+      console.log("notEmpty", notEmpty);
+
+      const sortMovies = currentList
+        ?.filter((u) => u.user === currentUser)
+        .map((m) => m.movies?.map((l) => l))
+        .flat();
+      console.log("sortMovies", sortMovies);
+
+      const finalMov = sortMovies?.filter((s) => notEmpty.includes(s.imdbID));
+      console.log("finalMov", finalMov);
+
+      const nonDupicateArray = [...new Set(finalMov)];
+
+      localStorage.setItem("historylist", JSON.stringify(nonDupicateArray));
+    },
   },
 });
 
@@ -166,5 +218,6 @@ export const {
   updateWatchlistdetails,
   deleteWatchlist,
   removeMovies,
+  recentlyWatched,
 } = localwatchlistSlice.actions;
 export default localwatchlistSlice.reducer;

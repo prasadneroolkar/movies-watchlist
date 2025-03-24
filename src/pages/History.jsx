@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { recentlyWatched } from "../components/store/localWatchlistSlice";
 import PageTitle from "../components/watchlist/PageTitle";
 import MoviesContainer from "../components/watchlist/moviescomponent/MoviesContainer";
 import MoviesPoster from "../components/watchlist/moviescomponent/MoviesPoster";
@@ -9,34 +11,36 @@ import { useSelector, useDispatch } from "react-redux";
 
 const History = () => {
   const dispatch = useDispatch();
+  const { currentUser } = useContext(AuthContext);
 
-  const currentLocalid = JSON.parse(localStorage.getItem("currentID")) || null;
-
-  const watchlistDetails = useSelector(
-    (state) => state.localWatchlist.watchlists || []
-  );
-
-  const resUnwatched = watchlistDetails.find((m) => m.id === currentLocalid);
-  let getDetails;
-  if (currentLocalid != undefined) {
-    getDetails = watchlistDetails?.find((data) => data.id === currentLocalid);
-  } else {
-    getDetails = null;
+  try {
+    dispatch(
+      recentlyWatched({
+        user: currentUser?.email,
+      })
+    );
+  } catch (error) {
+    console.log(error);
   }
+
+  const historyList = JSON.parse(localStorage.getItem("historylist")) || null;
+
+  console.log("historyList", historyList);
+
   return (
-    <>
+    <section className="watchlist_page">
       <PageTitle className="create_watchlist" Title="Recently watched" />
       <section className="movies_section">
         <MoviesContainer>
-          {getDetails?.movies?.length === 0 ? (
+          {historyList?.length === 0 ? (
             <p>No movies found.</p>
           ) : (
-            getDetails?.movies?.map((val) => (
+            historyList?.map((val) => (
               <MoviesCard key={val.imdbID}>
                 <MoviesPoster
-                  onClick={() => handleCheck(val.imdbID)}
-                  moviearray={resUnwatched}
+                  moviearray={historyList}
                   mapval={val}
+                  flag={true}
                 />
                 {val.Ratings?.map((rate, index) =>
                   rate.Source === "Metacritic" ? (
@@ -49,7 +53,7 @@ const History = () => {
           )}
         </MoviesContainer>
       </section>
-    </>
+    </section>
   );
 };
 
