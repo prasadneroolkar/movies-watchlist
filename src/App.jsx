@@ -16,6 +16,7 @@ const WatchlistPage = lazy(() => import("./pages/WatchlistPage"));
 const MovieDetails = lazy(() => import("./pages/MovieDetails"));
 const Editwatchlist = lazy(() => import("./pages/Editwatchlist"));
 const UserDetails = lazy(() => import("./pages/UserDetails"));
+const History = lazy(() => import("./pages/History"));
 
 function App() {
   const dispatchLocal = useDispatch();
@@ -46,6 +47,7 @@ function App() {
           <Route path="/details" element={<MovieDetails />} />
           <Route path="/editlist" element={<Editwatchlist />} />
           <Route path="/userdetail" element={<UserDetails />} />
+          <Route path="/history" element={<History />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

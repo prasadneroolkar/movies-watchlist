@@ -12,7 +12,7 @@ const Menu = () => {
     },
     {
       name: "History",
-      path: "",
+      path: "/history",
       icon: history,
     },
   ];

@@ -5,11 +5,6 @@ import editBtn from "/images/editBtn.png";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { contextWatchlist } from "../context/WatchlistContext";
-import better from "/images/better.png";
-import good from "/images/good.png";
-import awful from "/images/awful.png";
-import unCheck from "/images/tick.png";
-import Check from "/images/Checkmark.png";
 import {
   watchedMovie,
   getWatchlistFromLocalStorage,
@@ -34,8 +29,6 @@ const WatchlistPage = () => {
   );
 
   const resUnwatched = watchlistDetails.find((m) => m.id === currentLocalid);
-
-  useEffect(() => {}, []);
 
   let getDetails;
   if (currentLocalid != undefined) {
