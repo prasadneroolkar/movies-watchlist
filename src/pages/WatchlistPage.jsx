@@ -15,6 +15,12 @@ import {
   getWatchlistFromLocalStorage,
 } from "../components/store/localWatchlistSlice.js";
 
+import MoviesContainer from "../components/watchlist/moviescomponent/MoviesContainer";
+import MoviesPoster from "../components/watchlist/moviescomponent/MoviesPoster";
+import MoviesCard from "../components/watchlist/moviescomponent/MoviesCard";
+import MoviesRating from "../components/watchlist/moviescomponent/MoviesRating";
+import MoviesTitle from "../components/watchlist/moviescomponent/MoviesTitle";
+
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
   const navigate = useNavigate();
@@ -37,8 +43,6 @@ const WatchlistPage = () => {
   } else {
     getDetails = null;
   }
-
-  // console.log("Get details", getDetails);
 
   const getAVg = () => {
     const getMov = getDetails?.movies || [];
@@ -66,19 +70,8 @@ const WatchlistPage = () => {
       getDetails?.watchedMov.every((item2) => item2.moveId !== idmov.imdbID)
     );
 
-    // console.log("findId", findId);
-    // console.log("getDetails", getDetails);
-
-    // console.log("findId", findId?.length);
-
     function getMovieTimes(findId) {
       if (findId?.length === 0) {
-        // const allmov = getDetails?.movies.map((time) => {
-        //   return parseInt(time.Runtime.split(" ")[0]);
-        // });
-
-        // return allmov;
-        // }
         return 0;
       } else {
         const unwatMov = findId?.map((time) => {
@@ -89,12 +82,9 @@ const WatchlistPage = () => {
     }
 
     const returnesVal = getMovieTimes(findId);
-    // console.log("returnesVal", returnesVal);
-    // console.log("getDetails", getDetails?.movies.length);
 
     const totalTime =
       returnesVal !== 0 ? returnesVal?.reduce((acc, curr) => acc + curr, 0) : 0;
-    // console.log("Total Time", totalTime);
 
     const convertMin = (totalTime) => {
       const Hour = Math.floor(totalTime / 60);
@@ -155,7 +145,7 @@ const WatchlistPage = () => {
         </section>
 
         <section className="movies_section">
-          <div className="slider-container card-main ">
+          {/* <div className="slider-container card-main ">
             {getDetails?.movies?.length === 0 ? (
               <p>No movies found.</p>
             ) : (
@@ -214,7 +204,28 @@ const WatchlistPage = () => {
                 </div>
               ))
             )}
-          </div>
+          </div> */}
+          <MoviesContainer>
+            {getDetails?.movies?.length === 0 ? (
+              <p>No movies found.</p>
+            ) : (
+              getDetails?.movies?.map((val) => (
+                <MoviesCard key={val.imdbID}>
+                  <MoviesPoster
+                    onClick={() => handleCheck(val.imdbID)}
+                    moviearray={resUnwatched}
+                    mapval={val}
+                  />
+                  {val.Ratings?.map((rate, index) =>
+                    rate.Source === "Metacritic" ? (
+                      <MoviesRating key={index} mapval={rate} />
+                    ) : null
+                  )}
+                  <MoviesTitle mapval={val} />
+                </MoviesCard>
+              ))
+            )}
+          </MoviesContainer>
         </section>
       </section>
     </>

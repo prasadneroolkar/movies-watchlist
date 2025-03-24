@@ -486,6 +486,7 @@ section.editmovie_list {
         overflow-y: auto;
 
         li {
+          cursor: pointer;
           align-self: start;
           font-size: 16px;
           line-height: 19px;
