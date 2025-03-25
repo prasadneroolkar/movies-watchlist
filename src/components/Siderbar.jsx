@@ -10,11 +10,12 @@ import Logout from "./Form/Logout";
 import { Link } from "react-router-dom";
 
 const Siderbar = () => {
-  const { currentUser, searchList, handleSearch } = useContext(AuthContext);
+  const { currentUser, searchList, handleSearch, open } =
+    useContext(AuthContext);
 
   return (
     <>
-      <aside className="sidebar">
+      <aside className={`sidebar ${open ? "open" : "closed"}`}>
         <h1>watchlist</h1>
         <Searchbar
           placeholder="Search watchlists"

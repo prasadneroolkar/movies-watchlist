@@ -9,7 +9,6 @@ import { api } from "../services/api";
 const Home = () => {
   const [srchMov, setSrchmov] = useState("");
   const [inputValue, setInputValue] = useState("");
-  // console.log(srchMov);
 
   const handleSearch = (e) => {
     if (e.target.value === "") {
@@ -24,7 +23,6 @@ const Home = () => {
   };
   const onhandleClick = () => {
     setSrchmov(inputValue);
-    // console.log(inputValue);
   };
   return (
     <>
@@ -56,4 +54,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);

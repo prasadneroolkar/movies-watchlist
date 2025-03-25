@@ -36,6 +36,10 @@ button {
 section.main {
   min-height: 100vh;
 
+  @include bp(tablet-sm) {
+    padding-top: 56px;
+  }
+
 }
 
 .slick-track {

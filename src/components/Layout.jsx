@@ -4,15 +4,17 @@ import { Outlet } from "react-router-dom";
 import { store } from "../components/store/store";
 import { Provider } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
+import MobileHeader from "../components/MobileHeader";
 
 const Layout = ({ children }) => {
   const boxRef = useRef(null);
-  const { popup } = useContext(AuthContext);
+  const { popup, open } = useContext(AuthContext);
   return (
     <>
       <Provider store={store}>
+        <MobileHeader />
         <section className={`main d-flex  `}>
-          <Siderbar />
+          <Siderbar open={open} />
           <div className="right_common" ref={boxRef}>
             <Outlet context={{ boxRef }} />
             {children}

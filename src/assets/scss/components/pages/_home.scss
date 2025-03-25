@@ -34,7 +34,21 @@ section.search_box_2 {
     input {
       width: 100%;
     }
+
+    img {
+      @include bp(tablet-sm) {
+
+        display: none;
+      }
+    }
   }
+
+  @include bp(tablet-sm) {
+    button.btn_create {
+      min-width: unset;
+    }
+  }
+
 }
 
 section.movies_section {

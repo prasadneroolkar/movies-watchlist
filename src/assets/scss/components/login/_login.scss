@@ -1,6 +1,6 @@
 .login_section {
   background: url("/images/loginBg.jpg");
-  // background: linear-gradient(rgba(255, 255, 255, 0.1) 0%, rgb(0, 0, 0) 100%);
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,7 +9,8 @@
 }
 
 .formDiv {
-  // min-width: fit-content;
+  max-width: 450px;
+  margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 35px;
   border-radius: 10px;
@@ -33,6 +34,7 @@
     margin: 0 auto;
 
     .form-group {
+      max-height: 50px;
       position: relative;
       border: 1px solid;
       border-color: rgba(128, 128, 128, 0.7);
@@ -61,11 +63,7 @@
           transition-duration: 250ms;
           pointer-events: none;
           transition-timing-function: cubic-bezier(0.4, 0, 0.68, 0.06);
-
-
-
         }
-
 
 
         input {
@@ -101,13 +99,16 @@
   }
 
   .profile_pic {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     margin: 0 auto;
     background-color: white;
   }
 
+  @include bp(tablet-sm) {
+    margin: 20px 0;
+  }
 }
 
 .editprofile_form {

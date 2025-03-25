@@ -10,6 +10,10 @@ const AuthProvider = ({ children }) => {
   const [error, setError] = useState({});
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [searchList, setSearchList] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleHam = () => {
+    setOpen(!open);
+  };
 
   const handleSearch = useCallback((e) => {
     setSearchList(e.target.value);
@@ -125,6 +129,8 @@ const AuthProvider = ({ children }) => {
         updateCurrentUser,
         searchList,
         handleSearch,
+        handleHam,
+        open,
       }}
     >
       {children}

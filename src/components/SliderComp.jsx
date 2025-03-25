@@ -7,7 +7,7 @@ const SliderComp = ({ search }) => {
   return (
     <>
       <section className="movies_section">
-        <h2>Popular movies right now</h2>
+        <h2>Popular movies</h2>
         <Suspense
           fallback={
             <div className="card-main">
@@ -22,4 +22,4 @@ const SliderComp = ({ search }) => {
   );
 };
 
-export default SliderComp;
+export default React.memo(SliderComp);

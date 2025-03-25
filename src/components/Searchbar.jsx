@@ -17,4 +17,4 @@ const Searchbar = ({ placeholder, onChange, onKeyDown, value }) => {
   );
 };
 
-export default Searchbar;
+export default React.memo(Searchbar);
