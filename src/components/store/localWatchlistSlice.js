@@ -166,45 +166,39 @@ const localwatchlistSlice = createSlice({
 
       const listMovies = currentList
         ?.filter((u) => u.user === currentUser)
-        .map((m) => m.watchedMov?.filter((l) => l.liked === true) || []);
+        .flatMap((m) => m.watchedMov?.filter((l) => l.liked === true) || []);
       console.log("listMovies", listMovies);
 
-      const sortDate = listMovies.flat();
-      console.log("sortDate", sortDate);
-
-      const latestList = sortDate.sort((a, b) => {
+      // Sort by date (latest first)
+      const latestList = listMovies.sort((a, b) => {
         const dateA = new Date(
           a.date ? a.date.replace(" ", "T") : "1970-01-01T00:00"
         );
         const dateB = new Date(
           b.date ? b.date.replace(" ", "T") : "1970-01-01T00:00"
         );
-
-        return dateB - dateA;
+        return dateB - dateA; // Newest first
       });
 
       console.log(latestList);
 
-      const notEmpty =
-        latestList?.flat().map(
-          (m) => m.moveId
-          // { moveid: m.moveId, date: m.date }
-        ) || [];
+      const notEmpty = latestList?.flat().map((m) => m.moveId) || [];
 
       console.log("notEmpty", notEmpty);
 
       const sortMovies = currentList
         ?.filter((u) => u.user === currentUser)
-        .map((m) => m.movies?.map((l) => l))
-        .flat();
-      console.log("sortMovies", sortMovies);
+        .flatMap((m) => m.movies?.filter((l) => notEmpty.includes(l.imdbID)));
 
-      const finalMov = sortMovies?.filter((s) => notEmpty.includes(s.imdbID));
-      console.log("finalMov", finalMov);
+      const sortedMovies = sortMovies.sort((a, b) => {
+        return notEmpty.indexOf(a.imdbID) - notEmpty.indexOf(b.imdbID);
+      });
 
-      const nonDupicateArray = [...new Set(finalMov)];
+      const nonDuplicateArray = Array.from(
+        new Map(sortedMovies.map((movie) => [movie.imdbID, movie])).values()
+      );
 
-      localStorage.setItem("historylist", JSON.stringify(nonDupicateArray));
+      localStorage.setItem("historylist", JSON.stringify(nonDuplicateArray));
     },
   },
 });

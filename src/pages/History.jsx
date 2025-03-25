@@ -30,7 +30,7 @@ const History = () => {
   return (
     <section className="watchlist_page">
       <PageTitle className="create_watchlist" Title="Recently watched" />
-      <section className="movies_section">
+      <section className="movies_section movies_history">
         <MoviesContainer>
           {historyList?.length === 0 ? (
             <p>No movies found.</p>

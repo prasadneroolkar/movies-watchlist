@@ -4,9 +4,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-position: center;
+  background-size: cover;
 }
 
 .formDiv {
+  // min-width: fit-content;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 35px;
   border-radius: 10px;
@@ -19,10 +22,14 @@
     font-weight: 800;
     text-transform: capitalize;
     margin-bottom: 20px;
+
+    @include bp(tablet-sm) {
+      font-size: 32px;
+    }
   }
 
   form {
-    width: 324px;
+    max-width: 324px;
     margin: 0 auto;
 
     .form-group {

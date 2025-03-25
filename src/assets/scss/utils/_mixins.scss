@@ -66,11 +66,7 @@
     }
   }
 
-  @else if $query==sm {
-    @media (max-width: 575px) {
-      @content;
-    }
-  }
+
 
   @else if $query==xs {
     @media (max-width: 320px) {
