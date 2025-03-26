@@ -27,7 +27,6 @@ const AddwatchlistModal = ({
     (state) => state.localWatchlist
   );
 
-  console.log("movieDetails", movieDetails);
   useEffect(() => {
     if (statusMessage) {
       dispatch(showMsg({ message: statusMessage, type: statusType }));
@@ -38,6 +37,8 @@ const AddwatchlistModal = ({
       }, 2000);
     }
   }, [statusMessage, statusType, dispatch]);
+
+  useEffect(() => {}, []);
 
   const addNewMovie = () => {
     if (!currentUser) {
@@ -58,8 +59,6 @@ const AddwatchlistModal = ({
     } catch (error) {
       console.error(error.message);
     }
-
-    // setSelectedLocId(locID);
   };
   return (
     <div className={`modalup   ${status && " opacityModal"}`}>

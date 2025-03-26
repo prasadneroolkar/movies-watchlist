@@ -79,7 +79,9 @@ const Movies = ({ movSrch }) => {
           slidesToScroll: 1,
           infinite: true,
           dots: false,
-          // arrows: true,
+          swipe: true,
+          touchMove: true,
+          draggable: true,
         },
       },
 
@@ -90,6 +92,9 @@ const Movies = ({ movSrch }) => {
           slidesToScroll: 1,
           infinite: true,
           dots: false,
+          swipe: true,
+          touchMove: true,
+          draggable: true,
         },
       },
       {
@@ -97,6 +102,9 @@ const Movies = ({ movSrch }) => {
         settings: {
           slidesToShow: 3.5,
           slidesToScroll: 2,
+          swipe: true,
+          touchMove: true,
+          draggable: true,
         },
       },
       {
@@ -104,6 +112,9 @@ const Movies = ({ movSrch }) => {
         settings: {
           slidesToShow: 2.5,
           slidesToScroll: 1,
+          swipe: true,
+          touchMove: true,
+          draggable: true,
         },
       },
       {
@@ -111,6 +122,9 @@ const Movies = ({ movSrch }) => {
         settings: {
           slidesToShow: 2.5,
           slidesToScroll: 1,
+          swipe: true,
+          touchMove: true,
+          draggable: true,
         },
       },
 
@@ -119,6 +133,9 @@ const Movies = ({ movSrch }) => {
         settings: {
           slidesToShow: 1.5,
           slidesToScroll: 1,
+          swipe: true,
+          touchMove: true,
+          draggable: true,
         },
       },
     ],

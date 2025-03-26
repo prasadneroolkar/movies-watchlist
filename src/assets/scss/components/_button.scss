@@ -19,4 +19,10 @@ button.btn_create {
     color: $magic-black;
 
   }
+
+  @include bp(tablet-sm) {
+    min-width: unset;
+    max-width: 240px;
+    width: 100%;
+  }
 }

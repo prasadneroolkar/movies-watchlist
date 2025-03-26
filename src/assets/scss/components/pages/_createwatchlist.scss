@@ -6,5 +6,7 @@
 
   }
 
-  // margin-bottom: 50px;
+  @include bp(tablet-sm) {
+    margin-bottom: 30px;
+  }
 }

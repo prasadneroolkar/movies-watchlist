@@ -15,6 +15,18 @@ const AuthProvider = ({ children }) => {
     setOpen(!open);
   };
 
+  useEffect(() => {
+    if (popup) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [popup]);
+
   const handleSearch = useCallback((e) => {
     setSearchList(e.target.value);
   }, []);
@@ -23,7 +35,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("currentUser")) || null;
     if (storedUser) setcurrentUser(storedUser);
-    // console.log(storedUser);
   }, []);
 
   const updateCurrentUser = (user) => {

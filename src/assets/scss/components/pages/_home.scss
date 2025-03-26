@@ -41,15 +41,18 @@ section.search_box_2 {
         display: none;
       }
     }
+
+    @include bp(tablet-sm) {}
   }
 
   @include bp(tablet-sm) {
     button.btn_create {
       min-width: unset;
 
-      .srcBtn {
+      &.srcBtn {
         padding: 0 10px;
       }
+
     }
   }
 
