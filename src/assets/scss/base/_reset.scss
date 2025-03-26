@@ -46,6 +46,14 @@ section.main {
   display: flex;
   justify-content: start;
   column-gap: 30px;
+
+  @include bp(foundation-tablet-sm) {
+    column-gap: 15px;
+  }
+
+  @include bp(tablet-sm) {
+    column-gap: 15px;
+  }
 }
 
 .slick-list {

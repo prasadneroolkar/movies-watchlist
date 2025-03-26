@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ribbon from "/images/ribbon.png";
 import tick from "/images/tick.png";
 import Searchbar from "../components/Searchbar";
 import Button from "../components/Button";
 import SliderComp from "../components/SliderComp";
 import { api } from "../services/api";
+import SearchIcon from "@mui/icons-material/Search";
 
 const Home = () => {
   const [srchMov, setSrchmov] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [btnImg, setbtnImg] = useState(
+    window.matchMedia("(max-width: 991px)").matches
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setbtnImg(window.matchMedia("(max-width:991px)").matches);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleSearch = (e) => {
     if (e.target.value === "") {
@@ -46,7 +62,11 @@ const Home = () => {
           onChange={handleSearch}
           onKeyDown={handleKeypress}
         />
-        <Button btnName="search" onClick={onhandleClick}></Button>
+        <Button
+          btnName={!btnImg ? "search" : <SearchIcon />}
+          className={!btnImg ? "" : "srcBtn"}
+          onClick={onhandleClick}
+        ></Button>
       </section>
 
       <SliderComp search={srchMov} />

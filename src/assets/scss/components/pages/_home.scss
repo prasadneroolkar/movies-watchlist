@@ -46,6 +46,10 @@ section.search_box_2 {
   @include bp(tablet-sm) {
     button.btn_create {
       min-width: unset;
+
+      .srcBtn {
+        padding: 0 10px;
+      }
     }
   }
 

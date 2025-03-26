@@ -59,8 +59,7 @@ const Movies = ({ movSrch }) => {
   let settings = {
     dots: false,
     infinite: false,
-    lazyLoad: true,
-
+    lazyLoad: "ondemand",
     speed: 500,
     slidesToShow: 5.5,
     slidesToScroll: 5,
@@ -74,26 +73,51 @@ const Movies = ({ movSrch }) => {
 
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1025,
         settings: {
           slidesToShow: 3.5,
-          slidesToScroll: 3,
+          slidesToScroll: 1,
           infinite: true,
-          dots: true,
+          dots: false,
+          // arrows: true,
+        },
+      },
+
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 4.5,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3.5,
+          slidesToScroll: 2,
         },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2.5,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.1,
+          slidesToShow: 2.5,
+          slidesToScroll: 1,
+        },
+      },
+
+      {
+        breakpoint: 376,
+        settings: {
+          slidesToShow: 1.5,
           slidesToScroll: 1,
         },
       },
