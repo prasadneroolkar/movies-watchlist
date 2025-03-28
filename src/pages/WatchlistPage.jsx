@@ -111,6 +111,31 @@ const WatchlistPage = () => {
     }
   };
 
+  // console.log("movies length", getDetails?.movies?.length);
+  const getLength = getDetails?.movies?.length;
+  const [cur, setcur] = useState(0);
+  const [nex, setNex] = useState(5);
+
+  useEffect(() => {
+    const movslice = getDetails?.movies?.slice(cur, nex);
+    console.log("movslice", movslice);
+
+    console.log("nex updated:", nex);
+    console.log("cur updated:", cur);
+  }, [cur, nex]);
+
+  const onNext = () => {
+    if (getLength <= nex) {
+      console.log("getLength", typeof getLength);
+      setNex((prev) => prev + 5);
+      setcur((prev) => prev + 5);
+    }
+  };
+
+  const onPrev = () => {
+    setcur(cur);
+  };
+
   return (
     <>
       <section className="watchlist_page">
@@ -227,6 +252,12 @@ const WatchlistPage = () => {
             )}
           </MoviesContainer>
         </section>
+        <button onClick={onNext} style={{ color: "white" }}>
+          prev
+        </button>
+        <button onClick={onPrev} style={{ color: "white" }}>
+          next
+        </button>
       </section>
     </>
   );

@@ -374,6 +374,18 @@ section.watchlist_page {
     color: $primary-color;
     text-decoration: underline;
   }
+
+  .create_watchlist {
+    @include bp(tablet-sm) {
+      margin-bottom: 10px;
+
+    }
+  }
+
+  @include bp(tablet-sm) {
+    margin-bottom: 10px;
+
+  }
 }
 
 // ------------------Editwatchlist_page----------------------//
@@ -392,7 +404,7 @@ section.editmovie_list {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid $text-color;
+      border: 1px solid #414141;
       padding: 17px 17px 17px 17px;
       column-gap: 10px;
       border-radius: 4px;
@@ -413,7 +425,19 @@ section.editmovie_list {
         color: $text-color;
         min-width: unset;
         padding: 11px 10px;
+
+        &.rmBtn {
+          width: auto;
+          border: none;
+        }
       }
+
+      @include bp(mobile) {
+        border: none;
+        padding: 5px 5px;
+
+      }
+
 
 
     }
@@ -456,11 +480,13 @@ section.editmovie_list {
     gap: 8px;
     padding: 32px;
     margin: 0 auto;
+    max-width: 600px;
+    width: 40%;
 
     h2 {
       font-weight: 700;
       font-size: 24px;
-      line-height: 19px;
+      line-height: 27px;
       margin-bottom: 0;
     }
 
@@ -501,6 +527,12 @@ section.editmovie_list {
         font-size: 16px;
         line-height: 19px;
       }
+    }
+
+
+
+    @include bp(mobile) {
+      width: 90%
     }
   }
 

@@ -15,6 +15,7 @@ import {
 } from "../components/store/localWatchlistSlice";
 import { showMsg } from "../components/store/snackbar";
 import Popup from "../components/watchlist/modal/Popup";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Editwatchlist = () => {
   const locate = useLocation();
@@ -22,8 +23,21 @@ const Editwatchlist = () => {
   const recDetails = locate.state?.getDetails || [];
   const { handleErrormsg, error, setError, currentUser, setPopup, popup } =
     useContext(AuthContext);
+
+  const [btnremove, setbtnremove] = useState(
+    window.matchMedia("(max-width: 991px)").matches
+  );
+
   useEffect(() => {
-    setError({});
+    const handleResize = () => {
+      setbtnremove(window.matchMedia("(max-width:991px)").matches);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const dispatch = useDispatch();
@@ -195,8 +209,14 @@ const Editwatchlist = () => {
                     {details.Title}
                   </span>
                   <Button
-                    className="remove_btn"
-                    btnName="remove"
+                    className={`remove_btn ${!btnremove ? "" : "rmBtn"}`}
+                    btnName={
+                      !btnremove ? (
+                        "remove"
+                      ) : (
+                        <DeleteIcon sx={{ color: "#F33F3F" }} />
+                      )
+                    }
                     onClick={() => removeMovie(details.imdbID)}
                   />
                 </li>

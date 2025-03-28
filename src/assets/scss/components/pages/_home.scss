@@ -51,6 +51,7 @@ section.search_box_2 {
 
       &.srcBtn {
         padding: 0 10px;
+        width: auto;
       }
 
     }
@@ -159,6 +160,12 @@ section.movies_section {
       &.next {
         right: 10px;
       }
+    }
+
+    @include bp(tablet-sm) {
+      overflow: unset;
+      overflow-x: clip;
+
     }
   }
 

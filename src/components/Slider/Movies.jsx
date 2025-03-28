@@ -82,6 +82,7 @@ const Movies = ({ movSrch }) => {
           swipe: true,
           touchMove: true,
           draggable: true,
+          arrows: true,
         },
       },
 
@@ -95,6 +96,7 @@ const Movies = ({ movSrch }) => {
           swipe: true,
           touchMove: true,
           draggable: true,
+          arrows: true,
         },
       },
       {

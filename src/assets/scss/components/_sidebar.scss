@@ -120,6 +120,7 @@ aside.sidebar {
 
   @include bp(tablet-sm) {
     padding-inline: 30px;
+    padding-block: 40px;
   }
 
 }

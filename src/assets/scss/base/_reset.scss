@@ -91,16 +91,65 @@ button.slick-arrow {
     &:hover {
       transform: scale(1.2);
     }
+
+    @include bp(tablet-sm) {
+      height: auto;
+      width: 50px;
+      background-color: transparent;
+      filter: unset
+    }
   }
 
   &.slick-next {
-    right: 0
+    right: 0;
+
+    @include bp(tablet-sm) {
+      height: auto;
+      width: 50px;
+      background-color: transparent;
+      filter: unset;
+      right: 42%;
+      top: 100%;
+    }
+
+    @include bp(mobile) {
+      right: 30%;
+
+    }
+  }
+
+  &.slick-prev {
+    @include bp(tablet-sm) {
+      height: auto;
+      width: 50px;
+      background-color: transparent;
+      filter: unset;
+      left: 45%;
+      top: 100%;
+    }
+
+    @include bp(mobile) {
+      left: 30%;
+    }
   }
 
   &.slick-disabled {
     display: none;
+
+    @include bp(tablet-sm) {
+      display: block;
+      opacity: 0.1;
+    }
   }
 
+  @include bp(tablet-sm) {
+    height: auto;
+    width: 50px;
+  }
+
+  @include bp(tablet-sm) {
+    transform: translate(0, 50%);
+  }
 
 }
 
