@@ -37,6 +37,8 @@ const WatchlistPage = () => {
     getDetails = null;
   }
 
+  console.log("getDetails", getDetails);
+
   const getAVg = () => {
     const getMov = getDetails?.movies || [];
     const getRatings = getMov.map((rate) => rate.Ratings).flat();
@@ -112,28 +114,40 @@ const WatchlistPage = () => {
   };
 
   // console.log("movies length", getDetails?.movies?.length);
-  const getLength = getDetails?.movies?.length;
-  const [cur, setcur] = useState(0);
-  const [nex, setNex] = useState(5);
+  const getLength = getDetails?.movies?.length || 0;
+
+  const [currentPage, setCurentpage] = useState(1);
+  const itemsPerpage = 5;
+
+  const total = Math.ceil(getLength / itemsPerpage);
+
+  const page = Array.from({ length: total }, (_, i) => i + 1);
+  console.log("page", page);
+
+  const startIndex = (currentPage - 1) * itemsPerpage;
+  const endIndex = startIndex + itemsPerpage;
 
   useEffect(() => {
-    const movslice = getDetails?.movies?.slice(cur, nex);
-    console.log("movslice", movslice);
+    console.log("cur updated:", currentPage);
+    console.log("startIndex", startIndex);
+    console.log("endIndex", endIndex);
+  }, [currentPage, getLength]);
 
-    console.log("nex updated:", nex);
-    console.log("cur updated:", cur);
-  }, [cur, nex]);
+  const movslice = getDetails?.movies
+    ? getDetails.movies.slice(startIndex, endIndex)
+    : [];
+  console.log("movslice", movslice);
 
   const onNext = () => {
-    if (getLength <= nex) {
-      console.log("getLength", typeof getLength);
-      setNex((prev) => prev + 5);
-      setcur((prev) => prev + 5);
+    if (currentPage < total) {
+      setCurentpage((prev) => prev + 1);
     }
   };
 
   const onPrev = () => {
-    setcur(cur);
+    if (currentPage > 1) {
+      setCurentpage((prev) => prev - 1);
+    }
   };
 
   return (
@@ -169,71 +183,11 @@ const WatchlistPage = () => {
         </section>
 
         <section className="movies_section">
-          {/* <div className="slider-container card-main ">
-            {getDetails?.movies?.length === 0 ? (
-              <p>No movies found.</p>
-            ) : (
-              getDetails?.movies?.map((val) => (
-                <div className="mov_card" key={val.imdbID}>
-                  <span onClick={() => handleCheck(val.imdbID)}>
-                    <img
-                      src={
-                        resUnwatched?.watchedMov.some(
-                          (m) => m.moveId === val.imdbID?.toString() && m.liked
-                        )
-                          ? Check
-                          : unCheck
-                      }
-                      alt="ribbon"
-                    />
-                  </span>
-                  <img
-                    src={val.Poster}
-                    className="card-img-top"
-                    alt={val.Title}
-                  />
-
-                  {val.Ratings?.map((rate, index) =>
-                    rate.Source === "Metacritic" ? (
-                      <p className="ratings" key={index}>
-                        {(() => {
-                          const ratingValue = parseInt(
-                            rate.Value.slice(0, 2),
-                            10
-                          );
-                          return (
-                            <>
-                              <img
-                                src={
-                                  ratingValue > 50
-                                    ? better
-                                    : ratingValue < 35
-                                    ? awful
-                                    : good
-                                }
-                                alt="rating-icon"
-                              />
-                              <span>{ratingValue}</span>
-                              <sup>/100</sup>
-                            </>
-                          );
-                        })()}
-                      </p>
-                    ) : null
-                  )}
-                  <h5 className="card-title">
-                    {val.Title}
-                    <span>({val.Year})</span>
-                  </h5>
-                </div>
-              ))
-            )}
-          </div> */}
           <MoviesContainer>
             {getDetails?.movies?.length === 0 ? (
               <p>No movies found.</p>
             ) : (
-              getDetails?.movies?.map((val) => (
+              movslice?.map((val) => (
                 <MoviesCard key={val.imdbID}>
                   <MoviesPoster
                     onClick={() => handleCheck(val.imdbID)}
@@ -252,12 +206,21 @@ const WatchlistPage = () => {
             )}
           </MoviesContainer>
         </section>
-        <button onClick={onNext} style={{ color: "white" }}>
-          prev
-        </button>
-        <button onClick={onPrev} style={{ color: "white" }}>
-          next
-        </button>
+        <div className="d-flex justify-content-spacearound">
+          <button onClick={onPrev} style={{ color: "white" }}>
+            prev
+          </button>
+
+          {page?.length &&
+            page.map((val, index) => (
+              <button style={{ color: "white" }} key={index}>
+                {val}
+              </button>
+            ))}
+          <button onClick={onNext} style={{ color: "white" }}>
+            next
+          </button>
+        </div>
       </section>
     </>
   );
