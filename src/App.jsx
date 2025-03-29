@@ -23,7 +23,6 @@ function App() {
   useEffect(() => {
     try {
       dispatchLocal(getWatchlistFromLocalStorage());
-      console.log("dispatched in app");
     } catch (error) {
       console.error("error msg", error);
     }

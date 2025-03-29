@@ -223,6 +223,11 @@
 // ------------------watchlist_page----------------------//
 
 section.watchlist_page {
+  .card-main {
+    &.mov_card {}
+
+  }
+
   .editbtn {
 
     display: flex;
@@ -244,6 +249,8 @@ section.watchlist_page {
       }
 
     }
+
+
 
     button {
       background-color: unset;
@@ -356,9 +363,46 @@ section.watchlist_page {
               left: auto;
               top: 16px;
               right: 9px;
+
+              @include bp(tablet-sm) {
+                top: 35px;
+                width: 5%;
+                height: auto;
+              }
+            }
+          }
+
+          @include bp(tablet-sm) {
+            display: flex;
+            max-height: 80px;
+            min-height: unset;
+          }
+
+          p.ratings {
+            @include bp(tablet-sm) {
+              justify-content: start;
+            }
+
+          }
+
+          @include bp(tablet-sm) {
+            img.card-img-top {
+              width: 19%;
+              height: auto;
+            }
+          }
+
+          &>div {
+            @include bp(tablet-sm) {
+              display: flex;
+              flex-direction: column-reverse;
             }
           }
         }
+      }
+
+      @include bp(tablet-sm) {
+        row-gap: 15px;
       }
     }
   }
@@ -664,3 +708,41 @@ section.movies_section.movies_history {
 }
 
 // ------------------History page----------------------//
+// ------------------pagination----------------------//
+
+.paginations {
+  margin: 40px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+
+  button {
+    color: $text-color;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &.disabled {
+      opacity: 0.2;
+    }
+
+    &.active {
+      color: #141414;
+      background-color: $text-color;
+    }
+  }
+
+  &>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+
+    button {
+      border: 1px solid;
+      padding: 5px 10px;
+
+    }
+  }
+}
+
+// ------------------pagination----------------------//

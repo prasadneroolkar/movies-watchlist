@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, Suspense } from "react";
 import { useNavigate } from "react-router";
 import PageTitle from "../components/watchlist/PageTitle";
 import editBtn from "/images/editBtn.png";
@@ -15,11 +15,13 @@ import MoviesPoster from "../components/watchlist/moviescomponent/MoviesPoster";
 import MoviesCard from "../components/watchlist/moviescomponent/MoviesCard";
 import MoviesRating from "../components/watchlist/moviescomponent/MoviesRating";
 import MoviesTitle from "../components/watchlist/moviescomponent/MoviesTitle";
+import Pagination from "../components/Pagination";
+import MoviesSkimmer from "../components/MoviesSkimmer";
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
   const navigate = useNavigate();
-
+  const [paginatedMovies, setPaginatedMovies] = useState([]);
   const dispatch = useDispatch();
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID")) || null;
@@ -36,8 +38,6 @@ const WatchlistPage = () => {
   } else {
     getDetails = null;
   }
-
-  console.log("getDetails", getDetails);
 
   const getAVg = () => {
     const getMov = getDetails?.movies || [];
@@ -113,41 +113,10 @@ const WatchlistPage = () => {
     }
   };
 
-  // console.log("movies length", getDetails?.movies?.length);
-  const getLength = getDetails?.movies?.length || 0;
+  const shareData = getDetails?.movies || [];
 
-  const [currentPage, setCurentpage] = useState(1);
-  const itemsPerpage = 5;
-
-  const total = Math.ceil(getLength / itemsPerpage);
-
-  const page = Array.from({ length: total }, (_, i) => i + 1);
-  console.log("page", page);
-
-  const startIndex = (currentPage - 1) * itemsPerpage;
-  const endIndex = startIndex + itemsPerpage;
-
-  useEffect(() => {
-    console.log("cur updated:", currentPage);
-    console.log("startIndex", startIndex);
-    console.log("endIndex", endIndex);
-  }, [currentPage, getLength]);
-
-  const movslice = getDetails?.movies
-    ? getDetails.movies.slice(startIndex, endIndex)
-    : [];
-  console.log("movslice", movslice);
-
-  const onNext = () => {
-    if (currentPage < total) {
-      setCurentpage((prev) => prev + 1);
-    }
-  };
-
-  const onPrev = () => {
-    if (currentPage > 1) {
-      setCurentpage((prev) => prev - 1);
-    }
+  const handlePageDataChange = (mov) => {
+    setPaginatedMovies(mov);
   };
 
   return (
@@ -187,40 +156,35 @@ const WatchlistPage = () => {
             {getDetails?.movies?.length === 0 ? (
               <p>No movies found.</p>
             ) : (
-              movslice?.map((val) => (
-                <MoviesCard key={val.imdbID}>
-                  <MoviesPoster
-                    onClick={() => handleCheck(val.imdbID)}
-                    moviearray={resUnwatched}
-                    // subarray={watchedMov}
-                    mapval={val}
-                  />
-                  {val.Ratings?.map((rate, index) =>
-                    rate.Source === "Metacritic" ? (
-                      <MoviesRating key={index} mapval={rate} />
-                    ) : null
-                  )}
-                  <MoviesTitle mapval={val} />
-                </MoviesCard>
-              ))
+              <Suspense fallback={<MoviesSkimmer />}>
+                {paginatedMovies?.map((val) => (
+                  <MoviesCard key={val.imdbID}>
+                    <MoviesPoster
+                      onClick={() => handleCheck(val.imdbID)}
+                      moviearray={resUnwatched}
+                      // subarray={watchedMov}
+                      mapval={val}
+                    />
+                    <div>
+                      {val.Ratings?.map((rate, index) =>
+                        rate.Source === "Metacritic" ? (
+                          <MoviesRating key={index} mapval={rate} />
+                        ) : null
+                      )}
+                      <MoviesTitle mapval={val} />
+                    </div>
+                  </MoviesCard>
+                ))}
+              </Suspense>
             )}
           </MoviesContainer>
         </section>
-        <div className="d-flex justify-content-spacearound">
-          <button onClick={onPrev} style={{ color: "white" }}>
-            prev
-          </button>
-
-          {page?.length &&
-            page.map((val, index) => (
-              <button style={{ color: "white" }} key={index}>
-                {val}
-              </button>
-            ))}
-          <button onClick={onNext} style={{ color: "white" }}>
-            next
-          </button>
-        </div>
+        {getDetails?.movies?.length !== 0 && (
+          <Pagination
+            dataArray={shareData}
+            onPageDataChange={handlePageDataChange}
+          />
+        )}
       </section>
     </>
   );
