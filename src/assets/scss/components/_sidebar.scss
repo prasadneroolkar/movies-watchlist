@@ -8,7 +8,7 @@ header {
     height: 60px;
     top: 0;
     left: 0;
-    z-index: 12;
+    z-index: 1234;
     width: 100%;
     background-color: $bg-black;
     border-bottom: 1px solid #e9ecef36;
@@ -39,7 +39,7 @@ aside.sidebar {
   background-color: $bg-black;
 
   @include bp(tablet-sm) {
-    z-index: 1;
+    z-index: 123;
     position: fixed;
     top: 0;
     left: -250px;
@@ -113,14 +113,36 @@ aside.sidebar {
 }
 
 .right_common {
+  position: relative;
   width: 100%;
-  background-color: #191919;
-  padding: 50px 60px 20px;
+  background-color: #121212;
+  padding: 50px 60px 50px;
   overflow-x: hidden;
 
   @include bp(tablet-sm) {
     padding-inline: 30px;
     padding-block: 40px;
   }
+
+  .bodyColor {
+    top: 0;
+    left: 0;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, .6)), to(var(--background-base))), var(--background-noise);
+    background-image: linear-gradient(rgba(0, 0, 0, .6) 0, #121212 100%), var(--background-noise);
+    height: 256px;
+    margin-top: 0;
+    position: absolute;
+    -webkit-transition-duration: 1s;
+    transition-duration: 1s;
+    -webkit-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+    width: 100%;
+    z-index: 0;
+    background-color: rgb(72, 24, 24);
+  }
+
+
 
 }

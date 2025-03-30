@@ -1,8 +1,10 @@
 section.home-message {
+  z-index: 123;
+  position: relative;
   border-radius: 8px;
   border: 1px solid $ruby-red;
   padding: 20px 20px 30px;
-  background-color: #2c2c2c;
+  background-color: transparent;
 
   h1 {
     color: $text-color;
@@ -80,9 +82,10 @@ section.movies_section {
       position: relative;
       min-width: 150px;
       min-height: 320px;
-      border-radius: 0px;
-      background-color: #1f1f1f;
-      transition: all 0.5s ease;
+      border-radius: 6px;
+      background-color: #1d1d1d;
+      transition: all 3s ease;
+      cursor: pointer;
 
       p.ratings {
         padding-inline: 10px;
@@ -121,6 +124,15 @@ section.movies_section {
       img.card-img-top {
         width: 100%;
         height: 225px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+
+        @include bp(tablet-sm) {
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
       }
 
       .card-title {

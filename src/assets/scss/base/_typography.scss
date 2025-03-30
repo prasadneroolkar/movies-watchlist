@@ -1,3 +1,11 @@
+:root {
+  --left-sidebar-width: 232;
+  --content-spacing: 16px;
+  --content-max-width: 1955px;
+  --background-noise: url("/images/download.svg");
+}
+
+
 body {
   font-family: $base-family;
   color: $text-color;

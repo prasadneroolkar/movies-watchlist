@@ -42,6 +42,11 @@ section.main {
 
 }
 
+section {
+  z-index: auto;
+  position: relative;
+}
+
 .slick-track {
   display: flex;
   justify-content: start;
@@ -96,7 +101,8 @@ button.slick-arrow {
       height: auto;
       width: 50px;
       background-color: transparent;
-      filter: unset
+      filter: unset;
+      margin-bottom: 30px;
     }
   }
 

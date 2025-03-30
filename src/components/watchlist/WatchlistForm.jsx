@@ -5,9 +5,9 @@ const WatchlistForm = React.memo(
     // console.log("WatchlistForm rendered");
     return (
       <>
-        <div className={className}>
+        <section className={className}>
           <form onSubmit={onSubmit}>{children}</form>
-        </div>
+        </section>
       </>
     );
   }

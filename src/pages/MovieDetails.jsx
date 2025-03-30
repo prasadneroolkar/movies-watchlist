@@ -41,42 +41,44 @@ const MovieDetails = () => {
   return (
     <>
       {movDetail && (
-        <div className="container">
-          <div className="row">
-            <div className="col-12 col-lg-4">
-              <div className="poster">
-                <img src={movDetail.Poster} alt="" />
+        <section>
+          <div className="container ">
+            <div className="row">
+              <div className="col-12 col-lg-4">
+                <div className="poster">
+                  <img src={movDetail.Poster} alt="" />
+                </div>
               </div>
-            </div>
-            <div className="col-12 col-lg-8">
-              <div className="poster-details">
-                <h1>
-                  {movDetail.Title}
-                  <span>({movDetail.Year})</span>
-                </h1>
-                <p className="category">
-                  <ul>
-                    <li>{movDetail.Genre}</li>
-                    <li>{movieTime && movieTime}</li>
-                  </ul>
-                </p>
-                <h2>Overview</h2>
-                <p className="overview">{movDetail.Plot}</p>
-                <p className="cast">
-                  <span>Cast:</span>
-                  {movDetail.Actors}
-                </p>
-                <div className="rating_box">
-                  <p>
-                    <span>Score</span>
-                    {movDetail.Metascore}
+              <div className="col-12 col-lg-8">
+                <div className="poster-details">
+                  <h1>
+                    {movDetail.Title}
+                    <span>({movDetail.Year})</span>
+                  </h1>
+                  <p className="category">
+                    <ul>
+                      <li>{movDetail.Genre}</li>
+                      <li>{movieTime && movieTime}</li>
+                    </ul>
                   </p>
-                  <Button btnName="Add to Watchlist" onClick={openModal} />
+                  <h2>Overview</h2>
+                  <p className="overview">{movDetail.Plot}</p>
+                  <p className="cast">
+                    <span>Cast:</span>
+                    {movDetail.Actors}
+                  </p>
+                  <div className="rating_box">
+                    <p>
+                      <span>Score</span>
+                      {movDetail.Metascore}
+                    </p>
+                    <Button btnName="Add to Watchlist" onClick={openModal} />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       )}
       {popup && (
         <AddwatchlistModal

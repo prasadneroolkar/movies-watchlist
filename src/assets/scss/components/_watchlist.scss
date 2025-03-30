@@ -387,8 +387,11 @@ section.watchlist_page {
 
           @include bp(tablet-sm) {
             img.card-img-top {
-              width: 19%;
-              height: auto;
+              width: auto;
+              max-height: 80px;
+              max-width: 100%;
+              /* margin: auto 0; */
+              object-fit: contain;
             }
           }
 
@@ -396,13 +399,16 @@ section.watchlist_page {
             @include bp(tablet-sm) {
               display: flex;
               flex-direction: column-reverse;
+              justify-content: center;
             }
           }
         }
       }
 
       @include bp(tablet-sm) {
-        row-gap: 15px;
+        row-gap: 20px;
+        display: flex;
+        flex-direction: column;
       }
     }
   }
@@ -497,7 +503,7 @@ section.editmovie_list {
 
 .modalup {
   display: flex;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -738,7 +744,7 @@ section.movies_section.movies_history {
     column-gap: 20px;
 
     button {
-      border: 1px solid;
+      border: 1px solid #A41B1B;
       padding: 5px 10px;
 
     }

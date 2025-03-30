@@ -16,6 +16,7 @@ const Layout = ({ children }) => {
         <section className={`main d-flex  `}>
           <Siderbar open={open} />
           <div className="right_common" ref={boxRef}>
+            <div className="bodyColor"></div>
             <Outlet context={{ boxRef }} />
             {children}
           </div>

@@ -150,7 +150,7 @@ const Editwatchlist = () => {
 
   return (
     <>
-      <div className="editpage_title d-flex justify-content-between align-items-center">
+      <section className="editpage_title d-flex justify-content-between align-items-center">
         <PageTitle
           className="create_watchlist mt-0"
           Title="Edit your Watchlist"
@@ -166,7 +166,7 @@ const Editwatchlist = () => {
             message={editDetails.watchlistName}
           />
         )}
-      </div>
+      </section>
       <WatchlistForm>
         <InputField
           value={editDetails.watchlistName}
