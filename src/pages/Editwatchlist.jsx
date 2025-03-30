@@ -225,6 +225,7 @@ const Editwatchlist = () => {
           </>
         )}
         <Button
+          className="mobile_btn"
           btnName="save"
           type="submit"
           onClick={() => onUpdate(event, handleRedirect)}

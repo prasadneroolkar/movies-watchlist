@@ -8,7 +8,7 @@ header {
     height: 60px;
     top: 0;
     left: 0;
-    z-index: 1234;
+    z-index: 12345;
     width: 100%;
     background-color: $bg-black;
     border-bottom: 1px solid #e9ecef36;
@@ -48,6 +48,7 @@ aside.sidebar {
 
     &.open {
       left: 0;
+      z-index: 1234;
     }
 
     &.closed {

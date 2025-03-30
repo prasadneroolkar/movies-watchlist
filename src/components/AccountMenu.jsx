@@ -18,28 +18,31 @@ import dotIcon from "/images/dot.png"; // Importing the image
 const AccountMenu = () => {
   const { logout, currentUser } = React.useContext(AuthContext);
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(false);
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    // setAnchorEl(event.currentTarget);
+    setAnchorEl(!anchorEl);
+    console.log("anchorEl", anchorEl);
   };
   const handleClose = () => {
-    setAnchorEl(null);
+    setAnchorEl(false);
   };
 
   const handleProfile = () => {
-    setAnchorEl(null);
+    setAnchorEl(false);
     navigate("/userdetail");
   };
   const handleLogout = () => {
     logout();
     navigate("/");
-    setAnchorEl(null);
+    setAnchorEl(false);
   };
 
   const handleLogin = () => {
     navigate("/login");
-    setAnchorEl(null);
+    setAnchorEl(false);
   };
 
   return (
@@ -58,7 +61,15 @@ const AccountMenu = () => {
           </IconButton>
         </Tooltip>
       </Box>
-      <Menu
+
+      <div className={`account_setting ${anchorEl && "open"}`}>
+        <ul>
+          <li>login</li>
+          <li>edit profile</li>
+        </ul>
+      </div>
+
+      {/* <Menu
         anchorEl={anchorEl}
         id="account-menu"
         open={open}
@@ -119,7 +130,7 @@ const AccountMenu = () => {
             </MenuItem>,
           ]
         )}
-      </Menu>
+      </Menu> */}
     </React.Fragment>
   );
 };

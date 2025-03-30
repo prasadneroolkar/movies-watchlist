@@ -32,6 +32,11 @@
         margin-bottom: 8px;
       }
     }
+
+    @include bp(tablet-sm) {
+      max-height: 150px;
+      overflow-y: auto;
+    }
   }
 }
 
@@ -305,6 +310,11 @@ section.watchlist_page {
         color: $text-color;
         margin-bottom: 5px;
 
+        @include bp(tablet-sm) {
+          font-size: 16px;
+          line-height: 1.2;
+        }
+
       }
 
       span {
@@ -315,8 +325,8 @@ section.watchlist_page {
         color: $primary-color;
 
         @include bp(tablet-sm) {
-          font-size: 30px;
-          line-height: 40px;
+          font-size: 20px;
+          line-height: 1.2;
         }
 
       }
@@ -327,7 +337,16 @@ section.watchlist_page {
 
       @include bp(tablet-sm) {
         width: 100%;
+        justify-content: left;
+        text-align: left;
+        border: 0;
+        background-color: unset;
+
       }
+
+
+
+
     }
 
     @include bp(foundation-tablet-sm) {
@@ -340,7 +359,7 @@ section.watchlist_page {
       justify-content: revert-layer;
       align-items: center;
       flex-direction: column;
-      row-gap: 20px;
+      row-gap: 0px;
     }
   }
 
@@ -410,6 +429,11 @@ section.watchlist_page {
         display: flex;
         flex-direction: column;
       }
+    }
+
+    @include bp(tablet-sm) {
+      margin-top: 20px;
+
     }
   }
 
@@ -485,7 +509,7 @@ section.editmovie_list {
       @include bp(mobile) {
         border: none;
         padding: 5px 5px;
-
+        background-color: #1d1d1d;
       }
 
 
@@ -752,3 +776,20 @@ section.movies_section.movies_history {
 }
 
 // ------------------pagination----------------------//
+
+.account_setting {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: auto;
+  background-color: #1d1d1d;
+  top: 0;
+  left: 0;
+  transform: translate(0px, -76px);
+  border-radius: 6px;
+  padding: 10px;
+
+  &.open {
+    display: block;
+  }
+}
