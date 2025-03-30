@@ -10,8 +10,21 @@ import Logout from "./Form/Logout";
 import { Link } from "react-router-dom";
 
 const Siderbar = () => {
-  const { currentUser, searchList, handleSearch, open } =
+  const { currentUser, searchList, handleSearch, open, setOpen, handleHam } =
     useContext(AuthContext);
+
+  useEffect(() => {
+    const clickEvent = () => {
+      console.log("Sidebar is closing..."); // Debugging
+      setOpen(false);
+    };
+    if (open) {
+      document.addEventListener("click", clickEvent);
+    }
+    return () => {
+      document.removeEventListener("click", clickEvent);
+    };
+  }, [open, setOpen]);
 
   return (
     <>

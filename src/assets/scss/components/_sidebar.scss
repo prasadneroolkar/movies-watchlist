@@ -34,7 +34,8 @@ header {
 
 aside.sidebar {
   position: relative;
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   padding: 20px 40px;
   background-color: $bg-black;
 

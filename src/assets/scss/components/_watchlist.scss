@@ -29,7 +29,7 @@
       }
 
       &:not(:last-child) {
-        margin-bottom: 8px;
+        margin-bottom: 15px;
       }
     }
 
@@ -776,20 +776,32 @@ section.movies_section.movies_history {
 }
 
 // ------------------pagination----------------------//
-
+// ------------------Userprofile ----------------------//
 .account_setting {
-  display: none;
+  display: block;
   position: absolute;
   width: 100%;
   height: auto;
   background-color: #1d1d1d;
   top: 0;
   left: 0;
-  transform: translate(0px, -76px);
+  transform: translate(0px, -85px);
   border-radius: 6px;
   padding: 10px;
 
   &.open {
     display: block;
   }
+
+  ul {
+    li {
+      cursor: pointer;
+    }
+
+    li:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
 }
+
+// ------------------Userprofile----------------------//
