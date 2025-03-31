@@ -16,12 +16,24 @@ import MoviesCard from "../components/watchlist/moviescomponent/MoviesCard";
 import MoviesRating from "../components/watchlist/moviescomponent/MoviesRating";
 import MoviesTitle from "../components/watchlist/moviescomponent/MoviesTitle";
 import Pagination from "../components/Pagination";
+import PaginationMobile from "../components/PaginationMobile";
 import MoviesSkimmer from "../components/MoviesSkimmer";
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
   const navigate = useNavigate();
   const [paginatedMovies, setPaginatedMovies] = useState([]);
+  const [paginatedMoviesMb, setPaginatedMoviesMb] = useState([]);
+
+  const [resizeMobile, setResizemobile] = useState(window.innerWidth > 991);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setResizemobile(window.innerWidth > 991);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const dispatch = useDispatch();
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID")) || null;
@@ -119,6 +131,10 @@ const WatchlistPage = () => {
     setPaginatedMovies(mov);
   };
 
+  const handlePageDataChangeMb = (mov) => {
+    setPaginatedMoviesMb(mov);
+  };
+
   return (
     <>
       <section className="watchlist_page">
@@ -157,7 +173,7 @@ const WatchlistPage = () => {
               <p>No movies found.</p>
             ) : (
               <Suspense fallback={<MoviesSkimmer />}>
-                {paginatedMovies?.map((val) => (
+                {paginatedMoviesMb?.map((val) => (
                   <MoviesCard key={val.imdbID}>
                     <MoviesPoster
                       onClick={() => handleCheck(val.imdbID)}
@@ -185,6 +201,10 @@ const WatchlistPage = () => {
             onPageDataChange={handlePageDataChange}
           />
         )}
+        <PaginationMobile
+          dataArray={shareData}
+          onPageDataChangeMob={handlePageDataChangeMb}
+        />
       </section>
     </>
   );

@@ -26,7 +26,11 @@ button.btn_create {
     width: 100%;
   }
 
-  &.mobile_btn {
-    margin: auto;
+  @include bp(tablet-sm) {
+
+
+    &.mobile_btn {
+      margin: auto;
+    }
   }
 }

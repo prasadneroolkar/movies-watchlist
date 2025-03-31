@@ -3,6 +3,16 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import LastPageIcon from "@mui/icons-material/LastPage";
 
 const Pagination = ({ dataArray, onPageDataChange }) => {
+  const [resizeMob, setResizemob] = useState(window.innerWidth > 991);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setResizemob(window.innerWidth > 991);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const getLength = dataArray.length || 0;
 
   const [currentPage, setCurentpage] = useState(1);
@@ -39,7 +49,7 @@ const Pagination = ({ dataArray, onPageDataChange }) => {
   const handlePage = (i) => {
     setCurentpage(i);
   };
-
+  if (!resizeMob) return null;
   return (
     <div className="paginations">
       <button onClick={onPrev} className={`${startIndex === 0 && "disabled"}`}>
