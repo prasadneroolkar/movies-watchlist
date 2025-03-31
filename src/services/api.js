@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "http://www.omdbapi.com/";
+const url = "https://www.omdbapi.com/";
 const apiKey = "8db4a6db";
 
 export const api = async (searchQry) => {
