@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Searchbar from "../components/Searchbar";
 import Menu from "../components/Menu";
 import Button from "../components/Button";
@@ -10,30 +10,40 @@ import Logout from "./Form/Logout";
 import { Link } from "react-router-dom";
 
 const Siderbar = () => {
-  const { currentUser, searchList, handleSearch, open, setOpen, handleHam } =
+  const { currentUser, searchList, handleSearch, open, handleHam } =
     useContext(AuthContext);
 
+  const closeRef = useRef(null);
+  const searchRef = useRef(null);
+
   useEffect(() => {
-    const clickEvent = () => {
-      console.log("Sidebar is closing..."); // Debugging
-      setOpen(false);
+    const clickEvent = (event) => {
+      if (searchRef.current && searchRef.current.contains(event.target)) {
+        // Don't close sidebar if clicking inside the search bar
+        return;
+      }
+      if (closeRef.current && closeRef.current.contains(event.target)) {
+        handleHam();
+      }
     };
     if (open) {
+      console.log("open", open);
       document.addEventListener("click", clickEvent);
     }
     return () => {
       document.removeEventListener("click", clickEvent);
     };
-  }, [open, setOpen]);
+  }, [open, handleHam]);
 
   return (
     <>
-      <aside className={`sidebar ${open ? "open" : "closed"}`}>
+      <aside className={`sidebar ${open ? "open" : "closed"}`} ref={closeRef}>
         <h1>watchlist</h1>
         <Searchbar
           placeholder="Search watchlists"
           onChange={handleSearch}
           value={searchList}
+          ref={searchRef}
         />
         <Menu />
 
@@ -49,9 +59,9 @@ const Siderbar = () => {
         />
 
         <Watchlist />
-        <p className="mt-4">
+        {/* <p className="mt-4">
           {currentUser ? <Logout /> : <Link to="/login">Sign in</Link>}
-        </p>
+        </p> */}
         <Userprof />
       </aside>
     </>

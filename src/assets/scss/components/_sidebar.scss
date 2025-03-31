@@ -54,6 +54,8 @@ aside.sidebar {
 
     &.closed {
       left: -350px;
+      z-index: 1234;
+
     }
   }
 

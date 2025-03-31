@@ -13,7 +13,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import dotIcon from "/images/dot.png"; // Importing the image
+import dotIcon from "/images/dot.png";
 
 const AccountMenu = () => {
   const { logout, currentUser } = React.useContext(AuthContext);
@@ -25,11 +25,8 @@ const AccountMenu = () => {
     const outsideClose = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
         setAnchorEl(false);
-        console.log(event.target);
-        console.log("popupRef.current", popupRef.current);
       }
     };
-    console.log("ahndle", anchorEl);
     if (anchorEl) {
       document.addEventListener("click", outsideClose);
     }
@@ -60,36 +57,40 @@ const AccountMenu = () => {
   };
 
   return (
-    <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Account settings">
-          <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-            <img src={dotIcon} alt="profile" />
-          </IconButton>
-        </Tooltip>
-      </Box>
-      {anchorEl === true && (
-        <div
-          className={`account_setting ${anchorEl === true && "open"}`}
-          ref={popupRef}
+    currentUser && (
+      <React.Fragment>
+        <Box
+          sx={{ display: "flex", alignItems: "center", textAlign: "center" }}
         >
-          <ul>
-            {!currentUser ? (
-              <li onClick={handleLogin}>Login</li>
-            ) : (
-              [
-                <li key="profile" onClick={handleProfile}>
-                  Profile
-                </li>,
-                <li key="logout" onClick={handleLogout}>
-                  Logout
-                </li>,
-              ]
-            )}
-          </ul>
-        </div>
-      )}
-    </React.Fragment>
+          <Tooltip title="Account settings">
+            <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
+              <img src={dotIcon} alt="profile" />
+            </IconButton>
+          </Tooltip>
+        </Box>
+        {anchorEl === true && (
+          <div
+            className={`account_setting ${anchorEl === true && "open"}`}
+            ref={popupRef}
+          >
+            <ul>
+              {!currentUser ? (
+                <li onClick={handleLogin}>Login</li>
+              ) : (
+                [
+                  <li key="profile" onClick={handleProfile}>
+                    Profile
+                  </li>,
+                  <li key="logout" onClick={handleLogout}>
+                    Logout
+                  </li>,
+                ]
+              )}
+            </ul>
+          </div>
+        )}
+      </React.Fragment>
+    )
   );
 };
 

@@ -21,6 +21,15 @@ section.home-message {
     padding-bottom: 10px;
   }
 
+  img {
+    @include bp(tablet-sm) {
+
+      width: 20px;
+      height: auto;
+      margin: 5px;
+    }
+  }
+
 }
 
 section.search_box_2 {

@@ -44,7 +44,6 @@ const AuthProvider = ({ children }) => {
 
   const signUp = (id, userPic, username, email, password) => {
     const users = JSON.parse(localStorage.getItem("userDetails")) || [];
-    console.log(users);
     if (users.find((user) => user.email === email)) {
       dispatch(
         showMsg({
@@ -56,10 +55,8 @@ const AuthProvider = ({ children }) => {
     }
 
     const newUser = { id, userPic, username, email, password };
-    console.log(newUser);
     users.push(newUser);
     localStorage.setItem("userDetails", JSON.stringify(users));
-    // console.log(newUser);
     setcurrentUser(newUser);
     localStorage.setItem("currentUser", JSON.stringify(newUser));
     return true;

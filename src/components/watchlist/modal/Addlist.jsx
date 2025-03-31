@@ -122,17 +122,19 @@ const Addlist = ({
               new playlist
             </Link>
           </li>
-          <li>
-            <ul>
-              {currentUser &&
-                mergeList[0]?.length > 0 &&
-                mergeList[0].map((list, ind) => (
-                  <li key={ind} onClick={() => addMovie(list.id || null)}>
-                    <Link>{list.name}</Link>
-                  </li>
-                ))}
-            </ul>
-          </li>
+          {currentUser && (
+            <li>
+              <ul>
+                {currentUser &&
+                  mergeList[0]?.length > 0 &&
+                  mergeList[0].map((list, ind) => (
+                    <li key={ind} onClick={() => addMovie(list.id || null)}>
+                      <Link>{list.name}</Link>
+                    </li>
+                  ))}
+              </ul>
+            </li>
+          )}
         </ul>
       )}
     </div>
