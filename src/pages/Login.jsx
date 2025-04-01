@@ -65,7 +65,7 @@ const Login = () => {
           <span>{error.password}</span>
         </div>
 
-        <Button btnName="Sign in" type="submit" />
+        <Button btnName="Sign in" type="submit" className="logBtn" />
         <p className="text-center mt-4">
           <Link to="">Forgot your password?</Link>
         </p>

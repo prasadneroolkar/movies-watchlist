@@ -26,11 +26,17 @@ button.btn_create {
     width: 100%;
   }
 
-  @include bp(tablet-sm) {
-
-
-    &.mobile_btn {
+  &.mobile_btn {
+    @include bp(tablet-sm) {
       margin: auto;
     }
   }
+
+  &.logBtn {
+    @include bp(tablet-sm) {
+      max-width: unset;
+    }
+  }
+
+
 }
