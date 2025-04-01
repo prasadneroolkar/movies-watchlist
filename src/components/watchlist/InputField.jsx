@@ -1,7 +1,6 @@
 import React from "react";
 
 const InputFields = React.memo(({ onChange, value, errorMsg, name }) => {
-  // console.log("InputField rendered");
   return (
     <>
       <div className="fields">

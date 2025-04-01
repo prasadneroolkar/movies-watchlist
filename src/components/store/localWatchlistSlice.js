@@ -22,14 +22,12 @@ const localwatchlistSlice = createSlice({
         JSON.parse(localStorage.getItem("watchlists")) || [];
       state.watchlists.length = 0; // Clear the existing state
       state.watchlists.push(...storedWatchlist); // Populate it with the new data
-      // console.log("app", JSON.parse(JSON.stringify(state.watchlists)));
     },
 
     updatelocalliststorage(state, action) {
       const { localListid, localMovie } = action.payload;
 
       const localList = state.watchlists.find((lw) => lw.id === localListid);
-      console.log("localList", JSON.parse(JSON.stringify(localList)));
 
       if (!localList) {
         state.statusMessage = "Watchlist not found";
@@ -54,7 +52,6 @@ const localwatchlistSlice = createSlice({
       } else {
         localList.movies.push(localMovie);
         localStorage.setItem("watchlists", JSON.stringify(state.watchlists));
-        console.log("Added Successfully!");
         state.statusMessage = "Added Successfully!";
         state.statusType = "success";
       }
@@ -88,10 +85,6 @@ const localwatchlistSlice = createSlice({
           const updatedWatchedMov = isWatched
             ? watchedMov.filter((m) => m.moveId !== watchId.toString()) // Remove movie
             : [...watchedMov, { moveId: watchId.toString(), liked, date }]; // Add movie
-          console.log("updatedWatchedMov", {
-            ...list,
-            watchedMov: updatedWatchedMov,
-          });
 
           return { ...list, watchedMov: updatedWatchedMov };
         }
@@ -114,10 +107,7 @@ const localwatchlistSlice = createSlice({
       const description = action.payload.description;
       const delMov = action.payload.movies;
 
-      console.log("delMov", delMov);
-
       const loadDetails = JSON.parse(localStorage.getItem("watchlists")) || [];
-      console.log("loadDetails", loadDetails);
 
       const index = loadDetails.findIndex((item) => item.id === id);
 
@@ -128,8 +118,6 @@ const localwatchlistSlice = createSlice({
           description,
           movies: delMov,
         };
-
-        console.log("new arrayslice", loadDetails[index]);
 
         localStorage.setItem("watchlists", JSON.stringify(loadDetails));
 
@@ -150,7 +138,6 @@ const localwatchlistSlice = createSlice({
 
     deleteWatchlist(state, action) {
       const watchlistId = action.payload.watchlistId;
-      console.log("watchlistId", watchlistId);
 
       const getWatchlist = state.watchlists.filter(
         (list) => list.id !== watchlistId
@@ -167,7 +154,6 @@ const localwatchlistSlice = createSlice({
       const listMovies = currentList
         ?.filter((u) => u.user === currentUser)
         .flatMap((m) => m.watchedMov?.filter((l) => l.liked === true) || []);
-      console.log("listMovies", listMovies);
 
       // Sort by date (latest first)
       const latestList = listMovies.sort((a, b) => {
@@ -180,11 +166,7 @@ const localwatchlistSlice = createSlice({
         return dateB - dateA; // Newest first
       });
 
-      console.log(latestList);
-
       const notEmpty = latestList?.flat().map((m) => m.moveId) || [];
-
-      console.log("notEmpty", notEmpty);
 
       const sortMovies = currentList
         ?.filter((u) => u.user === currentUser)

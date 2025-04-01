@@ -13,7 +13,6 @@ const snackbarSlice = createSlice({
     },
     closeMsg(state) {
       state.open = false;
-      // state.message = "";
     },
   },
 });

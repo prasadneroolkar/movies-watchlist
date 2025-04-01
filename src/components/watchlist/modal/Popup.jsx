@@ -1,8 +1,7 @@
-import { React, memo } from "react";
+import { React } from "react";
 import Button from "../../../components/Button";
 
 const Popup = ({ status, delteList, closeList, message }) => {
-  console.log(" Popup triggered");
   return (
     <div className={`modalup ${status && " opacityModal"}`}>
       <div id="myPopover" className={`${status && " opacitypopup"}`}>
@@ -21,4 +20,4 @@ const Popup = ({ status, delteList, closeList, message }) => {
   );
 };
 
-export default memo(Popup);
+export default Popup;

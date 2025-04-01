@@ -21,7 +21,6 @@ const Addlist = ({
   onToggleMenu,
   movieDetails,
 }) => {
-  // const [selectedMovId, setSelectedmovId] = useState("");
   const [selectedLocalId, setSelectedLocId] = useState("");
 
   const dispatch = useDispatch();
@@ -30,7 +29,6 @@ const Addlist = ({
   const displayLocalList = useSelector(
     (state) => state.localWatchlist.watchlists
   );
-  // console.log("displayLocalList", displayLocalList);
 
   const { statusMessage, statusType } = useSelector(
     (state) => state.localWatchlist
@@ -40,13 +38,9 @@ const Addlist = ({
     (watchlist) => watchlist.user === currentUser?.email
   );
 
-  // console.log("userWatchlists", userWatchlists);
-
   const mergeList = [[...userWatchlists]];
-  // console.log("merged list", mergeList);
 
   const navigate = useNavigate();
-  // console.log("The movieList", movieDetails);
 
   const addtoList = () => {
     if (!currentUser) {
@@ -76,14 +70,7 @@ const Addlist = ({
   }, [menuVisible, onToggleMenu]);
 
   const addMovie = (locID) => {
-    // console.log("id in local ", locID);
     try {
-      // dispatch(
-      //   addMovieToWatchlist({
-      //     watchlistId,
-      //     movieDetails,
-      //   })
-      // );
       dispatch(
         updatelocalliststorage({
           localListid: locID,

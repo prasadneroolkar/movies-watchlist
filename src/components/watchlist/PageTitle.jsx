@@ -11,4 +11,4 @@ const PageTitle = ({ Title, className }) => {
   );
 };
 
-export default PageTitle;
+export default React.memo(PageTitle);

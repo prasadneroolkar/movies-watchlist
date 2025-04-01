@@ -17,13 +17,10 @@ const userSlice = createSlice({
       const username = action.payload.username;
       const email = action.payload.email;
       const password = action.payload.password;
-      console.log("userid", userid);
 
       const allUsers = JSON.parse(localStorage.getItem("userDetails")) || [];
-      console.log("allUsers", allUsers);
 
       const userIndex = allUsers.findIndex((user) => user.id === userid);
-      console.log("userExists", userIndex);
 
       if (userIndex !== -1) {
         allUsers[userIndex] = {
@@ -39,10 +36,6 @@ const userSlice = createSlice({
           JSON.stringify(allUsers[userIndex])
         );
       }
-      // const updateUsers = { ...state, userPic, username, email, password };
-      // if (updateUser) {
-      //   localStorage.setItem("currentUser", JSON.stringify(updateUsers));
-      // }
 
       return allUsers;
     },

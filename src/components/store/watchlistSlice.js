@@ -21,17 +21,8 @@ const watchlistSlice = createSlice({
 
       // Find the watchlist
       const watchlist = state.find((w) => w.id === watchlistId);
-      // console.log("og watchlist id ", watchlistId);
-      // console.log("og watchlist ", watchlist);
-
-      // console.log("Watchlist found:", JSON.stringify(watchlist, null, 2));
 
       if (watchlist) {
-        // console.log(
-        //   "if movie exist in movie",
-        //   JSON.stringify(watchlist.movi, null, 2)
-        // );
-
         if (!Array.isArray(watchlist.movi)) {
           watchlist.movi = [];
         }
@@ -39,19 +30,10 @@ const watchlistSlice = createSlice({
         const movieExists = watchlist.movi.some(
           (m) => m.imdbID === movieDetails.imdbID
         );
-        // console.log("Movie exists?", movieExists);
 
         if (!movieExists) {
           watchlist.movi.push(movieDetails);
-          // console.log(
-          //   "Movie added to watchlist:",
-          //   JSON.stringify(watchlist, null, 2)
-          // );
-        } else {
-          console.log("Movie already exists in the watchlist");
         }
-      } else {
-        console.error("Watchlist not found!");
       }
     },
   },
