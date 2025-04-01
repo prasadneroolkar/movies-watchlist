@@ -141,7 +141,7 @@ const Signup = () => {
           </p>
           <span>{error.confpass}</span>
         </div>
-        <Button btnName="Create Profile" type="submit" />
+        <Button btnName="Create Profile" type="submit" className="logBtn" />
         <p className=" mt-3 d-flex flex-column justify-content-center align-items-center">
           Already have an account?{" "}
           <Link to="/login" className="text-decoration-underline">
