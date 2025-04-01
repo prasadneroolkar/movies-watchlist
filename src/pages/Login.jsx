@@ -36,8 +36,6 @@ const Login = () => {
         navigate("/");
       }
     }
-
-    // login(email, password);
   };
 
   return (
@@ -82,4 +80,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default React.memo(Login);

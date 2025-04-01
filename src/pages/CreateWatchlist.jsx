@@ -15,7 +15,6 @@ const CreateWatchlist = () => {
   const { handleErrormsg, error, setError } = useContext(AuthContext);
   const location = useLocation();
   const movies = location.state?.movieDetails;
-  // console.log("from state", movies);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -30,8 +29,6 @@ const CreateWatchlist = () => {
     user: users.email,
     watchedMov: null,
   });
-
-  // console.log("watchlist email", watchlistData.user);
 
   const validateForm = (data) => {
     const errorData = {};
@@ -81,7 +78,6 @@ const CreateWatchlist = () => {
             : [],
         };
 
-        console.log("newWatchlist", newWatchlist);
         dispatch(addWatchlistToLocalStorage(newWatchlist));
       } catch (error) {
         console.error(error.message);

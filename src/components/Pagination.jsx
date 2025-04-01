@@ -77,4 +77,4 @@ const Pagination = ({ dataArray, onPageDataChange }) => {
   );
 };
 
-export default React.memo(Pagination);
+export default Pagination;

@@ -6,7 +6,6 @@ import Button from "../components/Button";
 import WatchlistForm from "../components/watchlist/WatchlistForm";
 import InputField from "../components/watchlist/InputField";
 import Textarea from "../components/watchlist/Textarea";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateWatchlistdetails,
@@ -53,7 +52,6 @@ const Editwatchlist = () => {
   );
 
   const updatedWatchlist = getLocalId?.find((val) => val.id === recDetails.id);
-  console.log("updatedWatchlist", updatedWatchlist);
 
   const validateForm = (data) => {
     const errorData = {};
@@ -113,9 +111,6 @@ const Editwatchlist = () => {
       dispatch(showMsg({ message: "Somthing went wrong !", type: "error" }));
     }
   };
-  console.log(
-    `current:${currentUser?.email} and watclist:${getUsermail?.user}`
-  );
 
   const openModal = () => {
     setPopup(!popup);
@@ -128,7 +123,6 @@ const Editwatchlist = () => {
     event.preventDefault();
 
     if (currentUser?.email === getUsermail?.user) {
-      console.log("recDetails", recDetails?.id);
       try {
         dispatch(
           deleteWatchlist({

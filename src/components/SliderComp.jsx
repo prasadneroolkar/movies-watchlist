@@ -22,4 +22,4 @@ const SliderComp = ({ search }) => {
   );
 };
 
-export default React.memo(SliderComp);
+export default SliderComp;

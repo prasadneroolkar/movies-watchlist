@@ -64,7 +64,6 @@ const Signup = () => {
       password,
       confpass: confirm,
     });
-    console.log(Object.keys(validateRes).length);
     if (Object.keys(validateRes).length === 0) {
       const signupRes = signUp(id, selectedImage, username, email, password);
       if (signupRes === false) {

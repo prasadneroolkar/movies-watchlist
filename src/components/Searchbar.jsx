@@ -22,4 +22,4 @@ const Searchbar = forwardRef(
   }
 );
 
-export default React.memo(Searchbar);
+export default Searchbar;

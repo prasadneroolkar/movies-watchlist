@@ -76,7 +76,6 @@ const UserDetails = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const validateRes = validateForm(editDetails);
-    console.log(Object.keys(validateRes).length);
     if (Object.keys(validateRes).length === 0) {
       try {
         const updatedUser = {

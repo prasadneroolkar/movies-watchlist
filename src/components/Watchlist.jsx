@@ -61,4 +61,4 @@ const Watchlist = () => {
   );
 };
 
-export default React.memo(Watchlist);
+export default Watchlist;

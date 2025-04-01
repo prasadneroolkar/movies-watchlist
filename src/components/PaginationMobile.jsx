@@ -1,37 +1,34 @@
-import React, { useState, useEffect, useMemo } from "react";
-import Button from "../components/Button";
+import React, { useState, useEffect, useRef } from "react";
 
-const PaginationMobile = ({ dataArray, onPageDataChangeMob }) => {
-  const getLength = dataArray.length || 0;
+const InfiniteScrollList = ({ dataArrayMb, onPageDataChange }) => {
+  const [countMov, setCountMov] = useState(2);
+  const observerRef = useRef(null);
 
-  const [currentPage, setCurentpage] = useState(1);
-  const itemsPerpage = 5;
-  const [countMov, setCountmov] = useState(itemsPerpage);
-
-  // const total = Math.ceil(getLength / itemsPerpage);
-  const startIndex = (currentPage - 1) * itemsPerpage;
-  // const endIndex = startIndex + itemsPerpage;
-
-  const movMobie = useMemo(
-    () => dataArray.slice(startIndex, countMov),
-    [dataArray, startIndex, countMov]
-  );
+  const movMobile = dataArrayMb.slice(0, countMov);
 
   useEffect(() => {
-    onPageDataChangeMob(movMobie);
-  }, [movMobie, onPageDataChangeMob]);
+    onPageDataChange(movMobile);
+  }, [movMobile, onPageDataChange]);
 
-  const onhandleClick = () => {
-    if (getLength <= countMov) {
-      setCountmov((prev) => prev + 5);
-    }
-  };
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setCountMov((prev) => prev + 2);
+        }
+      },
+      { threshold: 1.0 }
+    );
 
-  return (
-    <div className="page_btn">
-      <Button btnName="See more" onClick={onhandleClick} />
-    </div>
-  );
+    const target = document.querySelector("#loadMoreTrigger");
+    if (target) observerRef.current.observe(target);
+
+    return () => {
+      if (target) observerRef.current.unobserve(target);
+    };
+  }, [countMov]);
+
+  return <div id="loadMoreTrigger" style={{ height: "10px" }}></div>; // Empty div to detect scrolling
 };
 
-export default PaginationMobile;
+export default InfiniteScrollList;

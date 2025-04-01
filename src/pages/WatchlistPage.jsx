@@ -1,14 +1,17 @@
-import React, { useContext, useState, useEffect, Suspense } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  Suspense,
+  useCallback,
+} from "react";
 import { useNavigate } from "react-router";
 import PageTitle from "../components/watchlist/PageTitle";
 import editBtn from "/images/editBtn.png";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { contextWatchlist } from "../context/WatchlistContext";
-import {
-  watchedMovie,
-  getWatchlistFromLocalStorage,
-} from "../components/store/localWatchlistSlice.js";
+import { watchedMovie } from "../components/store/localWatchlistSlice.js";
 
 import MoviesContainer from "../components/watchlist/moviescomponent/MoviesContainer";
 import MoviesPoster from "../components/watchlist/moviescomponent/MoviesPoster";
@@ -16,24 +19,23 @@ import MoviesCard from "../components/watchlist/moviescomponent/MoviesCard";
 import MoviesRating from "../components/watchlist/moviescomponent/MoviesRating";
 import MoviesTitle from "../components/watchlist/moviescomponent/MoviesTitle";
 import Pagination from "../components/Pagination";
-import PaginationMobile from "../components/PaginationMobile";
+import InfiniteScrollList from "../components/PaginationMobile";
 import MoviesSkimmer from "../components/MoviesSkimmer";
 
 const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
   const navigate = useNavigate();
   const [paginatedMovies, setPaginatedMovies] = useState([]);
-  const [paginatedMoviesMb, setPaginatedMoviesMb] = useState([]);
-
-  const [resizeMobile, setResizemobile] = useState(window.innerWidth > 991);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 991);
 
   useEffect(() => {
     const handleResize = () => {
-      setResizemobile(window.innerWidth > 991);
+      setIsDesktop(window.innerWidth > 991);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   const dispatch = useDispatch();
 
   const currentLocalid = JSON.parse(localStorage.getItem("currentID")) || null;
@@ -127,13 +129,9 @@ const WatchlistPage = () => {
 
   const shareData = getDetails?.movies || [];
 
-  const handlePageDataChange = (mov) => {
+  const handlePageDataChange = useCallback((mov) => {
     setPaginatedMovies(mov);
-  };
-
-  const handlePageDataChangeMb = (mov) => {
-    setPaginatedMoviesMb(mov);
-  };
+  }, []);
 
   return (
     <>
@@ -173,12 +171,11 @@ const WatchlistPage = () => {
               <p>No movies found.</p>
             ) : (
               <Suspense fallback={<MoviesSkimmer />}>
-                {paginatedMoviesMb?.map((val) => (
+                {paginatedMovies?.map((val) => (
                   <MoviesCard key={val.imdbID}>
                     <MoviesPoster
                       onClick={() => handleCheck(val.imdbID)}
                       moviearray={resUnwatched}
-                      // subarray={watchedMov}
                       mapval={val}
                     />
                     <div>
@@ -195,19 +192,22 @@ const WatchlistPage = () => {
             )}
           </MoviesContainer>
         </section>
-        {getDetails?.movies?.length !== 0 && (
+        {/* Desktop Pagination (991px and above) */}
+        {isDesktop && getDetails?.movies?.length !== 0 && (
           <Pagination
             dataArray={shareData}
             onPageDataChange={handlePageDataChange}
           />
         )}
-        <PaginationMobile
-          dataArray={shareData}
-          onPageDataChangeMob={handlePageDataChangeMb}
-        />
+        {!isDesktop && (
+          <InfiniteScrollList
+            dataArrayMb={shareData}
+            onPageDataChange={handlePageDataChange}
+          />
+        )}
       </section>
     </>
   );
 };
 
-export default WatchlistPage;
+export default React.memo(WatchlistPage);

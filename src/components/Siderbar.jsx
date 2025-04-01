@@ -19,7 +19,6 @@ const Siderbar = () => {
   useEffect(() => {
     const clickEvent = (event) => {
       if (searchRef.current && searchRef.current.contains(event.target)) {
-        // Don't close sidebar if clicking inside the search bar
         return;
       }
       if (closeRef.current && closeRef.current.contains(event.target)) {
@@ -27,7 +26,6 @@ const Siderbar = () => {
       }
     };
     if (open) {
-      console.log("open", open);
       document.addEventListener("click", clickEvent);
     }
     return () => {
@@ -59,9 +57,7 @@ const Siderbar = () => {
         />
 
         <Watchlist />
-        {/* <p className="mt-4">
-          {currentUser ? <Logout /> : <Link to="/login">Sign in</Link>}
-        </p> */}
+
         <Userprof />
       </aside>
     </>
