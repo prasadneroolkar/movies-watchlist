@@ -65,12 +65,14 @@ const History = () => {
                   mapval={val}
                   flag={true}
                 />
-                {val.Ratings?.map((rate, index) =>
-                  rate.Source === "Metacritic" ? (
-                    <MoviesRating key={index} mapval={rate} />
-                  ) : null
-                )}
-                <MoviesTitle mapval={val} />
+                <div>
+                  {val.Ratings?.map((rate, index) =>
+                    rate.Source === "Metacritic" ? (
+                      <MoviesRating key={index} mapval={rate} />
+                    ) : null
+                  )}
+                  <MoviesTitle mapval={val} />
+                </div>
               </MoviesCard>
             ))
           )}
