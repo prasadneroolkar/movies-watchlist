@@ -26,15 +26,6 @@ const WatchlistPage = () => {
   const { listID } = useContext(contextWatchlist);
   const navigate = useNavigate();
   const [paginatedMovies, setPaginatedMovies] = useState([]);
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 991);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth > 991);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const dispatch = useDispatch();
 
@@ -148,7 +139,6 @@ const WatchlistPage = () => {
             <p>{getDetails.description}</p>
           </div>
         )}
-
         <section className="stats_details">
           <div>
             <p>ITEMS ON LIST</p>
@@ -164,7 +154,6 @@ const WatchlistPage = () => {
             <span>{avgRate ? avgRate : "0"}</span>
           </div>
         </section>
-
         <section className="movies_section">
           <MoviesContainer>
             {getDetails?.movies?.length === 0 ? (
@@ -193,18 +182,17 @@ const WatchlistPage = () => {
           </MoviesContainer>
         </section>
         {/* Desktop Pagination (991px and above) */}
-        {isDesktop && getDetails?.movies?.length !== 0 && (
+        {getDetails?.movies?.length !== 0 && (
           <Pagination
             dataArray={shareData}
             onPageDataChange={handlePageDataChange}
           />
         )}
-        {!isDesktop && (
-          <InfiniteScrollList
-            dataArrayMb={shareData}
-            onPageDataChange={handlePageDataChange}
-          />
-        )}
+        {/* mobile Pagination (991px and below) */}
+        <InfiniteScrollList
+          dataArrayMb={shareData}
+          onPageDataChange={handlePageDataChange}
+        />
       </section>
     </>
   );

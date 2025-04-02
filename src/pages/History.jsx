@@ -13,32 +13,41 @@ import InfiniteScrollList from "../components/PaginationMobile";
 
 const History = () => {
   const [paginatedMovies, setPaginatedMovies] = useState([]);
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 991);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth < 991);
   const dispatch = useDispatch();
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth > 991);
+      setIsDesktop(window.innerWidth < 991);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [paginatedMovies]);
 
-  try {
-    dispatch(
-      recentlyWatched({
-        user: currentUser?.email,
-      })
-    );
-  } catch (error) {
-    console.log(error);
-  }
+  useEffect(() => {
+    try {
+      dispatch(
+        recentlyWatched({
+          user: currentUser?.email,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch, currentUser?.email]);
 
-  const historyList = JSON.parse(localStorage.getItem("historylist")) || null;
+  const historyList = JSON.parse(localStorage.getItem("historylist")) || [];
+
+  // const handlePageDataChange = useCallback((mov) => {
+  //   setPaginatedMovies(mov);
+  // }, []);
 
   const handlePageDataChange = useCallback((mov) => {
-    setPaginatedMovies(mov);
+    setPaginatedMovies((prev) => {
+      // Avoid unnecessary state updates
+      return JSON.stringify(prev) !== JSON.stringify(mov) ? mov : prev;
+    });
   }, []);
 
   return (
@@ -68,18 +77,21 @@ const History = () => {
         </MoviesContainer>
       </section>
       {/* Desktop Pagination (991px and above) */}
-      {isDesktop && historyList?.movies?.length !== 0 && (
+      {historyList?.movies?.length !== 0 && window.innerWidth > 991 && (
         <Pagination
           dataArray={historyList}
           onPageDataChange={handlePageDataChange}
         />
       )}
-      {!isDesktop && (
-        <InfiniteScrollList
-          dataArrayMb={historyList}
-          onPageDataChange={handlePageDataChange}
-        />
-      )}
+
+      {isDesktop &&
+        historyList?.movies?.length !== 0 &&
+        window.innerWidth <= 991 && (
+          <InfiniteScrollList
+            dataArrayMb={historyList}
+            onPageDataChange={handlePageDataChange}
+          />
+        )}
     </section>
   );
 };

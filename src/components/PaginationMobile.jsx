@@ -1,20 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const InfiniteScrollList = ({ dataArrayMb, onPageDataChange }) => {
-  const [countMov, setCountMov] = useState(2);
+const InfiniteScrollList = ({ dataArrayMb = [], onPageDataChange }) => {
+  const [countMov, setCountMov] = useState(5); // Start with 5 movies
   const observerRef = useRef(null);
 
-  const movMobile = dataArrayMb.slice(0, countMov);
+  // Ensure we have a valid array
+  const visibleMovies = Array.isArray(dataArrayMb)
+    ? dataArrayMb.slice(0, countMov)
+    : [];
 
   useEffect(() => {
-    onPageDataChange(movMobile);
-  }, [movMobile, onPageDataChange]);
+    if (visibleMovies.length > 0) {
+      onPageDataChange(visibleMovies); // Update only when movies change
+    }
+  }, [visibleMovies, onPageDataChange]);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setCountMov((prev) => prev + 2);
+          setCountMov((prev) => prev + 5); // Load 5 more movies when scrolled
         }
       },
       { threshold: 1.0 }
@@ -26,9 +31,9 @@ const InfiniteScrollList = ({ dataArrayMb, onPageDataChange }) => {
     return () => {
       if (target) observerRef.current.unobserve(target);
     };
-  }, [countMov]);
+  }, []);
 
-  return <div id="loadMoreTrigger" style={{ height: "10px" }}></div>; // Empty div to detect scrolling
+  return <div id="loadMoreTrigger" className="infinite-scroll-trigger"></div>;
 };
 
-export default InfiniteScrollList;
+export default React.memo(InfiniteScrollList);

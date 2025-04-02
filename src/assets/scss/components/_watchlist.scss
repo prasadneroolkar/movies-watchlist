@@ -740,37 +740,42 @@ section.movies_section.movies_history {
 // ------------------History page----------------------//
 // ------------------pagination----------------------//
 
-.paginations {
-  margin: 40px auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 20px;
+.pagination-desktop {
+  display: none;
 
-  button {
-    color: $text-color;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+  @include bp(tablet-md) {
 
-    &.disabled {
-      opacity: 0.2;
-    }
-
-    &.active {
-      color: #141414;
-      background-color: $text-color;
-    }
-  }
-
-  &>div {
+    margin: 40px auto;
     display: flex;
     justify-content: center;
     align-items: center;
     column-gap: 20px;
 
     button {
-      border: 1px solid #A41B1B;
-      padding: 5px 10px;
+      color: $text-color;
+      transition: background-color 0.3s ease, transform 0.2s ease;
 
+      &.disabled {
+        opacity: 0.2;
+      }
+
+      &.active {
+        color: #141414;
+        background-color: $text-color;
+      }
+    }
+
+    &>div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      column-gap: 20px;
+
+      button {
+        border: 1px solid #A41B1B;
+        padding: 5px 10px;
+
+      }
     }
   }
 }
@@ -805,3 +810,11 @@ section.movies_section.movies_history {
 }
 
 // ------------------Userprofile----------------------//
+.infinite-scroll-trigger {
+  display: none;
+
+  @include bp(tablet-sm) {
+    display: block;
+    height: 10px;
+  }
+}
