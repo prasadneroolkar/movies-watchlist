@@ -22,6 +22,10 @@ section.home-message {
   }
 
   img {
+    width: 20px;
+    height: auto;
+    margin: 5px;
+
     @include bp(tablet-sm) {
 
       width: 20px;
