@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const FormInput = ({
   Labelname,
@@ -8,9 +8,10 @@ const FormInput = ({
   InputRef,
   name,
 }) => {
+  const [isFocused, setIsFocused] = useState(false);
   return (
     <>
-      <div className="label_input">
+      <div className={`label_input ${isFocused || value ? "active" : ""}`}>
         <input
           name={name}
           type={type}
@@ -18,6 +19,8 @@ const FormInput = ({
           value={value}
           onChange={onChange}
           ref={InputRef}
+          onFocus={() => setIsFocused(true)}
+          onBlur={(e) => setIsFocused(e.target.value !== "")}
         />
         <label htmlFor="">{Labelname}</label>
       </div>

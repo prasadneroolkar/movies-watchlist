@@ -77,10 +77,15 @@
           color: transparent; // Hide placeholder text
         }
 
-        &:focus-within label,
-        input:not(:placeholder-shown)+label {
+        // &:focus-within label,
+        // input:not(:placeholder-shown)+label {
+        //   top: 8px;
+        //   font-size: 12px;
+        // }
+        &.active label {
           top: 8px;
           font-size: 12px;
+          //  color: black;
         }
       }
 
